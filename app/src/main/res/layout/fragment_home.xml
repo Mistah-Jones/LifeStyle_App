@@ -103,7 +103,7 @@
 
     <Button
         android:id="@+id/button_submit"
-        android:layout_width="188dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#5158BB"
         android:text="Submit"
@@ -113,7 +113,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
+        app:layout_constraintVertical_bias="0.811"/>
 
     <EditText
         android:id="@+id/et_date"
@@ -128,7 +128,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.392"
-        android:background="@drawable/border"
+        android:background="@drawable/user_info_text_boarder"
         />
 
     <Spinner
@@ -161,7 +161,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.552"
         tools:text="Weight"
-        android:background="@drawable/border" />
+        android:background="@drawable/user_info_text_boarder" />
 
     <EditText
         android:id="@+id/et_name"
@@ -178,6 +178,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.298"
         tools:text="Enter name here"
-        android:background="@drawable/border" />
+        android:background="@drawable/user_info_text_boarder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
