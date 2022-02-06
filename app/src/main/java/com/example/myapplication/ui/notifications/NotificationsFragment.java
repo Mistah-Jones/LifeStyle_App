@@ -39,8 +39,7 @@ public class NotificationsFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
-        // Ethan was here
+        
         // TODO: input current location
         Uri hikesUri = Uri.parse("geo:40.767778,-111.845205?q=hikes");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, hikesUri);
