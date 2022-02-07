@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -39,10 +42,19 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+
+    // Name Information
+    private EditText mEtName;
+    private String mStringName;
+
+    // Image Information
     private Button mButtonCamera;
     private ImageView mIvThumbnail;
+
+    // Birth date information
     private EditText datePickerEText;
     private DatePickerDialog picker;
+
     private String[] heights = { "3 ft 0 in", "3 ft 1 in", "3 ft 2 in", "3 ft 3 in", "3 ft 4 in", "3 ft 5 in", "3 ft 6 in",
             "3 ft 7 in", "3 ft 8 in", "3 ft 9 in", "3 ft 10 in", "3 ft 11 in", "4 ft 0 in", "4 ft 1 in", "4 ft 2 in",
             "4 ft 3 in", "4 ft 4 in", "4 ft 5 in", "4 ft 6 in", "4 ft 7 in", "4 ft 8 in", "4 ft 9 in", "4 ft 10 in",
@@ -51,12 +63,33 @@ public class HomeFragment extends Fragment {
             "6 ft 3 in", "6 ft 4 in", "6 ft 5 in", "6 ft 6 in", "6 ft 7 in", "6 ft 8 in", "6 ft 9 in", "6 ft 10 in",
             "6 ft 11 in" };
 
+    // Weight information
+    private EditText weightPicker;
+
     //Define a bitmap
     Bitmap mThumbnailImage;
+    OnUserDataPass mDataPasser;
 
     //Define a request code for the camera
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    //Callback interface
+    public interface OnUserDataPass{
+        public void onUserDataPass(String[] data);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try{
+            mDataPasser = (OnUserDataPass) context;
+        }catch(ClassCastException e){
+            throw new ClassCastException(context.toString() + " must implement OnUserDataPass");
+        }
+    }
+
+    // TODO: Break into helper methods!
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -90,6 +123,9 @@ public class HomeFragment extends Fragment {
             }
         );
 
+        // The name Field
+        mEtName = (EditText) root.findViewById(R.id.et_name);
+
         // The Birthday Field
         //TODO: Add spinner instead of calendar?
         datePickerEText=(EditText) root.findViewById(R.id.et_date);
@@ -117,7 +153,6 @@ public class HomeFragment extends Fragment {
         //TODO: Replace hard-coded strings with two integer spinners for feet and inches
         //TODO: Add prompt to spinner dialog
         Spinner heightSP = root.findViewById(R.id.sp_height);
-        heightSP.setPrompt("Height");
         ArrayAdapter ad
                 = new ArrayAdapter(
                 getActivity(),
@@ -127,6 +162,60 @@ public class HomeFragment extends Fragment {
                 android.R.layout
                         .simple_spinner_dropdown_item);
         heightSP.setAdapter(ad);
+
+        // The Weight Field
+        weightPicker = root.findViewById(R.id.et_weight);
+
+        // The Gender Field
+        RadioGroup radioGroupGender = (RadioGroup) root.findViewById(R.id.rg_gender);
+
+        // The Activity Level Field
+        RadioGroup radioGroupActivity = (RadioGroup) root.findViewById(R.id.rg_activity);
+
+        // The Submit Button
+        Button submitBttn = root.findViewById(R.id.button_submit);
+        submitBttn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                // TODO Add warning messages about empty fields
+
+                // Get selected radio button from gender group
+                int genderSelectedId = radioGroupGender.getCheckedRadioButtonId();
+                RadioButton genderBttn = (RadioButton) root.findViewById(genderSelectedId);
+                if (genderBttn.getText().charAt(0) == 'M')
+                {
+                    genderSelectedId = 1;
+                }
+                else if (genderBttn.getText().charAt(0) == 'F')
+                {
+                    genderSelectedId = 2;
+                }
+
+                // Get selected radio button from activity group
+                int activitySelectedId = radioGroupActivity.getCheckedRadioButtonId();
+                RadioButton activityBttn = (RadioButton) root.findViewById(activitySelectedId);
+                String isActive = "";
+                if (activityBttn.getText().charAt(0) == 'A')
+                {
+                    isActive = "True";
+                }
+                else if (activityBttn.getText().charAt(0) == 'S')
+                {
+                    isActive = "False";
+                }
+
+                // Send the inputted data
+                String[] data = {mEtName.getText().toString(),
+                        datePickerEText.getText().toString(),
+                        "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
+                        weightPicker.getText().toString(),
+                        "" + genderSelectedId,
+                        isActive};
+
+                mDataPasser.onUserDataPass(data);
+            }
+        });
 
         return root;
     }
@@ -158,6 +247,16 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /*
+    A helper method to convert the current height string format into an integer
+    format of inches.
+     */
+    private int convertHeightToInches(String heightString)
+    {
+        heightString = heightString.replaceAll(" ft", "").replaceAll(" in","");
+        String[] ftAndIn = heightString.split(" ");
+        return (Integer.parseInt(ftAndIn[0]) * 12) + Integer.parseInt(ftAndIn[1]);
+    }
 
     private String saveImage(Bitmap finalBitmap) {
 

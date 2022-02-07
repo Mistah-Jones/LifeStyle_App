@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.dashboard;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,17 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        //Get the BMI / BMR text views
+        TextView tvBMI = (TextView) root.findViewById(R.id.tv_BMI_data);
+        TextView tvBMR = (TextView) root.findViewById(R.id.tv_BMR_data);
+
+        try {
+            tvBMI.setText("" + getArguments().getFloat("BMI_DATA"));
+            tvBMR.setText("" + getArguments().getFloat("BMR_DATA"));
+        } catch (Exception e) {
+            String error = e.getMessage();
+        }
         return root;
     }
 
