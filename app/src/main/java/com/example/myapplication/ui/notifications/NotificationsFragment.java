@@ -40,8 +40,8 @@ public class NotificationsFragment extends Fragment {
             }
         });
         
-        // TODO: input current location
-        Uri hikesUri = Uri.parse("geo:40.767778,-111.845205?q=hikes");
+        // Search for Hikes nearby
+        Uri hikesUri = Uri.parse("geo:0,0?q=hikes");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, hikesUri);
         startActivity(mapIntent);
         
