@@ -23,11 +23,14 @@ public class MainActivity extends AppCompatActivity
                 implements UserInfoFragment.OnUserDataPass{
 
     private ActivityMainBinding binding;
-    private String mName;
+    private String mName = null;
     private int mAge;
     private int mWeight, mHeight;
     private short mGender;
     private boolean mActivity;
+
+    private float bmi;
+    private float bmr;
 
     private NavController navController;
 
@@ -53,7 +56,23 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.navigation_dashboard);
+                // If the user has not input any data, take them to the user info fragment.
+                if (mName == null)
+                {
+                    navController.navigate(R.id.navigation_home);
+                }
+                else
+                {
+                    // Instantiate the fragment
+                    DashboardFragment dashboardFragment = new DashboardFragment();
+
+                    // Send data to fragment
+                    Bundle sentData = new Bundle();
+                    sentData.putFloat("BMI_DATA", bmi);
+                    sentData.putFloat("BMR_DATA", bmr);
+
+                    navController.navigate(R.id.navigation_dashboard, sentData);
+                }
             }
         });
     }
@@ -68,11 +87,11 @@ public class MainActivity extends AppCompatActivity
         mActivity = Boolean.parseBoolean(data[5]);
 
         // BMI Calculation
-        float bmi = (float)mWeight / (float)Math.pow(mHeight,2);
+        bmi = (float)mWeight / (float)Math.pow(mHeight,2);
         bmi *= 703;
 
         // BMR Calculation (Harris-Benedict Equation)
-        float bmr = 0f;
+        bmr = 0f;
         switch (mGender)
         {
             // Male
