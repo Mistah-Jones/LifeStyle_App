@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.home;
+package com.example.myapplication.ui.userInfo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,12 +36,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.example.myapplication.R;
-import com.example.myapplication.databinding.FragmentHomeBinding;
+import com.example.myapplication.databinding.FragmentUserinfoBinding;
 
-public class HomeFragment extends Fragment {
+public class UserInfoFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private UserInfoViewModel homeViewModel;
+    private FragmentUserinfoBinding binding;
 
     // Name Information
     private EditText mEtName;
@@ -93,9 +93,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+                new ViewModelProvider(this).get(UserInfoViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentUserinfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;

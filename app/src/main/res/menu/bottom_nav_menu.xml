@@ -11,7 +11,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_hike"
         android:icon="@drawable/ic_hike"
         android:title="Hike" />
 
