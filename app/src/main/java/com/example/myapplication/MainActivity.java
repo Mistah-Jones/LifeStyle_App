@@ -2,29 +2,25 @@ package com.example.myapplication;
 
 import static androidx.navigation.Navigation.findNavController;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.ui.dashboard.DashboardFragment;
-import com.example.myapplication.ui.home.HomeFragment;
+import com.example.myapplication.ui.userInfo.UserInfoFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.Period;
 
 public class MainActivity extends AppCompatActivity
-                implements HomeFragment.OnUserDataPass{
+                implements UserInfoFragment.OnUserDataPass{
 
     private ActivityMainBinding binding;
     private String mName;
@@ -47,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.fab, R.id.navigation_notifications)
+                R.id.navigation_home, R.id.fab, R.id.navigation_hike)
                 .build();
         navController = findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
