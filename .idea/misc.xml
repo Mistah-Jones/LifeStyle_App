@@ -7,12 +7,14 @@
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/drawer_item_color.xml" value="0.12129629629629629" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/ic_outline_photo_camera_24.xml" value="0.1578125" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/ic_user_info_submit_button.xml" value="0.1578125" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/spinner_outline.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_account.xml" value="0.11911231884057971" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_dashboard.xml" value="0.1933876811594203" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_hike.xml" value="0.12183383991894631" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_notifications.xml" value="0.11911231884057971" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_userinfo.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_weather.xml" value="0.11911231884057971" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25052083333333336" />
       </map>

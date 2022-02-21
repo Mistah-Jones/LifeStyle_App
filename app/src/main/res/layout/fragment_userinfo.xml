@@ -14,16 +14,17 @@
         android:src="@drawable/ic_account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_home"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/text_home"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068"
-        tools:ignore="MissingConstraints"/>
+        app:layout_constraintVertical_bias="0.027"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_pic"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:backgroundTint="#5158BB"
+        android:backgroundTint="#30BCC9"
         app:cornerRadius="45dp"
         app:icon="@drawable/ic_camera_icon"
         app:iconGravity="textStart"
@@ -40,10 +41,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433"/>
+        app:layout_constraintVertical_bias="0.451" />
 
     <RadioGroup
         android:id="@+id/rg_gender"
@@ -55,22 +56,22 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631" >
+        app:layout_constraintVertical_bias="0.631">
 
         <RadioButton
             android:id="@+id/rb_male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male"
-            android:buttonTint="#5158BB" />
+            android:buttonTint="#30BCC9"
+            android:text="Male" />
 
         <RadioButton
             android:id="@+id/rb_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="Female"
-            android:buttonTint="#5158BB"/>
+            android:buttonTint="#30BCC9"
+            android:text="Female" />
     </RadioGroup>
 
     <RadioGroup
@@ -83,29 +84,29 @@
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.712" >
+        app:layout_constraintVertical_bias="0.712">
 
         <RadioButton
             android:id="@+id/rb_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Active"
-            android:buttonTint="#5158BB"/>
+            android:buttonTint="#30BCC9"
+            android:text="Active" />
 
         <RadioButton
             android:id="@+id/rb_sedentary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Sedentary"
-            android:buttonTint="#5158BB"/>
+            android:buttonTint="#30BCC9"
+            android:text="Sedentary" />
     </RadioGroup>
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#5158BB"
+        android:backgroundTint="#30BCC9"
         android:text="Submit"
         app:itemRippleColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -113,23 +114,30 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811"/>
+        app:layout_constraintVertical_bias="0.811" />
 
-    <EditText
-        android:id="@+id/et_date"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Birthday"
-        android:inputType="none"
+        android:textColorHint="#F6404F"
+        app:boxStrokeColor="#30BCC9"
+        app:hintTextColor="#30BCC9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.392"
-        android:background="@drawable/user_info_text_boarder"
-        />
+        app:layout_constraintVertical_bias="0.364">
+
+        <EditText
+            android:id="@+id/et_date"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Birthday"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
         android:id="@+id/sp_height"
@@ -139,45 +147,61 @@
         android:imeOptions="actionDone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473"
-        tools:text="Height"
-        android:backgroundTint="#5158BB"/>
+        app:layout_constraintVertical_bias="0.454"
+        android:background="@drawable/spinner_outline"
+        tools:text="Height" />
 
-    <EditText
-        android:id="@+id/et_weight"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Weight"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.552"
-        tools:text="Weight"
-        android:background="@drawable/user_info_text_boarder" />
-
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Name"
-        android:imeOptions="actionDone"
-        android:inputType="textPersonName"
+        android:textColorHint="#F6404F"
+        app:boxStrokeColor="#30BCC9"
+        app:hintTextColor="#30BCC9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.298"
-        tools:text="Enter name here"
-        android:background="@drawable/user_info_text_boarder" />
+        app:layout_constraintVertical_bias="0.537">
+
+        <EditText
+            android:id="@+id/et_weight"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Weight"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            tools:text="Weight" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColorHint="#F6404F"
+        app:boxStrokeColor="#30BCC9"
+        app:hintTextColor="#30BCC9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.261">
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            tools:text="Enter name here" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

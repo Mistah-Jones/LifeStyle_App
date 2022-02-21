@@ -14,7 +14,7 @@
         app:fabCradleMargin="15dp"
         app:fabCradleVerticalOffset="5dp"
         app:fabCradleRoundedCornerRadius="10dp"
-        app:backgroundTint="#5158BB">
+        app:backgroundTint="#30BCC9">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_account"
-        app:backgroundTint="#5158BB"
+        app:backgroundTint="#30BCC9"
         app:rippleColor="@color/white"
         app:layout_anchor="@id/bottomAppBar"
         app:tint="@drawable/drawer_item_color"/>
