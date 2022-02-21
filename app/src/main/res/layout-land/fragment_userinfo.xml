@@ -14,10 +14,10 @@
         android:src="@drawable/ic_account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/text_home"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="@+id/text_home"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43"
+        app:layout_constraintVertical_bias="0.239"
         tools:ignore="MissingConstraints" />
 
     <com.google.android.material.button.MaterialButton
@@ -53,10 +53,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.28">
+        app:layout_constraintVertical_bias="0.176">
 
         <RadioButton
             android:id="@+id/rb_male"
@@ -81,10 +81,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52">
+        app:layout_constraintVertical_bias="0.435">
 
         <RadioButton
             android:id="@+id/rb_active"
@@ -93,6 +93,13 @@
             android:buttonTint="#30BCC9"
             android:text="Active" />
 
+        <RadioButton
+            android:id="@+id/rb_sedentary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:buttonTint="#30BCC9"
+            android:text="Sedentary" />
     </RadioGroup>
 
     <Button
@@ -104,10 +111,9 @@
         app:itemRippleColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713" />
+        app:layout_constraintVertical_bias="0.636" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -118,10 +124,10 @@
         app:hintTextColor="#30BCC9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.273"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.364">
+        app:layout_constraintVertical_bias="0.42">
 
         <EditText
             android:id="@+id/et_date"
@@ -141,10 +147,10 @@
         android:imeOptions="actionDone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintHorizontal_bias="0.623"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688"
+        app:layout_constraintVertical_bias="0.204"
         tools:text="Height" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -156,11 +162,20 @@
         app:hintTextColor="#30BCC9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.623"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537">
+        app:layout_constraintVertical_bias="0.42">
 
+        <EditText
+            android:id="@+id/et_weight"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Weight"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            tools:text="Weight" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -173,46 +188,19 @@
         app:hintTextColor="#30BCC9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.273"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.261">
+        app:layout_constraintVertical_bias="0.182">
 
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            tools:text="Enter name here" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter Name"
-        android:imeOptions="actionDone"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="189dp"
-        tools:layout_editor_absoluteY="41dp"
-        tools:text="Enter name here"
-        tools:ignore="MissingConstraints" />
-
-    <RadioButton
-        android:id="@+id/rb_sedentary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:buttonTint="#30BCC9"
-        android:text="Sedentary"
-        tools:layout_editor_absoluteX="625dp"
-        tools:layout_editor_absoluteY="187dp"
-        tools:ignore="MissingConstraints" />
-
-    <EditText
-        android:id="@+id/et_weight"
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Weight"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="406dp"
-        tools:layout_editor_absoluteY="41dp"
-        tools:text="Weight"
-        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
