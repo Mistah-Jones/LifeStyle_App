@@ -152,7 +152,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.454"
         android:background="@drawable/spinner_outline"
-        tools:text="Height" />
+        tools:text="Height"/>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
