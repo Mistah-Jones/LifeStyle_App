@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+        <solid android:color="#F6404f"/>
+        <size
+            android:width="10dp"
+            android:height="5dp"/>
+            <corners
+                android:bottomLeftRadius="10dp"
+                android:bottomRightRadius="20dp"/>
+        </shape>
+    </item>
+    <item android:left="7dp">
+        <shape
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:innerRadius=".75dp"
+            android:shape="ring"
+            android:thickness=".5dp"
+            android:useLevel="false">
+            <solid android:color="#30c9e1" />
+        </shape>
+    </item>
+    <item android:left="7dp">
+        <shape
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:innerRadius=".5dp"
+            android:shape="ring"
+            android:thickness=".5dp"
+            android:useLevel="false">
+            <solid android:color="#30BCC9" />
+        </shape>
+    </item>
+    <item>
+        <shape
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <gradient
+                android:startColor="#FADA80"
+                android:endColor="#FAF3E3"
+                android:angle="315"
+                android:type ="linear" />
+            <size
+                android:width="10dp"
+                android:height="5dp"/>
+            <corners
+                android:bottomLeftRadius="20dp"
+                android:bottomRightRadius="20dp"/>
+        </shape>
+    </item>
+</layer-list>
