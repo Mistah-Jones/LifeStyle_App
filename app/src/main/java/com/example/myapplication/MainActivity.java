@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,7 +13,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +55,12 @@ public class MainActivity extends AppCompatActivity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.action_bar, null);
+        actionBar.setCustomView(view);
 
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
         navView.setBackground(null);
