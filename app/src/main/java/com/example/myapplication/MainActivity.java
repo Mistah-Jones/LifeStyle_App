@@ -3,9 +3,11 @@ package com.example.myapplication;
 import static androidx.navigation.Navigation.findNavController;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.fab, R.id.navigation_hike)
+                R.id.navigation_weather, R.id.fab, R.id.navigation_hike)
                 .build();
         navController = findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity
                 // If the user has not input any data, take them to the user info fragment.
                 if (mName == null)
                 {
-                    navController.navigate(R.id.navigation_home);
+                    navController.navigate(R.id.navigation_userinfo);
                 }
                 else
                 {
