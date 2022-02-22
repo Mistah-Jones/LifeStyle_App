@@ -26,6 +26,7 @@ public class DashboardFragment extends Fragment {
 
     private float bmr;
     private float bmi;
+    private String name;
 
     private EditText weightLossPicker;
 
@@ -41,12 +42,15 @@ public class DashboardFragment extends Fragment {
         TextView tvBMI = (TextView) root.findViewById(R.id.tv_BMI_data);
         TextView tvBMR = (TextView) root.findViewById(R.id.tv_BMR_data);
         tvCalories = (TextView) root.findViewById(R.id.text_calories);
+        TextView tvName = (TextView) root.findViewById(R.id.tv_name_data);
 
         try {
             bmi = getArguments().getFloat("BMI_DATA");
             bmr = getArguments().getFloat("BMR_DATA");
+            name = getArguments().getString("NAME_DATA");
             tvBMI.setText("" + Math.round(bmi));
             tvBMR.setText("" + Math.round(bmr));
+            tvName.setText("Hello " + name + "!");
         } catch (Exception e) {
             String error = e.getMessage();
         }
