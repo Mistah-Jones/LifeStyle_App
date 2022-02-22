@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -205,13 +207,18 @@ public class UserInfoFragment extends Fragment {
                     isActive = "False";
                 }
 
+                ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+                mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
+                byte [] b=baos.toByteArray();
+                String temp= Base64.encodeToString(b, Base64.DEFAULT);
+
                 // Send the inputted data
                 String[] data = {mEtName.getText().toString(),
                         datePickerEText.getText().toString(),
                         "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
                         weightPicker.getText().toString(),
                         "" + genderSelectedId,
-                        isActive};
+                        isActive, temp};
 
                 mDataPasser.onUserDataPass(data);
             }

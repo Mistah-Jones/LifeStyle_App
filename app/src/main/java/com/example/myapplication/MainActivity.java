@@ -2,7 +2,12 @@ package com.example.myapplication;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     private int mWeight, mHeight;
     private short mGender;
     private boolean mActivity;
+    private String mThumbnailString;
+    private Bitmap mThumbnail;
 
     private float bmi;
     private float bmr;
@@ -85,6 +92,13 @@ public class MainActivity extends AppCompatActivity
         mWeight = Integer.parseInt(data[3]);
         mGender = Short.parseShort(data[4]);
         mActivity = Boolean.parseBoolean(data[5]);
+        mThumbnailString = data[6];
+
+        byte [] encodeByte= Base64.decode(mThumbnailString,Base64.DEFAULT);
+        mThumbnail = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        Drawable d = new BitmapDrawable(getResources(), mThumbnail);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setImageDrawable(d);
 
         // BMI Calculation
         bmi = (float)mWeight / (float)Math.pow(mHeight,2);
