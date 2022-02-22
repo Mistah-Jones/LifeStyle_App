@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.dashboard;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Debug;
 import android.view.KeyEvent;
@@ -19,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
+import com.example.myapplication.ui.userInfo.UserInfoFragment;
 
 public class DashboardFragment extends Fragment {
 
@@ -34,6 +37,10 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        // TODO - remove icon from action bar - not working even though it works for UserInfoFragment
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false); // remove the icon
 
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);

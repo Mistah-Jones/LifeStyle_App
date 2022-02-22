@@ -98,7 +98,7 @@ public class UserInfoFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_camera_icon);
+        actionBar.setDisplayHomeAsUpEnabled(true); // remove the icon
 
         homeViewModel =
                 new ViewModelProvider(this).get(UserInfoViewModel.class);
