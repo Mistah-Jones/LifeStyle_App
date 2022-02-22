@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_weather"
         android:icon="@drawable/ic_weather"
         android:title="Weather" />
 
@@ -11,7 +11,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_hike"
         android:icon="@drawable/ic_hike"
         android:title="Hike" />
 
