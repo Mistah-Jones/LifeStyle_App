@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -181,39 +182,38 @@ public class UserInfoFragment extends Fragment {
                 // TODO Add warning messages about empty fields
 
                 // Get selected radio button from gender group
-                int genderSelectedId = radioGroupGender.getCheckedRadioButtonId();
-                RadioButton genderBttn = (RadioButton) root.findViewById(genderSelectedId);
-                if (genderBttn.getText().charAt(0) == 'M')
-                {
-                    genderSelectedId = 1;
-                }
-                else if (genderBttn.getText().charAt(0) == 'F')
-                {
-                    genderSelectedId = 2;
-                }
+                try {
+                    int genderSelectedId = radioGroupGender.getCheckedRadioButtonId();
+                    RadioButton genderBttn = (RadioButton) root.findViewById(genderSelectedId);
+                    if (genderBttn.getText().charAt(0) == 'M') {
+                        genderSelectedId = 1;
+                    } else if (genderBttn.getText().charAt(0) == 'F') {
+                        genderSelectedId = 2;
+                    }
 
-                // Get selected radio button from activity group
-                int activitySelectedId = radioGroupActivity.getCheckedRadioButtonId();
-                RadioButton activityBttn = (RadioButton) root.findViewById(activitySelectedId);
-                String isActive = "";
-                if (activityBttn.getText().charAt(0) == 'A')
-                {
-                    isActive = "True";
-                }
-                else if (activityBttn.getText().charAt(0) == 'S')
-                {
-                    isActive = "False";
-                }
+                    // Get selected radio button from activity group
+                    int activitySelectedId = radioGroupActivity.getCheckedRadioButtonId();
+                    RadioButton activityBttn = (RadioButton) root.findViewById(activitySelectedId);
+                    String isActive = "";
+                    if (activityBttn.getText().charAt(0) == 'A') {
+                        isActive = "True";
+                    } else if (activityBttn.getText().charAt(0) == 'S') {
+                        isActive = "False";
+                    }
 
-                // Send the inputted data
-                String[] data = {mEtName.getText().toString(),
-                        datePickerEText.getText().toString(),
-                        "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
-                        weightPicker.getText().toString(),
-                        "" + genderSelectedId,
-                        isActive};
+                    // Send the inputted data
+                    String[] data = {mEtName.getText().toString(),
+                            datePickerEText.getText().toString(),
+                            "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
+                            weightPicker.getText().toString(),
+                            "" + genderSelectedId,
+                            isActive};
 
-                mDataPasser.onUserDataPass(data);
+                    mDataPasser.onUserDataPass(data);
+                }
+                catch (Exception e){
+                    Log.d("nathan_error", "don't send");
+                }
             }
         });
 
