@@ -4,6 +4,11 @@ import static androidx.navigation.Navigation.findNavController;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -94,8 +99,27 @@ public class MainActivity extends AppCompatActivity
         mActivity = Boolean.parseBoolean(data[5]);
         mThumbnailString = data[6];
 
+        // get thumbnail image and decode it
         byte [] encodeByte= Base64.decode(mThumbnailString,Base64.DEFAULT);
         mThumbnail = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+
+        // convert thumbnail image to circle shaped version
+        Bitmap output = Bitmap.createBitmap(mThumbnail.getWidth(),
+                mThumbnail.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, mThumbnail.getWidth(), mThumbnail.getHeight());
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(mThumbnail.getWidth() / 2, mThumbnail.getHeight() / 2,
+                mThumbnail.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(mThumbnail, rect, rect, paint);
+        mThumbnail = output;
+
+        // convert circle thumbnail to drawable and assign to fab
         Drawable d = new BitmapDrawable(getResources(), mThumbnail);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setImageDrawable(d);
