@@ -45,8 +45,8 @@ public class DashboardFragment extends Fragment {
         try {
             bmi = getArguments().getFloat("BMI_DATA");
             bmr = getArguments().getFloat("BMR_DATA");
-            tvBMI.setText("" + bmi);
-            tvBMR.setText("" + bmr);
+            tvBMI.setText("" + Math.round(bmi));
+            tvBMR.setText("" + Math.round(bmr));
         } catch (Exception e) {
             String error = e.getMessage();
         }
@@ -73,6 +73,6 @@ public class DashboardFragment extends Fragment {
     private float calculateTargetCalories(float weightChangePerWeek)
     {
         float calories = weightChangePerWeek + (weightChangePerWeek * 3500f) / 7f;
-        return bmr + calories;
+        return Math.round(Math.round(bmr) + Math.round(calories));
     }
 }

@@ -6,10 +6,18 @@
         <entry key="..\:/Users/ethra/OneDrive/Documents/GitHub/LifeStyle_App/app/src/main/res/drawable/ic_weather.xml" value="0.403125" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/bmi_square.xml" value="0.112" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/bmr_square.xml" value="0.112" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/cream_blobl.xml" value="0.1385" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/cream_wave.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/dashboard_background.xml" value="0.1" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/dashboard_background1.xml" value="0.1385" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/dashboard_background2.xml" value="0.1385" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/dashboard_background_2.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/drawer_item_color.xml" value="0.12129629629629629" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/gradient_list.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/ic_outline_photo_camera_24.xml" value="0.1578125" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/ic_user_info_submit_button.xml" value="0.1578125" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/ic_wave.xml" value="0.1385" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/logo_icon_background.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/spinner_outline.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_dashboard.xml" value="0.2239858906525573" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_hike.xml" value="0.2239858906525573" />
@@ -26,6 +34,7 @@
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_userinfo.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout/fragment_weather.xml" value="0.11911231884057971" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/mipmap-anydpi-v26/logo_icon.xml" value="0.1385" />
       </map>
     </option>
   </component>

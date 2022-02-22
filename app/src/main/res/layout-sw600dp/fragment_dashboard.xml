@@ -7,49 +7,63 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <ImageView
-        android:id="@+id/profile_avatar"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="272dp"
-        android:layout_centerHorizontal="true"
+        android:layout_height="200dp"
+        android:layout_marginBottom="192dp"
+        android:paddingBottom="10dp"
         android:src="@drawable/dashboard_background"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:paddingBottom="10dp"
+        android:src="@drawable/dashboard_background_2"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Daily Calories"
+        android:text="Calories:"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18"
-        tools:text="Daily Calories" />
+        app:layout_constraintVertical_bias="0.168"
+        android:textColor="#D3D3D3"
+        android:fontFamily="sans-serif-medium"
+        tools:text="Calories" />
+
     <TextView
         android:id="@+id/text_calories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23"/>
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.135" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -70,7 +84,7 @@
 
             <TextView
                 android:layout_width="172dp"
-                android:layout_height="16dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -79,8 +93,9 @@
                 android:text="BMI"
                 tools:text="BMI"
                 android:fontFamily="sans-serif-medium"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="#000000"/>
+                android:textColor="#D3D3D3" />
 
             <TextView
                 android:id="@+id/tv_BMI_data"
@@ -91,6 +106,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#FFFFFF"
                 android:text="HERE IS A PLACE HOLDER FOR BMI"
                 tools:text="BMI" />
         </LinearLayout>
@@ -100,7 +117,7 @@
 
             <TextView
                 android:layout_width="172dp"
-                android:layout_height="16dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -110,7 +127,8 @@
                 tools:text="BMR"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:textSize="15sp"
+                android:textColor="#D3D3D3"/>
 
             <TextView
                 android:id="@+id/tv_BMR_data"
@@ -121,6 +139,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#FFFFFF"
                 android:text="HERE IS A PLACE HOLDER FOR BMR"
                 tools:text="BMR" />
         </LinearLayout>
@@ -129,7 +149,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="188dp"
-        android:layout_height="88dp"
+        android:layout_height="125dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,25 +164,41 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center"
             android:text="Weight Change Per Week"
             tools:text="Weight Change Per Week" />
 
-        <EditText
-            android:id="@+id/et_weight"
-            android:layout_width="168dp"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="188dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/user_info_text_boarder"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="lbs"
-            android:imeOptions="actionDone"
-            android:inputType="numberSigned|numberDecimal"
-            tools:text="Weight" />
+            android:textColorHint="#F6404F"
+            app:boxStrokeColor="#30BCC9"
+            app:hintTextColor="#30BCC9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.364">
+
+            <EditText
+                android:id="@+id/et_weight"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/user_info_text_boarder"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="lbs"
+                android:imeOptions="actionDone"
+                android:inputType="numberSigned|numberDecimal"
+                tools:text="Weight" />
+
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
