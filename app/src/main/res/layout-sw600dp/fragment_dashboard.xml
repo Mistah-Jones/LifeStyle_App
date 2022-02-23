@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Calories:"
+        android:textAlignment="center"
+        android:textColor="#D3D3D3"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_calories"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.224"
+        tools:text="Calories" />
+
+    <TextView
+        android:id="@+id/text_calories"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="center"
+        android:textSize="75sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.574"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.313" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:columnCount="2"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.654">
+
+        <LinearLayout
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="130dp"
+            tools:layout_editor_absoluteY="748dp">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="BMI"
+                android:textColor="#D3D3D3"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="138dp"
+                tools:layout_editor_absoluteY="756dp"
+                tools:text="BMI" />
+
+            <TextView
+                android:id="@+id/tv_BMI_data"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:text="HERE IS A PLACE HOLDER FOR BMI"
+                android:textColor="#FFFFFF"
+                android:textSize="55sp"
+                tools:layout_editor_absoluteX="138dp"
+                tools:layout_editor_absoluteY="812dp"
+                tools:text="BMI" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@drawable/bmr_square"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="404dp"
+            tools:layout_editor_absoluteY="748dp">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="BMR"
+                android:textColor="#D3D3D3"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="412dp"
+                tools:layout_editor_absoluteY="756dp"
+                tools:text="BMR" />
+
+            <TextView
+                android:id="@+id/tv_BMR_data"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:text="HERE IS A PLACE HOLDER FOR BMR"
+                android:textColor="#FFFFFF"
+                android:textSize="55sp"
+                tools:layout_editor_absoluteX="412dp"
+                tools:layout_editor_absoluteY="812dp"
+                tools:text="BMR" />
+        </LinearLayout>
+    </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="350dp"
+        android:layout_height="175dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.868">
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Weight Change Per Week"
+            android:textSize="25dp"
+            tools:layout_editor_absoluteX="229dp"
+            tools:layout_editor_absoluteY="968dp"
+            tools:text="Weight Change Per Week" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:textColorHint="#F6404F"
+            app:boxStrokeColor="#30BCC9"
+            app:hintTextColor="#30BCC9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.87">
+
+            <EditText
+                android:id="@+id/et_weight"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/user_info_text_boarder"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="lbs"
+                android:imeOptions="actionDone"
+                android:inputType="numberSigned|numberDecimal"
+                android:textSize="50dp"
+                tools:layout_editor_absoluteX="231dp"
+                tools:layout_editor_absoluteY="1020dp"
+                tools:text="Weight" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

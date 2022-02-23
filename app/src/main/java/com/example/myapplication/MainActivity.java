@@ -2,7 +2,22 @@ package com.example.myapplication;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     private int mWeight, mHeight;
     private short mGender;
     private boolean mActivity;
+    private String mThumbnailString;
+    private Bitmap mThumbnail;
 
     private float bmi;
     private float bmr;
@@ -41,12 +58,18 @@ public class MainActivity extends AppCompatActivity
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.action_bar, null);
+        actionBar.setCustomView(view);
+
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
         navView.setBackground(null);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.fab, R.id.navigation_hike)
+                R.id.navigation_weather, R.id.fab, R.id.navigation_hike)
                 .build();
         navController = findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -59,7 +82,7 @@ public class MainActivity extends AppCompatActivity
                 // If the user has not input any data, take them to the user info fragment.
                 if (mName == null)
                 {
-                    navController.navigate(R.id.navigation_home);
+                    navController.navigate(R.id.navigation_userinfo);
                 }
                 else
                 {
@@ -85,6 +108,32 @@ public class MainActivity extends AppCompatActivity
         mWeight = Integer.parseInt(data[3]);
         mGender = Short.parseShort(data[4]);
         mActivity = Boolean.parseBoolean(data[5]);
+        mThumbnailString = data[6];
+
+        // get thumbnail image and decode it
+        byte [] encodeByte= Base64.decode(mThumbnailString,Base64.DEFAULT);
+        mThumbnail = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+
+        // convert thumbnail image to circle shaped version
+        Bitmap output = Bitmap.createBitmap(mThumbnail.getWidth(),
+                mThumbnail.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, mThumbnail.getWidth(), mThumbnail.getHeight());
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(mThumbnail.getWidth() / 2, mThumbnail.getHeight() / 2,
+                mThumbnail.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(mThumbnail, rect, rect, paint);
+        mThumbnail = output;
+
+        // convert circle thumbnail to drawable and assign to fab
+        Drawable d = new BitmapDrawable(getResources(), mThumbnail);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setImageDrawable(d);
 
         // BMI Calculation
         bmi = (float)mWeight / (float)Math.pow(mHeight,2);
@@ -126,6 +175,7 @@ public class MainActivity extends AppCompatActivity
         Bundle sentData = new Bundle();
         sentData.putFloat("BMI_DATA", bmi);
         sentData.putFloat("BMR_DATA", bmr);
+        sentData.putString("NAME_DATA", mName);
 
         navController.navigate(R.id.navigation_dashboard, sentData);
     }
