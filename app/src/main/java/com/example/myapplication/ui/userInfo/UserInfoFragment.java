@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -41,6 +40,7 @@ import java.util.Date;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentUserinfoBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class UserInfoFragment extends Fragment {
 
@@ -96,10 +96,6 @@ public class UserInfoFragment extends Fragment {
     // TODO: Break into helper methods!
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true); // remove the icon
-
         homeViewModel =
                 new ViewModelProvider(this).get(UserInfoViewModel.class);
 
@@ -121,14 +117,14 @@ public class UserInfoFragment extends Fragment {
         mIvThumbnail = (ImageView) root.findViewById(R.id.iv_pic);
 
         mButtonCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                //The button press should open a camera
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-            }
-            }
+                                             @Override
+                                             public void onClick(View v)
+                                             {
+                                                 //The button press should open a camera
+                                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                                 startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+                                             }
+                                         }
         );
 
         // The name Field
@@ -187,46 +183,80 @@ public class UserInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO Add warning messages about empty fields
+                boolean g= true, a= true, n= true, b= true, h= true, w = true;
 
                 // Get selected radio button from gender group
-                int genderSelectedId = radioGroupGender.getCheckedRadioButtonId();
-                RadioButton genderBttn = (RadioButton) root.findViewById(genderSelectedId);
-                if (genderBttn.getText().charAt(0) == 'M')
-                {
-                    genderSelectedId = 1;
-                }
-                else if (genderBttn.getText().charAt(0) == 'F')
-                {
-                    genderSelectedId = 2;
-                }
+                try {
+                    int genderSelectedId = radioGroupGender.getCheckedRadioButtonId();
+                    RadioButton genderBttn = (RadioButton) root.findViewById(genderSelectedId);
+                    if(genderBttn == null)
+                    {
+                        g = false;
+                    }
+                    if(g) {
+                        if (genderBttn.getText().charAt(0) == 'M') {
+                            genderSelectedId = 1;
+                        } else if (genderBttn.getText().charAt(0) == 'F') {
+                            genderSelectedId = 2;
+                        }
+                    }
 
-                // Get selected radio button from activity group
-                int activitySelectedId = radioGroupActivity.getCheckedRadioButtonId();
-                RadioButton activityBttn = (RadioButton) root.findViewById(activitySelectedId);
-                String isActive = "";
-                if (activityBttn.getText().charAt(0) == 'A')
-                {
-                    isActive = "True";
+                    // Get selected radio button from activity group
+                    int activitySelectedId = radioGroupActivity.getCheckedRadioButtonId();
+                    RadioButton activityBttn = (RadioButton) root.findViewById(activitySelectedId);
+                    String isActive = "";
+                    if(activityBttn == null){
+                        a = false;
+                    }
+                    if(a) {
+                        if (activityBttn.getText().charAt(0) == 'A') {
+                            isActive = "True";
+                        } else if (activityBttn.getText().charAt(0) == 'S') {
+                            isActive = "False";
+                        }
+                    }
+
+                    if(mEtName.getText().toString().equals("")) n = false;
+                    if(datePickerEText.getText().toString().equals("")) b = false;
+                    if(heightSP.getSelectedItem().toString().equals("")) h = false;
+                    if(weightPicker.getText().toString().equals("")) w = false;
+
+                    ByteArrayOutputStream baos =new  ByteArrayOutputStream();
+                    mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
+                    byte [] byteImage = baos.toByteArray();
+                    String userPhotoString = Base64.encodeToString(byteImage, Base64.DEFAULT);
+
+                    // Send the inputted data
+                    if(g && a && n && b && h && w) {
+                        String[] data = {mEtName.getText().toString(),
+                                datePickerEText.getText().toString(),
+                                "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
+                                weightPicker.getText().toString(),
+                                "" + genderSelectedId,
+                                isActive, userPhotoString};
+
+                        mDataPasser.onUserDataPass(data);
+                    }
+                    else{
+                        String mess = "Please enter ";
+                        if(!g) mess += "gender, ";
+                        if(!a) mess += "activity level, ";
+                        if(!n) mess += "name, ";
+                        if(!b) mess += "birthday, ";
+                        if(!h) mess += "height, ";
+                        if(!w) mess += "weight, ";
+
+                        mess = mess.substring(0, mess.length()-2);
+                        mess += ".";
+
+                        Log.d("userinfofragment_error", mess);
+                        Snackbar.make(root, mess, Snackbar.LENGTH_LONG).show();
+                    }
                 }
-                else if (activityBttn.getText().charAt(0) == 'S')
-                {
-                    isActive = "False";
+                catch (Exception e){
+                    Log.d("userinfofragment_error", e.getMessage());
+                    throw e;
                 }
-
-                ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-                mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
-                byte [] b=baos.toByteArray();
-                String temp= Base64.encodeToString(b, Base64.DEFAULT);
-
-                // Send the inputted data
-                String[] data = {mEtName.getText().toString(),
-                        datePickerEText.getText().toString(),
-                        "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
-                        weightPicker.getText().toString(),
-                        "" + genderSelectedId,
-                        isActive, temp};
-
-                mDataPasser.onUserDataPass(data);
             }
         });
 
