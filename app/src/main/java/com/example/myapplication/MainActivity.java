@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity
                     Bundle sentData = new Bundle();
                     sentData.putFloat("BMI_DATA", bmi);
                     sentData.putFloat("BMR_DATA", bmr);
+                    sentData.putString("NAME_DATA", mName);
 
                     navController.navigate(R.id.navigation_dashboard, sentData);
                 }
