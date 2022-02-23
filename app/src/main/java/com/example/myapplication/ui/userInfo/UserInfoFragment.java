@@ -38,6 +38,7 @@ import java.util.Date;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentUserinfoBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class UserInfoFragment extends Fragment {
 
@@ -180,39 +181,74 @@ public class UserInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO Add warning messages about empty fields
+                boolean g= true, a= true, n= true, b= true, h= true, w = true;
 
                 // Get selected radio button from gender group
                 try {
                     int genderSelectedId = radioGroupGender.getCheckedRadioButtonId();
                     RadioButton genderBttn = (RadioButton) root.findViewById(genderSelectedId);
-                    if (genderBttn.getText().charAt(0) == 'M') {
-                        genderSelectedId = 1;
-                    } else if (genderBttn.getText().charAt(0) == 'F') {
-                        genderSelectedId = 2;
+                    if(genderBttn == null)
+                    {
+                        g = false;
+                    }
+                    if(g) {
+                        if (genderBttn.getText().charAt(0) == 'M') {
+                            genderSelectedId = 1;
+                        } else if (genderBttn.getText().charAt(0) == 'F') {
+                            genderSelectedId = 2;
+                        }
                     }
 
                     // Get selected radio button from activity group
                     int activitySelectedId = radioGroupActivity.getCheckedRadioButtonId();
                     RadioButton activityBttn = (RadioButton) root.findViewById(activitySelectedId);
                     String isActive = "";
-                    if (activityBttn.getText().charAt(0) == 'A') {
-                        isActive = "True";
-                    } else if (activityBttn.getText().charAt(0) == 'S') {
-                        isActive = "False";
+                    if(activityBttn == null){
+                        a = false;
+                    }
+                    if(a) {
+                        if (activityBttn.getText().charAt(0) == 'A') {
+                            isActive = "True";
+                        } else if (activityBttn.getText().charAt(0) == 'S') {
+                            isActive = "False";
+                        }
                     }
 
-                    // Send the inputted data
-                    String[] data = {mEtName.getText().toString(),
-                            datePickerEText.getText().toString(),
-                            "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
-                            weightPicker.getText().toString(),
-                            "" + genderSelectedId,
-                            isActive};
+                    if(mEtName.getText().toString().equals("")) n = false;
+                    if(datePickerEText.getText().toString().equals("")) b = false;
+                    if(heightSP.getSelectedItem().toString().equals("")) h = false;
+                    if(weightPicker.getText().toString().equals("")) w = false;
 
-                    mDataPasser.onUserDataPass(data);
+                    // Send the inputted data
+                    if(g && a && n && b && h && w) {
+                        String[] data = {mEtName.getText().toString(),
+                                datePickerEText.getText().toString(),
+                                "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
+                                weightPicker.getText().toString(),
+                                "" + genderSelectedId,
+                                isActive};
+
+                        mDataPasser.onUserDataPass(data);
+                    }
+                    else{
+                        String mess = "Please enter ";
+                        if(!g) mess += "gender, ";
+                        if(!a) mess += "activity level, ";
+                        if(!n) mess += "name, ";
+                        if(!b) mess += "birthday, ";
+                        if(!h) mess += "height, ";
+                        if(!w) mess += "weight, ";
+
+                        mess = mess.substring(0, mess.length()-2);
+                        mess += ".";
+
+                        Log.d("userinfofragment_error", mess);
+                        Snackbar.make(root, mess, Snackbar.LENGTH_LONG).show();
+                    }
                 }
                 catch (Exception e){
-                    Log.d("nathan_error", "don't send");
+                    Log.d("userinfofragment_error", e.getMessage());
+                    throw e;
                 }
             }
         });
