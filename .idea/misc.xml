@@ -19,9 +19,11 @@
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/ic_wave.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/logo_icon_background.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/spinner_outline.xml" value="0.1" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_dashboard.xml" value="0.2239858906525573" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_hike.xml" value="0.2239858906525573" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_userinfo.xml" value="0.6" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp/fragment_hike.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp/fragment_userinfo.xml" value="0.14666666666666667" />
