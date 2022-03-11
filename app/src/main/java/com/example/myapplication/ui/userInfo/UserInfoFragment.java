@@ -70,8 +70,13 @@ public class UserInfoFragment extends Fragment {
     // Weight information
     private EditText weightPicker;
 
+    // City information
+    private EditText mEtCity;
+
     //Define a bitmap
     Bitmap mThumbnailImage;
+
+    // The data passer between the fragment and the main activity
     OnUserDataPass mDataPasser;
 
     //Define a request code for the camera
@@ -176,6 +181,9 @@ public class UserInfoFragment extends Fragment {
         // The Activity Level Field
         RadioGroup radioGroupActivity = (RadioGroup) root.findViewById(R.id.rg_activity);
 
+        // The city Field
+        mEtCity = (EditText) root.findViewById(R.id.et_city);
+
         // The Submit Button
         Button submitBttn = root.findViewById(R.id.button_submit);
         submitBttn.setOnClickListener(new View.OnClickListener()
@@ -183,7 +191,7 @@ public class UserInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO Add warning messages about empty fields
-                boolean g= true, a= true, n= true, b= true, h= true, w = true;
+                boolean g= true, a= true, n= true, b= true, h= true, w = true, c = true;
 
                 // Get selected radio button from gender group
                 try {
@@ -220,6 +228,7 @@ public class UserInfoFragment extends Fragment {
                     if(datePickerEText.getText().toString().equals("")) b = false;
                     if(heightSP.getSelectedItem().toString().equals("")) h = false;
                     if(weightPicker.getText().toString().equals("")) w = false;
+                    if(mEtCity.getText().toString().equals("")) c = false;
 
                     ByteArrayOutputStream baos =new  ByteArrayOutputStream();
                     mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
@@ -227,13 +236,15 @@ public class UserInfoFragment extends Fragment {
                     String userPhotoString = Base64.encodeToString(byteImage, Base64.DEFAULT);
 
                     // Send the inputted data
-                    if(g && a && n && b && h && w) {
+                    if(g && a && n && b && h && w && c) {
                         String[] data = {mEtName.getText().toString(),
                                 datePickerEText.getText().toString(),
                                 "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
                                 weightPicker.getText().toString(),
                                 "" + genderSelectedId,
-                                isActive, userPhotoString};
+                                isActive, userPhotoString,
+                                mEtCity.getText().toString()
+                        };
 
                         mDataPasser.onUserDataPass(data);
                     }
@@ -245,6 +256,7 @@ public class UserInfoFragment extends Fragment {
                         if(!b) mess += "birthday, ";
                         if(!h) mess += "height, ";
                         if(!w) mess += "weight, ";
+                        if(!c) mess += "city, ";
 
                         mess = mess.substring(0, mess.length()-2);
                         mess += ".";

@@ -18,21 +18,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter location:"
-            android:layout_weight="0"
-            />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             tools:text="City,Country"
             android:layout_weight="1"
-            android:id="@+id/et_location"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/button_submit"
+            android:id="@+id/tv_location"
             />
     </LinearLayout>
 

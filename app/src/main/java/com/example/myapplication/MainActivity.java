@@ -28,6 +28,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.ui.dashboard.DashboardFragment;
 import com.example.myapplication.ui.userInfo.UserInfoFragment;
+import com.example.myapplication.ui.weather.WeatherFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,9 +37,11 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class MainActivity extends AppCompatActivity
-                implements UserInfoFragment.OnUserDataPass{
+                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnGoalDataPass {
 
     private ActivityMainBinding binding;
+
+    // User Information
     private String mName = null;
     private int mAge;
     private int mWeight, mHeight;
@@ -45,9 +49,14 @@ public class MainActivity extends AppCompatActivity
     private boolean mActivity;
     private String mThumbnailString;
     private Bitmap mThumbnail;
+    private String mCity;
 
+    // Calculated Information
     private float bmi;
     private float bmr;
+
+    // Weight Goal Data
+    private float mWeightChange;
 
     private NavController navController;
 
@@ -76,29 +85,11 @@ public class MainActivity extends AppCompatActivity
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // If the user has not input any data, take them to the user info fragment.
-                if (mName == null)
-                {
-                    navController.navigate(R.id.navigation_userinfo);
-                }
-                else
-                {
-                    // Instantiate the fragment
-                    DashboardFragment dashboardFragment = new DashboardFragment();
+        fab.setOnClickListener(buttonClickListener);
 
-                    // Send data to fragment
-                    Bundle sentData = new Bundle();
-                    sentData.putFloat("BMI_DATA", bmi);
-                    sentData.putFloat("BMR_DATA", bmr);
-                    sentData.putString("NAME_DATA", mName);
+        BottomNavigationItemView weather = findViewById(R.id.navigation_weather);
+        weather.setOnClickListener(buttonClickListener);
 
-                    navController.navigate(R.id.navigation_dashboard, sentData);
-                }
-            }
-        });
     }
 
     @Override
@@ -110,6 +101,7 @@ public class MainActivity extends AppCompatActivity
         mGender = Short.parseShort(data[4]);
         mActivity = Boolean.parseBoolean(data[5]);
         mThumbnailString = data[6];
+        mCity = data[7];
 
         // get thumbnail image and decode it
         byte [] encodeByte= Base64.decode(mThumbnailString,Base64.DEFAULT);
@@ -181,6 +173,12 @@ public class MainActivity extends AppCompatActivity
         navController.navigate(R.id.navigation_dashboard, sentData);
     }
 
+
+    @Override
+    public void onGoalDataPass(String[] data) {
+        mWeightChange = Float.parseFloat(data[0]);
+    }
+
     // TODO: Update API version minimum to 26 to use LocalDate
     private int getAge(String birthDate)
     {
@@ -193,4 +191,44 @@ public class MainActivity extends AppCompatActivity
 
         return p.getYears();
     }
+
+    private View.OnClickListener buttonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.fab:
+                    // If the user has not input any data, take them to the user info fragment.
+                    if (mName == null) {
+                        navController.navigate(R.id.navigation_userinfo);
+                    } else {
+                        // Instantiate the fragment
+                        DashboardFragment dashboardFragment = new DashboardFragment();
+
+                        // Send data to fragment
+                        Bundle sentData = new Bundle();
+                        sentData.putFloat("BMI_DATA", bmi);
+                        sentData.putFloat("BMR_DATA", bmr);
+                        sentData.putString("NAME_DATA", mName);
+                        sentData.putFloat("WEIGHT_CHANGE_DATA", mWeightChange);
+
+                        navController.navigate(R.id.navigation_dashboard, sentData);
+                    }
+                    break;
+                case R.id.navigation_weather:
+                    // If the user has not input any data, we don't want to open the weather fragment
+                    // (We need the city for this fragment to function)
+                    if (mName != null)
+                    {
+                        // Instantiate the fragment
+                        WeatherFragment weatherFragment = new WeatherFragment();
+
+                        // Send data to fragment
+                        Bundle sentData = new Bundle();
+                        sentData.putString("CITY_DATA", mCity);
+
+                        navController.navigate(R.id.navigation_weather, sentData);
+                    }
+            }
+        }
+    };
 }
