@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.dashboard;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Debug;
 import android.view.KeyEvent;
@@ -11,12 +13,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
+import com.example.myapplication.ui.userInfo.UserInfoFragment;
 
 public class DashboardFragment extends Fragment {
 
@@ -26,11 +31,17 @@ public class DashboardFragment extends Fragment {
 
     private float bmr;
     private float bmi;
+    private String name;
 
     private EditText weightLossPicker;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        // TODO - remove icon from action bar - not working even though it works for UserInfoFragment
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false); // remove the icon
+
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -41,12 +52,15 @@ public class DashboardFragment extends Fragment {
         TextView tvBMI = (TextView) root.findViewById(R.id.tv_BMI_data);
         TextView tvBMR = (TextView) root.findViewById(R.id.tv_BMR_data);
         tvCalories = (TextView) root.findViewById(R.id.text_calories);
+        TextView tvName = (TextView) root.findViewById(R.id.tv_name_data);
 
         try {
             bmi = getArguments().getFloat("BMI_DATA");
             bmr = getArguments().getFloat("BMR_DATA");
-            tvBMI.setText("" + bmi);
-            tvBMR.setText("" + bmr);
+            name = getArguments().getString("NAME_DATA");
+            tvBMI.setText("" + Math.round(bmi));
+            tvBMR.setText("" + Math.round(bmr));
+            tvName.setText("Hello " + name + "!");
         } catch (Exception e) {
             String error = e.getMessage();
         }
@@ -73,6 +87,6 @@ public class DashboardFragment extends Fragment {
     private float calculateTargetCalories(float weightChangePerWeek)
     {
         float calories = weightChangePerWeek + (weightChangePerWeek * 3500f) / 7f;
-        return bmr + calories;
+        return Math.round(Math.round(bmr) + Math.round(calories));
     }
 }
