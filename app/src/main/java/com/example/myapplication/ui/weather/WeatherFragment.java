@@ -22,7 +22,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.weatherbackend.JSONWeatherUtils;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 
@@ -31,16 +30,16 @@ import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class WeatherFragment extends Fragment implements View.OnClickListener {
+public class WeatherFragment extends Fragment {
 
     private WeatherViewModel mViewModel;
 
-    private EditText mEtLocation;
+    private TextView mTvLocation;
     private TextView mTvTemp;
     private TextView mTvPress;
     private TextView mTvHum;
     private WeatherData mWeatherData;
-    private Button mBtSubmit;
+    private String city;
     private static FetchWeatherTask mFetchWeatherTask = new FetchWeatherTask();
 
     public static WeatherFragment newInstance() {
@@ -54,10 +53,20 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         // Get the edit / view texts
-        mEtLocation = view.findViewById(R.id.et_location);
+        mTvLocation = view.findViewById(R.id.tv_location);
         mTvTemp = (TextView) view.findViewById(R.id.tv_temp);
         mTvPress = (TextView) view.findViewById(R.id.tv_pressure);
         mTvHum = (TextView) view.findViewById(R.id.tv_humidity);
+
+        // Get the data passed from the Main Activity
+        try {
+            city = getArguments().getString("CITY_DATA");
+            mTvLocation.setText(city);
+        } catch (Exception e) {
+            String error = e.getMessage();
+        }
+
+        // Check if there is any saved data from the fragment's current life cycle
         if(savedInstanceState!=null) {
             String temp = savedInstanceState.getString("tvTemp");
             String hum = savedInstanceState.getString("tvHum");
@@ -69,22 +78,15 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
             if (press != null)
                 mTvPress.setText(""+press);
         }
-        mFetchWeatherTask.setWeakReference(this); //make sure we're always pointing to current version of fragment
-        mBtSubmit = (Button) view.findViewById(R.id.button_submit);
-        mBtSubmit.setOnClickListener(this);
-        return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.button_submit:{
-                //Get the string from the edit text and sanitize the input
-                String inputFromEt = mEtLocation.getText().toString().replace(' ','&');
-                loadWeatherData(inputFromEt);
-            }
-            break;
+        // If there is no weather data saved, fetch it
+        else
+        {
+            String inputFromEt = mTvLocation.getText().toString().replace(' ','&');
+            loadWeatherData(inputFromEt);
         }
+        mFetchWeatherTask.setWeakReference(this); //make sure we're always pointing to current version of fragment
+
+        return view;
     }
 
     @Override

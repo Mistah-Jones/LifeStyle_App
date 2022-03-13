@@ -32,8 +32,12 @@ public class DashboardFragment extends Fragment {
     private float bmr;
     private float bmi;
     private String name;
+    private float weightChange;
 
     private EditText weightLossPicker;
+
+    // The data passer between the fragment and the main activity
+    DashboardFragment.OnGoalDataPass mDataPasser;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,33 +52,59 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //Get the text views
+        //Get the text views / edit texts
         TextView tvBMI = (TextView) root.findViewById(R.id.tv_BMI_data);
         TextView tvBMR = (TextView) root.findViewById(R.id.tv_BMR_data);
         tvCalories = (TextView) root.findViewById(R.id.text_calories);
         TextView tvName = (TextView) root.findViewById(R.id.tv_name_data);
+        weightLossPicker = root.findViewById(R.id.et_weight);
 
         try {
             bmi = getArguments().getFloat("BMI_DATA");
             bmr = getArguments().getFloat("BMR_DATA");
             name = getArguments().getString("NAME_DATA");
+            weightChange = getArguments().getFloat("WEIGHT_CHANGE_DATA");
+
             tvBMI.setText("" + Math.round(bmi));
             tvBMR.setText("" + Math.round(bmr));
             tvName.setText("Hello " + name + "!");
+            tvCalories.setText("" + calculateTargetCalories(weightChange));
+            weightLossPicker.setText("" + weightChange);
+
         } catch (Exception e) {
             String error = e.getMessage();
         }
 
-        weightLossPicker = root.findViewById(R.id.et_weight);
         weightLossPicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                float weightChange = Float.parseFloat(textView.getText().toString());
+                weightChange = Float.parseFloat(textView.getText().toString());
                 tvCalories.setText("" + calculateTargetCalories(weightChange));
+
+                // Send the data to the main activity to store
+                String[] data = {"" + weightChange};
+                mDataPasser.onGoalDataPass(data);
+
                 return true;
             }
         });
         return root;
+    }
+
+    //Callback interface
+    public interface OnGoalDataPass{
+        public void onGoalDataPass(String[] data);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try{
+            mDataPasser = (DashboardFragment.OnGoalDataPass) context;
+        }catch(ClassCastException e){
+            throw new ClassCastException(context.toString() + " must implement OnUserDataPass");
+        }
     }
 
     @Override

@@ -114,7 +114,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
+        app:layout_constraintVertical_bias="0.91" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -202,6 +202,30 @@
             android:imeOptions="actionDone"
             android:inputType="textPersonName"
             tools:text="Enter name here" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColorHint="#F6404F"
+        app:boxStrokeColor="#30BCC9"
+        app:hintTextColor="#30BCC9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811">
+
+        <EditText
+            android:id="@+id/et_city"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter City Name"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            tools:text="Enter city and country" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
