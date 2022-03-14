@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -262,7 +264,14 @@ public class UserInfoFragment extends Fragment {
                         mess += ".";
 
                         Log.d("userinfofragment_error", mess);
-                        Snackbar.make(root, mess, Snackbar.LENGTH_LONG).show();
+                        CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
+                        cl.bringToFront();
+                        Snackbar snackbar = Snackbar.make(cl, mess, Snackbar.LENGTH_LONG);
+                        View view = snackbar.getView();
+                        CoordinatorLayout.LayoutParams params=(CoordinatorLayout.LayoutParams)view.getLayoutParams();
+                        params.gravity = Gravity.TOP;
+                        view.setLayoutParams(params);
+                        snackbar.show();
                     }
                 }
                 catch (Exception e){
