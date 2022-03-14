@@ -1,27 +1,23 @@
 package com.example.myapplication.ui.dashboard;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Debug;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
-import com.example.myapplication.ui.userInfo.UserInfoFragment;
 
 public class DashboardFragment extends Fragment {
 
@@ -85,9 +81,13 @@ public class DashboardFragment extends Fragment {
                 String[] data = {"" + weightChange};
                 mDataPasser.onGoalDataPass(data);
 
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(weightLossPicker.getWindowToken(), 0);
+
                 return true;
             }
         });
+
         return root;
     }
 
