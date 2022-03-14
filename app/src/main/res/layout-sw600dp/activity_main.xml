@@ -24,8 +24,8 @@
             android:background="@android:color/transparent"
             app:menu="@menu/bottom_nav_menu"
             app:itemRippleColor="@color/white"
-            app:itemIconTint="@drawable/drawer_item_color"
-            app:itemTextColor="@drawable/drawer_item_color"/>
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"/>
 
 
     </com.google.android.material.bottomappbar.BottomAppBar>
@@ -38,7 +38,8 @@
         app:backgroundTint="#30BCC9"
         app:rippleColor="@color/white"
         app:layout_anchor="@id/bottomAppBar"
-        app:tint="@drawable/drawer_item_color"/>
+        app:maxImageSize="56dp"
+        app:tint="@null"/>
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"
