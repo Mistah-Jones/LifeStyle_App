@@ -29,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -268,6 +269,9 @@ public class UserInfoFragment extends Fragment {
                         cl.bringToFront();
                         Snackbar snackbar = Snackbar.make(cl, mess, Snackbar.LENGTH_LONG);
                         View view = snackbar.getView();
+                        view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
+                        TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+                        tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
                         CoordinatorLayout.LayoutParams params=(CoordinatorLayout.LayoutParams)view.getLayoutParams();
                         params.gravity = Gravity.TOP;
                         view.setLayoutParams(params);

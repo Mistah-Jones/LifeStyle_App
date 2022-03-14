@@ -1,7 +1,9 @@
 package com.example.myapplication.ui.dashboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +15,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class DashboardFragment extends Fragment {
 
@@ -72,6 +77,7 @@ public class DashboardFragment extends Fragment {
         }
 
         weightLossPicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 weightChange = Float.parseFloat(textView.getText().toString());
@@ -83,6 +89,24 @@ public class DashboardFragment extends Fragment {
 
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(weightLossPicker.getWindowToken(), 0);
+
+                if (weightChange > 2 | weightChange < -2) {
+
+                    String mess = "This is an unhealthy goal. It is recommended to stay in the range of losing/gaining no more than 2 pounds.";
+
+                    CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
+                    cl.bringToFront();
+                    Snackbar snackbar = Snackbar.make(cl, mess, Snackbar.LENGTH_LONG);
+                    View view = snackbar.getView();
+                    view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
+                    TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+                    tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                    tv.setMaxLines(4);
+                    CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+                    params.gravity = Gravity.TOP;
+                    view.setLayoutParams(params);
+                    snackbar.show();
+                }
 
                 return true;
             }
