@@ -5,65 +5,221 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.weather.WeatherFragment">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/ll"
-        android:layout_alignParentLeft="true"
-        >
+        android:layout_marginTop="36dp"
+        android:layout_weight="1"
+        android:textSize="120sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="City,Country" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="800sp"
+        android:layout_height="200sp"
+        android:background="@drawable/bmr_square"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_location"
+        app:layout_constraintStart_toStartOf="@+id/tv_location"
+        app:layout_constraintTop_toBottomOf="@+id/tv_location"
+        app:layout_constraintVertical_bias="0.071">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="City,Country"
-            android:layout_weight="1"
-            android:id="@+id/tv_location"
-            />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="Temperature"
+            android:textSize="50sp"
+            tools:layout_editor_absoluteX="227dp"
+            tools:layout_editor_absoluteY="158dp"
+            tools:text="Temperature" />
+
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="80sp"
+            tools:layout_editor_absoluteX="109dp"
+            tools:layout_editor_absoluteY="188dp"
+            tools:text="65 F" />
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_temp"
+
+    <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll"
-        android:layout_alignParentLeft="true"
-        />
+        android:columnCount="1"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="0.166">
 
-    <TextView
-        android:id="@+id/tv_pressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_temp"
-        android:layout_alignParentLeft="true"
-        />
+        <LinearLayout
+            android:id="@+id/linearLayoutMinTemp"
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            android:layout_width="800sp"
+            android:gravity="center">
 
-    <TextView
-        android:id="@+id/tv_humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_pressure"
-        android:layout_alignParentLeft="true"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="227dp"
+                tools:layout_editor_absoluteY="158dp"
+                tools:text="Low"
+                android:text="Low"
+                android:textSize="50sp"/>
 
-    <TextView
-        android:id="@+id/tv_wind_speed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_humidity"
-        android:layout_alignParentLeft="true"
-        />
+            <TextView
+                android:id="@+id/tv_min_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="60sp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="109dp"
+                tools:layout_editor_absoluteY="188dp"
+                tools:text="3 C" />
 
-    <TextView
-        android:id="@+id/tv_wind_deg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_wind_speed"
-        android:layout_alignParentLeft="true"
-        />
+        </LinearLayout>
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/linearLayoutMaxTemp"
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            android:layout_width="800sp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="227dp"
+                tools:layout_editor_absoluteY="158dp"
+                tools:text="High"
+                android:text="High"
+                android:textSize="50sp"/>
+
+            <TextView
+                android:id="@+id/tv_max_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="60sp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="109dp"
+                tools:layout_editor_absoluteY="188dp"
+                tools:text="4 C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutPressure"
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            android:layout_width="800sp"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                tools:layout_editor_absoluteX="227dp"
+                tools:layout_editor_absoluteY="158dp"
+                tools:text="Pressure"
+                android:text="Pressure"
+                android:textSize="50sp"/>
+
+            <TextView
+                android:id="@+id/tv_pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="60sp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="109dp"
+                tools:layout_editor_absoluteY="188dp"
+                tools:text="100 hPa" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutHumidity"
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            android:layout_width="800sp"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                tools:layout_editor_absoluteX="227dp"
+                tools:layout_editor_absoluteY="158dp"
+                tools:text="Humidity"
+                android:text="Humidity"
+                android:textSize="50sp"/>
+
+            <TextView
+                android:id="@+id/tv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="60sp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="109dp"
+                tools:layout_editor_absoluteY="188dp"
+                tools:text="70 %" />
+
+        </LinearLayout>
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
