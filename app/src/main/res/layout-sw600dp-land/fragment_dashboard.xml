@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment" >
+    tools:context=".ui.dashboard.DashboardFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/tv_name_data"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -25,52 +25,51 @@
         android:text="Name:"
         android:textAlignment="center"
         android:textColor="#D3D3D3"
-        android:textSize="20sp"
+        android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.085"
         tools:text="Name" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="80dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Calories:"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textColor="#D3D3D3"
+        android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168"
-        android:textColor="#D3D3D3"
-        android:fontFamily="sans-serif-medium"
+        app:layout_constraintVertical_bias="0.284"
         tools:text="Calories" />
 
     <TextView
         android:id="@+id/text_calories"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-medium"
         android:textAlignment="center"
-        android:textSize="50sp"
+        android:textSize="75sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="bold"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintVertical_bias="0.54" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -78,107 +77,110 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:columnCount="2"
+        android:useDefaultMargins="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56"
-        android:useDefaultMargins="true"
-        >
+        app:layout_constraintVertical_bias="0.026">
 
-        <LinearLayout android:orientation="vertical"
-            android:background="@drawable/bmi_square">
+        <LinearLayout
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="172dp"
-                android:layout_height="20dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="BMI"
-                tools:text="BMI"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="15sp"
+                android:textColor="#D3D3D3"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                android:textColor="#D3D3D3" />
+                tools:text="BMI" />
 
             <TextView
                 android:id="@+id/tv_BMI_data"
-                android:layout_width="172dp"
-                android:layout_height="80dp"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="35sp"
-                android:textColor="#FFFFFF"
                 android:text="HERE IS A PLACE HOLDER FOR BMI"
+                android:textColor="#FFFFFF"
+                android:textSize="55sp"
                 tools:text="BMI" />
         </LinearLayout>
 
-        <LinearLayout android:orientation="vertical"
-            android:background="@drawable/bmr_square">
+        <LinearLayout
+            android:background="@drawable/bmr_square"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="172dp"
-                android:layout_height="20dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="BMR"
-                tools:text="BMR"
-                android:fontFamily="sans-serif-medium"
+                android:textColor="#D3D3D3"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#D3D3D3"/>
+                tools:text="BMR" />
 
             <TextView
                 android:id="@+id/tv_BMR_data"
-                android:layout_width="172dp"
-                android:layout_height="80dp"
+                android:layout_width="250dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="35sp"
-                android:textColor="#FFFFFF"
                 android:text="HERE IS A PLACE HOLDER FOR BMR"
+                android:textColor="#FFFFFF"
+                android:textSize="55sp"
                 tools:text="BMR" />
         </LinearLayout>
     </GridLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="189dp"
-        android:layout_height="134dp"
+        android:layout_width="350dp"
+        android:layout_height="175dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.826"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.80">
+        app:layout_constraintVertical_bias="0.574">
 
         <TextView
-            android:layout_width="172dp"
-            android:layout_height="30dp"
+            android:layout_width="350dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="12dp"
             android:gravity="center"
             android:text="Weight Change Per Week"
+            android:textSize="25dp"
             tools:text="Weight Change Per Week" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="188dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:textColorHint="#F6404F"
             app:boxStrokeColor="#30BCC9"
@@ -192,7 +194,7 @@
 
             <EditText
                 android:id="@+id/et_weight"
-                android:layout_width="168dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
@@ -202,6 +204,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="lbs"
+                android:textSize="50dp"
                 android:imeOptions="actionDone"
                 android:inputType="numberSigned|numberDecimal"
                 tools:text="Weight" />
