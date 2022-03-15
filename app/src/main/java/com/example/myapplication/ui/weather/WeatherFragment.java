@@ -38,6 +38,8 @@ public class WeatherFragment extends Fragment {
     private TextView mTvTemp;
     private TextView mTvPress;
     private TextView mTvHum;
+    private TextView mTvMaxTemp;
+    private TextView mTvMinTemp;
     private WeatherData mWeatherData;
     private String city;
     private static FetchWeatherTask mFetchWeatherTask = new FetchWeatherTask();
@@ -57,6 +59,8 @@ public class WeatherFragment extends Fragment {
         mTvTemp = (TextView) view.findViewById(R.id.tv_temp);
         mTvPress = (TextView) view.findViewById(R.id.tv_pressure);
         mTvHum = (TextView) view.findViewById(R.id.tv_humidity);
+        mTvMaxTemp = (TextView) view.findViewById(R.id.tv_max_temp);
+        mTvMinTemp = (TextView) view.findViewById(R.id.tv_min_temp);
 
         // Get the data passed from the Main Activity
         try {
@@ -71,12 +75,18 @@ public class WeatherFragment extends Fragment {
             String temp = savedInstanceState.getString("tvTemp");
             String hum = savedInstanceState.getString("tvHum");
             String press = savedInstanceState.getString("tvPress");
+            String tmax = savedInstanceState.getString("tvMaxTemp");
+            String tmin = savedInstanceState.getString("tvMinTemp");
             if (temp != null)
                 mTvTemp.setText(""+temp);
             if (hum != null)
                 mTvHum.setText(""+hum);
             if (press != null)
                 mTvPress.setText(""+press);
+            if (tmax != null)
+                mTvPress.setText(""+tmax);
+            if (tmin != null)
+                mTvPress.setText(""+tmin);
         }
         // If there is no weather data saved, fetch it
         else
@@ -95,6 +105,8 @@ public class WeatherFragment extends Fragment {
         outState.putString("tvTemp",mTvTemp.getText().toString());
         outState.putString("tvHum",mTvHum.getText().toString());
         outState.putString("tvPress",mTvPress.getText().toString());
+        outState.putString("tvMaxTemp",mTvMaxTemp.getText().toString());
+        outState.putString("tvMinTemp",mTvMinTemp.getText().toString());
     }
 
     @Override
@@ -149,6 +161,8 @@ public class WeatherFragment extends Fragment {
                             localRef.mTvTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getTemp() - 273.15) + " C");
                             localRef.mTvHum.setText("" + localRef.mWeatherData.getCurrentCondition().getHumidity() + "%");
                             localRef.mTvPress.setText("" + localRef.mWeatherData.getCurrentCondition().getPressure() + " hPa");
+                            localRef.mTvMaxTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getMaxTemp() - 273.15) + " C");
+                            localRef.mTvMinTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getMinTemp() - 273.15) + " C");
                         }
                     }
                 }

@@ -22,13 +22,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:background="@drawable/bmr_square"
         android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tv_location"
-        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="@+id/tv_location"
         app:layout_constraintTop_toBottomOf="@+id/tv_location"
         app:layout_constraintVertical_bias="0.071">
@@ -41,10 +41,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
+            android:text="Temperature"
             tools:layout_editor_absoluteX="227dp"
             tools:layout_editor_absoluteY="158dp"
-            tools:text="Temperature"
-            android:text="Temperature"/>
+            tools:text="Temperature" />
 
         <TextView
             android:id="@+id/tv_temp"
@@ -54,8 +54,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:textSize="35sp"
             android:textColor="#FFFFFF"
+            android:textSize="35sp"
             tools:layout_editor_absoluteX="109dp"
             tools:layout_editor_absoluteY="188dp"
             tools:text="65 F" />
@@ -76,9 +76,11 @@
         app:layout_constraintVertical_bias="0.166">
 
         <LinearLayout
-            android:id="@+id/linearLayoutPressure"
+            android:id="@+id/linearLayoutMinTemp"
             android:background="@drawable/bmi_square"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_width="150sp"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,6 +90,77 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                tools:layout_editor_absoluteX="227dp"
+                tools:layout_editor_absoluteY="158dp"
+                tools:text="Low"
+                android:text="Low"/>
+
+            <TextView
+                android:id="@+id/tv_min_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="109dp"
+                tools:layout_editor_absoluteY="188dp"
+                tools:text="3 C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutMaxTemp"
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            android:layout_width="150sp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="227dp"
+                tools:layout_editor_absoluteY="158dp"
+                tools:text="High"
+                android:text="High"/>
+
+            <TextView
+                android:id="@+id/tv_max_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="109dp"
+                tools:layout_editor_absoluteY="188dp"
+                tools:text="4 C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutPressure"
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical"
+            android:layout_width="150sp"
+            android:gravity="center" >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 tools:layout_editor_absoluteX="227dp"
                 tools:layout_editor_absoluteY="158dp"
                 tools:text="Pressure"
@@ -105,14 +178,16 @@
                 android:textColor="#FFFFFF"
                 tools:layout_editor_absoluteX="109dp"
                 tools:layout_editor_absoluteY="188dp"
-                tools:text="Pressure" />
+                tools:text="100 hPa" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayoutHumidity"
             android:background="@drawable/bmi_square"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_width="150sp"
+            android:gravity="center" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -121,7 +196,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:gravity="center"
                 tools:layout_editor_absoluteX="227dp"
                 tools:layout_editor_absoluteY="158dp"
                 tools:text="Humidity"
@@ -139,41 +213,7 @@
                 android:textColor="#FFFFFF"
                 tools:layout_editor_absoluteX="109dp"
                 tools:layout_editor_absoluteY="188dp"
-                tools:text="Humidity" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayoutWindSpeed"
-            android:background="@drawable/bmi_square"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                tools:layout_editor_absoluteX="227dp"
-                tools:layout_editor_absoluteY="158dp"
-                tools:text="Wind Speed"
-                android:text="Wind Speed" />
-
-            <TextView
-                android:id="@+id/tv_wind_speed"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:textSize="35sp"
-                android:textColor="#FFFFFF"
-                tools:layout_editor_absoluteX="109dp"
-                tools:layout_editor_absoluteY="188dp"
-                tools:text="Wind" />
+                tools:text="70 %" />
 
         </LinearLayout>
     </GridLayout>
