@@ -18,6 +18,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="City,Country" />
 
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:src="@drawable/ic_sun"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -73,14 +82,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.166">
+        app:layout_constraintVertical_bias="0.55">
 
         <LinearLayout
             android:id="@+id/linearLayoutMinTemp"
-            android:background="@drawable/bmi_square"
-            android:orientation="vertical"
             android:layout_width="800sp"
-            android:gravity="center">
+            android:background="@drawable/bmi_square"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,11 +99,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:text="Low"
+                android:textSize="50sp"
                 tools:layout_editor_absoluteX="227dp"
                 tools:layout_editor_absoluteY="158dp"
-                tools:text="Low"
-                android:text="Low"
-                android:textSize="50sp"/>
+                tools:text="Low" />
 
             <TextView
                 android:id="@+id/tv_min_temp"
@@ -104,8 +113,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="60sp"
                 android:textColor="#FFFFFF"
+                android:textSize="60sp"
                 tools:layout_editor_absoluteX="109dp"
                 tools:layout_editor_absoluteY="188dp"
                 tools:text="3 C" />
@@ -114,10 +123,10 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutMaxTemp"
-            android:background="@drawable/bmi_square"
-            android:orientation="vertical"
             android:layout_width="800sp"
-            android:gravity="center">
+            android:background="@drawable/bmi_square"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,11 +136,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:text="High"
+                android:textSize="50sp"
                 tools:layout_editor_absoluteX="227dp"
                 tools:layout_editor_absoluteY="158dp"
-                tools:text="High"
-                android:text="High"
-                android:textSize="50sp"/>
+                tools:text="High" />
 
             <TextView
                 android:id="@+id/tv_max_temp"
@@ -141,8 +150,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="60sp"
                 android:textColor="#FFFFFF"
+                android:textSize="60sp"
                 tools:layout_editor_absoluteX="109dp"
                 tools:layout_editor_absoluteY="188dp"
                 tools:text="4 C" />
@@ -151,10 +160,10 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutPressure"
-            android:background="@drawable/bmi_square"
-            android:orientation="vertical"
             android:layout_width="800sp"
-            android:gravity="center" >
+            android:background="@drawable/bmi_square"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -163,11 +172,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:text="Pressure"
+                android:textSize="50sp"
                 tools:layout_editor_absoluteX="227dp"
                 tools:layout_editor_absoluteY="158dp"
-                tools:text="Pressure"
-                android:text="Pressure"
-                android:textSize="50sp"/>
+                tools:text="Pressure" />
 
             <TextView
                 android:id="@+id/tv_pressure"
@@ -177,8 +186,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="60sp"
                 android:textColor="#FFFFFF"
+                android:textSize="60sp"
                 tools:layout_editor_absoluteX="109dp"
                 tools:layout_editor_absoluteY="188dp"
                 tools:text="100 hPa" />
@@ -187,10 +196,10 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutHumidity"
-            android:background="@drawable/bmi_square"
-            android:orientation="vertical"
             android:layout_width="800sp"
-            android:gravity="center" >
+            android:background="@drawable/bmi_square"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -199,11 +208,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:text="Humidity"
+                android:textSize="50sp"
                 tools:layout_editor_absoluteX="227dp"
                 tools:layout_editor_absoluteY="158dp"
-                tools:text="Humidity"
-                android:text="Humidity"
-                android:textSize="50sp"/>
+                tools:text="Humidity" />
 
             <TextView
                 android:id="@+id/tv_humidity"
@@ -213,8 +222,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="60sp"
                 android:textColor="#FFFFFF"
+                android:textSize="60sp"
                 tools:layout_editor_absoluteX="109dp"
                 tools:layout_editor_absoluteY="188dp"
                 tools:text="70 %" />

@@ -16,6 +16,13 @@ public class JSONWeatherUtils {
         JSONObject jsonMain = jsonObject.getJSONObject("main");
         currentCondition.setHumidity(jsonMain.getInt("humidity"));
         currentCondition.setPressure(jsonMain.getInt("pressure"));
+
+
+        JSONArray jsonWeather = jsonObject.getJSONArray("weather");
+        // Get the weather condition: ex("Rain")
+        String condition = jsonWeather.getJSONObject(0).getString("main");
+        currentCondition.setCondition(condition);
+
         weatherData.setCurrentCondition(currentCondition);
 
         //Get the temperature, wind and cloud data.
@@ -26,6 +33,7 @@ public class JSONWeatherUtils {
         temperature.setMinTemp(jsonMain.getDouble("temp_min"));
         temperature.setTemp(jsonMain.getDouble("temp"));
         weatherData.setTemperature(temperature);
+
 
         return weatherData;
     }

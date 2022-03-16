@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -40,6 +41,7 @@ public class WeatherFragment extends Fragment {
     private TextView mTvHum;
     private TextView mTvMaxTemp;
     private TextView mTvMinTemp;
+    private ImageView mIvIcon;
     private WeatherData mWeatherData;
     private String city;
     private static FetchWeatherTask mFetchWeatherTask = new FetchWeatherTask();
@@ -61,6 +63,7 @@ public class WeatherFragment extends Fragment {
         mTvHum = (TextView) view.findViewById(R.id.tv_humidity);
         mTvMaxTemp = (TextView) view.findViewById(R.id.tv_max_temp);
         mTvMinTemp = (TextView) view.findViewById(R.id.tv_min_temp);
+        mIvIcon = (ImageView) view.findViewById(R.id.iv_icon);
 
         // Get the data passed from the Main Activity
         try {
@@ -77,6 +80,7 @@ public class WeatherFragment extends Fragment {
             String press = savedInstanceState.getString("tvPress");
             String tmax = savedInstanceState.getString("tvMaxTemp");
             String tmin = savedInstanceState.getString("tvMinTemp");
+            String icon = savedInstanceState.getString("ivIcon");
             if (temp != null)
                 mTvTemp.setText(""+temp);
             if (hum != null)
@@ -87,6 +91,8 @@ public class WeatherFragment extends Fragment {
                 mTvPress.setText(""+tmax);
             if (tmin != null)
                 mTvPress.setText(""+tmin);
+            if (icon != null)
+                SetIcon(mIvIcon, icon);
         }
         // If there is no weather data saved, fetch it
         else
@@ -107,6 +113,7 @@ public class WeatherFragment extends Fragment {
         outState.putString("tvPress",mTvPress.getText().toString());
         outState.putString("tvMaxTemp",mTvMaxTemp.getText().toString());
         outState.putString("tvMinTemp",mTvMinTemp.getText().toString());
+        outState.putString("ivIcon", mWeatherData.getCurrentCondition().getCondition());
     }
 
     @Override
@@ -163,10 +170,20 @@ public class WeatherFragment extends Fragment {
                             localRef.mTvPress.setText("" + localRef.mWeatherData.getCurrentCondition().getPressure() + " hPa");
                             localRef.mTvMaxTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getMaxTemp() - 273.15) + " C");
                             localRef.mTvMinTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getMinTemp() - 273.15) + " C");
+                            SetIcon(localRef.mIvIcon, localRef.mWeatherData.getCurrentCondition().getCondition());
                         }
                     }
                 }
             });
+        }
+    }
+    private static void SetIcon(ImageView mIvIcon, String icon) {
+        switch(icon) {
+            case "Thunderstorm": { mIvIcon.setImageResource(R.drawable.ic_lightning); break; }
+            case "Snow": { mIvIcon.setImageResource(R.drawable.ic_snow); break; }
+            case "Rain": { mIvIcon.setImageResource(R.drawable.ic_rain); break; }
+            case "Clear": { mIvIcon.setImageResource(R.drawable.ic_sun); break; }
+            default: { mIvIcon.setImageResource(R.drawable.ic_cloud); }
         }
     }
 }
