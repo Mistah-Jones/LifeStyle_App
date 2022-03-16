@@ -1,5 +1,7 @@
 package com.example.myapplication.weatherbackend;
 
+import android.widget.ImageView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,10 +21,11 @@ public class JSONWeatherUtils {
 
 
         JSONArray jsonWeather = jsonObject.getJSONArray("weather");
-        // Get the weather condition: ex("Rain")
+        // Get the weather condition: eg("Rain")
         String condition = jsonWeather.getJSONObject(0).getString("main");
         currentCondition.setCondition(condition);
-
+        String iconCode = jsonWeather.getJSONObject(0).getString("icon");
+        currentCondition.setIconCode(iconCode);
         weatherData.setCurrentCondition(currentCondition);
 
         //Get the temperature, wind and cloud data.

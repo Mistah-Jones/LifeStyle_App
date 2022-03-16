@@ -1,7 +1,11 @@
 package com.example.myapplication.weatherbackend;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Debug;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +18,9 @@ public class NetworkUtils {
     private static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
     private static String APPIDQUERY = "&appid=";
     private static final String app_id="dbc96dcde7ca653643a7586eee5ec911";
+
+    private static String BASE_ICON_URL_START = "https://openweathermap.org/img/wn/";
+    private static String BASE_ICON_URL_END = "@2x.png";
 
     public static URL buildURLFromString(String location){
         URL myURL = null;
@@ -49,5 +56,32 @@ public class NetworkUtils {
         }
         // Should never run
         return null;
+    }
+
+    // Method edited from Stack Overflow:
+    // https://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
+    public static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = BASE_ICON_URL_START + urls[0] + BASE_ICON_URL_END;
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

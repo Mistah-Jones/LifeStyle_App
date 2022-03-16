@@ -3,6 +3,9 @@ package com.example.myapplication.ui.weather;
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +29,7 @@ import com.example.myapplication.weatherbackend.WeatherData;
 
 import org.json.JSONException;
 
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
@@ -80,7 +84,7 @@ public class WeatherFragment extends Fragment {
             String press = savedInstanceState.getString("tvPress");
             String tmax = savedInstanceState.getString("tvMaxTemp");
             String tmin = savedInstanceState.getString("tvMinTemp");
-            String icon = savedInstanceState.getString("ivIcon");
+            Bitmap icon = savedInstanceState.getParcelable("ivIcon");
             if (temp != null)
                 mTvTemp.setText(""+temp);
             if (hum != null)
@@ -92,7 +96,7 @@ public class WeatherFragment extends Fragment {
             if (tmin != null)
                 mTvPress.setText(""+tmin);
             if (icon != null)
-                SetIcon(mIvIcon, icon);
+                mIvIcon.setImageBitmap(icon);
         }
         // If there is no weather data saved, fetch it
         else
@@ -113,7 +117,7 @@ public class WeatherFragment extends Fragment {
         outState.putString("tvPress",mTvPress.getText().toString());
         outState.putString("tvMaxTemp",mTvMaxTemp.getText().toString());
         outState.putString("tvMinTemp",mTvMinTemp.getText().toString());
-        outState.putString("ivIcon", mWeatherData.getCurrentCondition().getCondition());
+        outState.putParcelable("ivIcon", mWeatherData.getCurrentCondition().getIcon());
     }
 
     @Override
@@ -170,13 +174,26 @@ public class WeatherFragment extends Fragment {
                             localRef.mTvPress.setText("" + localRef.mWeatherData.getCurrentCondition().getPressure() + " hPa");
                             localRef.mTvMaxTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getMaxTemp() - 273.15) + " C");
                             localRef.mTvMinTemp.setText("" + Math.round(localRef.mWeatherData.getTemperature().getMinTemp() - 273.15) + " C");
-                            SetIcon(localRef.mIvIcon, localRef.mWeatherData.getCurrentCondition().getCondition());
+
+                            try {
+                                new NetworkUtils.DownloadImageTask((ImageView) localRef.mIvIcon)
+                                        .execute(localRef.mWeatherData.getCurrentCondition().getIconCode());
+                                // Save Bitmap to WeatherData class
+                                localRef.mWeatherData.getCurrentCondition().setIcon(localRef.mIvIcon.getDrawingCache());
+                            }
+                            // If getting image from web fails, set image using a vector
+                            catch (Exception e){
+                                SetIcon(localRef.mIvIcon, localRef.mWeatherData.getCurrentCondition().getCondition());
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
             });
         }
     }
+
+    // Sets the weather imageview icon to one of five basic vectors
     private static void SetIcon(ImageView mIvIcon, String icon) {
         switch(icon) {
             case "Thunderstorm": { mIvIcon.setImageResource(R.drawable.ic_lightning); break; }
