@@ -1,5 +1,7 @@
 package com.example.myapplication.weatherbackend;
 
+import android.graphics.Bitmap;
+
 public class WeatherData {
     private LocationData mLocationData;
     private CurrentCondition mCurrentCondition = new CurrentCondition();
@@ -14,7 +16,8 @@ public class WeatherData {
         private long mWeatherId;
         private String mCondition;
         private String mDescr;
-        private String mIcon;
+        private String mIconCode;
+        private Bitmap mIcon;
 
 
         private double mPressure;
@@ -38,12 +41,14 @@ public class WeatherData {
         public void setDescr(String descr) {
             mDescr = descr;
         }
-        public String getIcon() {
-            return mIcon;
+        public String getIconCode() {
+            return mIconCode;
         }
-        public void setIcon(String icon) {
-            mIcon = icon;
+        public void setIconCode(String iconCode) {
+            mIconCode = iconCode;
         }
+        public  Bitmap getIcon() { return mIcon; }
+        public void setIcon(Bitmap icon) { mIcon = icon;}
         public double getPressure() {
             return mPressure;
         }
