@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -193,8 +194,7 @@ public class UserInfoFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                // TODO Add warning messages about empty fields
-                boolean g= true, a= true, n= true, b= true, h= true, w = true, c = true;
+                boolean g= true, a= true, n= true, b= true, h= true, w = true, c = true, p = true;
 
                 // Get selected radio button from gender group
                 try {
@@ -210,6 +210,7 @@ public class UserInfoFragment extends Fragment {
                         } else if (genderBttn.getText().charAt(0) == 'F') {
                             genderSelectedId = 2;
                         }
+
                     }
 
                     // Get selected radio button from activity group
@@ -227,19 +228,19 @@ public class UserInfoFragment extends Fragment {
                         }
                     }
 
+                    if(mThumbnailImage == null) p = false;
                     if(mEtName.getText().toString().equals("")) n = false;
                     if(datePickerEText.getText().toString().equals("")) b = false;
                     if(heightSP.getSelectedItem().toString().equals("")) h = false;
                     if(weightPicker.getText().toString().equals("")) w = false;
                     if(mEtCity.getText().toString().equals("")) c = false;
 
-                    ByteArrayOutputStream baos =new  ByteArrayOutputStream();
-                    mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
-                    byte [] byteImage = baos.toByteArray();
-                    String userPhotoString = Base64.encodeToString(byteImage, Base64.DEFAULT);
-
                     // Send the inputted data
-                    if(g && a && n && b && h && w && c) {
+                    if(g && a && n && b && h && w && c && p) {
+                        ByteArrayOutputStream baos =new  ByteArrayOutputStream();
+                        mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
+                        byte [] byteImage = baos.toByteArray();
+                        String userPhotoString = Base64.encodeToString(byteImage, Base64.DEFAULT);
                         String[] data = {mEtName.getText().toString(),
                                 datePickerEText.getText().toString(),
                                 "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
@@ -252,7 +253,8 @@ public class UserInfoFragment extends Fragment {
                         mDataPasser.onUserDataPass(data);
                     }
                     else{
-                        String mess = "Please enter ";
+                        String mess = "Please include the following: ";
+                        if(!p) mess += "photo, ";
                         if(!g) mess += "gender, ";
                         if(!a) mess += "activity level, ";
                         if(!n) mess += "name, ";
@@ -284,6 +286,43 @@ public class UserInfoFragment extends Fragment {
                 }
             }
         });
+
+        try {
+
+            mEtName.setText(getArguments().getString("NAME_DATA"));
+            weightPicker.setText("" + getArguments().getInt("WEIGHT_DATA"));
+            datePickerEText.setText(getArguments().getString("BIRTH_DATA"));
+            mEtCity.setText(getArguments().getString("LOCATION_DATA"));
+
+            //set gender
+            short gen = getArguments().getShort("GENDER_DATA");
+            if (gen == 1) {
+                radioGroupGender.check(R.id.rb_male);
+            } else {
+                radioGroupGender.check(R.id.rb_female);
+            }
+
+            //set activity level
+            if (getArguments().getBoolean("ACTIVITY_DATA")){
+                radioGroupActivity.check(R.id.rb_active);
+            } else {
+                radioGroupActivity.check(R.id.rb_sedentary);
+            }
+
+            //convert height to array index lmao
+            int height = getArguments().getInt("HEIGHT_DATA");
+            heightSP.setSelection(height-36);
+
+            String img = getArguments().getString("THUMBNAIL_DATA");
+            byte [] encodeByte= Base64.decode(img ,Base64.DEFAULT);
+            mThumbnailImage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            mIvThumbnail.setImageBitmap(mThumbnailImage);
+
+
+
+        } catch (Exception e) {
+            Log.d("NATE", e.getMessage());
+        }
 
         return root;
     }

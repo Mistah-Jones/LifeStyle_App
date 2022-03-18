@@ -19,6 +19,7 @@ import android.text.Layout;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -37,13 +38,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class MainActivity extends AppCompatActivity
-                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnGoalDataPass {
+                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnGoalDataPass, DashboardFragment.OnEdit {
 
     private ActivityMainBinding binding;
 
     // User Information
     private String mName = null;
     private int mAge;
+    private String mBirthDay;
     private int mWeight, mHeight;
     private short mGender;
     private boolean mActivity;
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onUserDataPass(String[] data) {
         mName = data[0];
+        mBirthDay = data[1];
         mAge = getAge(data[1]);
         mHeight = Integer.parseInt(data[2]);
         mWeight = Integer.parseInt(data[3]);
@@ -169,6 +172,7 @@ public class MainActivity extends AppCompatActivity
         sentData.putFloat("BMI_DATA", bmi);
         sentData.putFloat("BMR_DATA", bmr);
         sentData.putString("NAME_DATA", mName);
+        sentData.putShort("GENDER_DATA", mGender);
 
         navController.navigate(R.id.navigation_dashboard, sentData);
     }
@@ -177,6 +181,24 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onGoalDataPass(String[] data) {
         mWeightChange = Float.parseFloat(data[0]);
+    }
+
+    @Override
+    public void onEdit() {
+        UserInfoFragment userInfoFragment = new UserInfoFragment();
+
+        Bundle sentData = new Bundle();
+        sentData.putString("NAME_DATA", mName);
+        sentData.putShort("GENDER_DATA", mGender);
+        sentData.putString("BIRTH_DATA", mBirthDay);
+        sentData.putInt("WEIGHT_DATA", mWeight);
+        sentData.putInt("HEIGHT_DATA", mHeight);
+        sentData.putBoolean("ACTIVITY_DATA", mActivity);
+        sentData.putString("LOCATION_DATA", mCity);
+        sentData.putString("THUMBNAIL_DATA", mThumbnailString);
+
+        navController.navigate(R.id.navigation_userinfo, sentData);
+
     }
 
     // TODO: Update API version minimum to 26 to use LocalDate
@@ -209,7 +231,9 @@ public class MainActivity extends AppCompatActivity
                         sentData.putFloat("BMI_DATA", bmi);
                         sentData.putFloat("BMR_DATA", bmr);
                         sentData.putString("NAME_DATA", mName);
+                        sentData.putShort("GENDER_DATA", mGender);
                         sentData.putFloat("WEIGHT_CHANGE_DATA", mWeightChange);
+
 
                         navController.navigate(R.id.navigation_dashboard, sentData);
                     }
@@ -217,8 +241,7 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_weather:
                     // If the user has not input any data, we don't want to open the weather fragment
                     // (We need the city for this fragment to function)
-                    if (mName != null)
-                    {
+                    if (mName != null) {
                         // Instantiate the fragment
                         WeatherFragment weatherFragment = new WeatherFragment();
 
