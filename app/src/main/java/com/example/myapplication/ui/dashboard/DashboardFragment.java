@@ -93,7 +93,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 weightChange = Float.parseFloat(textView.getText().toString());
-                tvCalories.setText("" + calculateTargetCalories(weightChange));
+                calorieGoal = calculateTargetCalories(weightChange);
+                tvCalories.setText("" + calorieGoal);
 
                 // Send the data to the main activity to store
                 String[] data = {"" + weightChange};
@@ -107,7 +108,7 @@ public class DashboardFragment extends Fragment {
                 boolean cf = (calorieGoal < 1000 && gender == 2);
                 if (wc | cm | cf) {
 
-                    String mess = "This is an unhealthy goal.";
+                    String mess = "This is an unhealthy goal. ";
                     if(cm) {
                         if(wc) mess += "It is recommended to consume no less than 1200 calories for men and to avoid weight changes of +/- 2 pounds.";
                         else mess += "It is recommended to consume no less than 1200 calories for men";
