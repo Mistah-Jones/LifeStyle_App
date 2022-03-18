@@ -195,7 +195,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Edit User"
         android:textAlignment="center"
-        android:textColor="#D3D3D3"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
