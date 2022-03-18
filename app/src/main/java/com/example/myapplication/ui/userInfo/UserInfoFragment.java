@@ -235,6 +235,15 @@ public class UserInfoFragment extends Fragment {
                     if(weightPicker.getText().toString().equals("")) w = false;
                     if(mEtCity.getText().toString().equals("")) c = false;
 
+                    //check if birth date is in the right form
+                    String[] values = datePickerEText.getText().toString().split("/");
+                    if(values.length != 3 ||
+                            Integer.parseInt(values[0]) > 12 ||
+                            Integer.parseInt(values[0]) <= 0 ||
+                            Integer.parseInt(values[1]) > 31 ||
+                            Integer.parseInt(values[1]) <= 0 ||
+                            values[2].length() != 4 ) b = false;
+
                     // Send the inputted data
                     if(g && a && n && b && h && w && c && p) {
                         ByteArrayOutputStream baos =new  ByteArrayOutputStream();
