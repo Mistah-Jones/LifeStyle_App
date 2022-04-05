@@ -1,15 +1,13 @@
-package com.example.myapplication.ui.weather;
+package com.example.myapplication.models;
 
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.ImageView;
 
 import androidx.core.os.HandlerCompat;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.myapplication.views.WeatherFragment;
 import com.example.myapplication.weatherbackend.JSONWeatherUtils;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;

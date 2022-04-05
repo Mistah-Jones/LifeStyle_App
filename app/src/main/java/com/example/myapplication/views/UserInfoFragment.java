@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.userInfo;
+package com.example.myapplication.views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,8 +32,6 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,7 +46,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class UserInfoFragment extends Fragment {
 
-    private UserInfoViewModel homeViewModel;
+    //private UserInfoViewModel homeViewModel;
     private FragmentUserinfoBinding binding;
 
     // Name Information
@@ -105,19 +103,19 @@ public class UserInfoFragment extends Fragment {
     // TODO: Break into helper methods!
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(UserInfoViewModel.class);
+        //homeViewModel =
+                //new ViewModelProvider(this).get(UserInfoViewModel.class);
 
         binding = FragmentUserinfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+   //     });
 
         // The Profile Picture Field
         //The button press should open a camera

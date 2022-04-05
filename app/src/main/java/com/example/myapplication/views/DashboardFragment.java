@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.dashboard;
+package com.example.myapplication.views;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -21,18 +21,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
-import com.example.myapplication.ui.userInfo.UserInfoFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 public class DashboardFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    //private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
     private TextView tvCalories;
 
@@ -57,8 +54,8 @@ public class DashboardFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false); // remove the icon
 
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+//        dashboardViewModel =
+//                new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

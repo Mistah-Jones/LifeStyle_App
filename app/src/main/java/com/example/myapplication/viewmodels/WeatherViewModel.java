@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.weather;
+package com.example.myapplication.viewmodels;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.myapplication.models.WeatherRepository;
 import com.example.myapplication.weatherbackend.WeatherData;
 
 public class WeatherViewModel extends AndroidViewModel {
