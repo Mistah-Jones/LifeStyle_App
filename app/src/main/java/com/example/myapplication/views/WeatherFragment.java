@@ -16,13 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.viewmodels.WeatherViewModel;
+import com.example.myapplication.viewmodels.MainViewModel;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;
 
 public class WeatherFragment extends Fragment {
 
-    private WeatherViewModel mViewModel;
+    private MainViewModel mViewModel;
 
     private TextView mTvLocation;
     private TextView mTvTemp;
@@ -53,10 +53,10 @@ public class WeatherFragment extends Fragment {
         mIvIcon = (ImageView) view.findViewById(R.id.iv_icon);
 
         // Create View Model
-        mViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         // Set Observer
-        mViewModel.getData().observe(getViewLifecycleOwner(), observer);
+        mViewModel.getWeatherData().observe(getViewLifecycleOwner(), observer);
 
         // Get the data passed from the Main Activity
         try {

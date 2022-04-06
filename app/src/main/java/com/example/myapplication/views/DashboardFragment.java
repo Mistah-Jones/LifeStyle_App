@@ -21,15 +21,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
+import com.example.myapplication.viewmodels.MainViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 public class DashboardFragment extends Fragment {
 
-    //private DashboardViewModel dashboardViewModel;
+    private MainViewModel mViewModel;
     private FragmentDashboardBinding binding;
     private TextView tvCalories;
 
@@ -54,8 +56,7 @@ public class DashboardFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false); // remove the icon
 
-//        dashboardViewModel =
-//                new ViewModelProvider(this).get(DashboardViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -71,13 +72,14 @@ public class DashboardFragment extends Fragment {
             bmi = getArguments().getFloat("BMI_DATA");
             bmr = getArguments().getFloat("BMR_DATA");
             name = getArguments().getString("NAME_DATA");
+
             gender = getArguments().getShort("GENDER_DATA");
             weightChange = getArguments().getFloat("WEIGHT_CHANGE_DATA");
             calorieGoal = calculateTargetCalories(weightChange);
 
             tvBMI.setText("" + Math.round(bmi));
             tvBMR.setText("" + Math.round(bmr));
-            tvName.setText("Hello " + name + "!");
+            tvName.setText("Hello " + mViewModel.getCurrUserData().getValue().getName() + "!");
             tvCalories.setText("" + calorieGoal);
             weightLossPicker.setText("" + weightChange);
 
