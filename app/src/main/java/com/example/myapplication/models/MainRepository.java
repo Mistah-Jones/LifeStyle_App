@@ -19,14 +19,19 @@ import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+
 public class MainRepository {
     private static MainRepository instance;
     private final MutableLiveData<WeatherData> jsonData = new MutableLiveData<WeatherData>();
     private final MutableLiveData<UserInfo> currUserData = new MutableLiveData<UserInfo>();
     private String mLocation;
     private UserInfo mCurrUser;
+    private LifestyleDoa mDao;
 
     private MainRepository(Application application) {
+        RoomDB db = RoomDB.getDatabase(application);
+        mDao = db.lifestyleDao();
         if (mLocation != null)
             loadWeatherData();
         if(mCurrUser != null)
@@ -50,6 +55,18 @@ public class MainRepository {
                             String thumbnailString){
         mCurrUser = new UserInfo(weight, birthdate, location, height, name, gender, activity, thumbnailString);
         loadCurrUserData();
+        //Insert user into DB
+        insert();
+    }
+
+    private void insert() {
+        if(mCurrUser != null) {
+            //TODO: insert unique user ID here
+            UserTable userTable = new UserTable(1, mCurrUser);
+            RoomDB.databaseExecutor.execute(() -> {
+                mDao.insert(userTable);
+            });
+        }
     }
 
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
@@ -86,9 +103,7 @@ public class MainRepository {
 
         private void postToMainThread(String jsonWeatherData)
         {
-            mainThreadHandler.post(new Runnable() {
-                @Override
-                public void run() {
+            mainThreadHandler.post(() -> {
                     if (jsonWeatherData != null) {
                         try {
                             jsonData.setValue(JSONWeatherUtils.getWeatherData(jsonWeatherData));
@@ -96,7 +111,6 @@ public class MainRepository {
                             e.printStackTrace();
                         }
                     }
-                }
             });
         }
     }
