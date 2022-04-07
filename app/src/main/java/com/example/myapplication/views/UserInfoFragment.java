@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.userInfo;
+package com.example.myapplication.views;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +32,6 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.ByteArrayOutputStream;
@@ -44,11 +43,13 @@ import java.util.Date;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentUserinfoBinding;
+import com.example.myapplication.viewmodels.MainViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 public class UserInfoFragment extends Fragment {
 
-    private UserInfoViewModel homeViewModel;
+    private MainViewModel mViewModel;
+
     private FragmentUserinfoBinding binding;
 
     // Name Information
@@ -105,19 +106,18 @@ public class UserInfoFragment extends Fragment {
     // TODO: Break into helper methods!
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(UserInfoViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         binding = FragmentUserinfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+   //     });
 
         // The Profile Picture Field
         //The button press should open a camera
@@ -126,21 +126,19 @@ public class UserInfoFragment extends Fragment {
         mIvThumbnail = (ImageView) root.findViewById(R.id.iv_pic);
 
         mButtonCamera.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v)
-                                             {
-                                                 //The button press should open a camera
-                                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                                 startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-                                             }
-                                         }
-        );
+             @Override
+             public void onClick(View v)
+             {
+                 //The button press should open a camera
+                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                 startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+             }
+         });
 
         // The name Field
         mEtName = (EditText) root.findViewById(R.id.et_name);
 
         // The Birthday Field
-        //TODO: Add spinner instead of calendar?
         datePickerEText=(EditText) root.findViewById(R.id.et_date);
         datePickerEText.setInputType(InputType.TYPE_NULL);
         datePickerEText.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +257,15 @@ public class UserInfoFragment extends Fragment {
                                 mEtCity.getText().toString()
                         };
 
+
+                        mViewModel.setCurrUser(Integer.parseInt(weightPicker.getText().toString()),
+                                datePickerEText.getText().toString(),
+                                mEtCity.getText().toString(),
+                                convertHeightToInches(heightSP.getSelectedItem().toString()),
+                                mEtName.getText().toString(),
+                                (short)genderSelectedId,
+                                Boolean.parseBoolean(isActive),
+                                userPhotoString);
                         mDataPasser.onUserDataPass(data);
                     }
                     else{

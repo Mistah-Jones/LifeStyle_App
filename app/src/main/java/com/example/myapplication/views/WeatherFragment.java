@@ -1,11 +1,7 @@
-package com.example.myapplication.ui.weather;
+package com.example.myapplication.views;
 
-import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,33 +9,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.weatherbackend.JSONWeatherUtils;
+import com.example.myapplication.viewmodels.MainViewModel;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;
 
-import org.json.JSONException;
-
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.net.URL;
-import java.util.Observable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class WeatherFragment extends Fragment {
 
-    private WeatherViewModel mViewModel;
+    private MainViewModel mViewModel;
 
     private TextView mTvLocation;
     private TextView mTvTemp;
@@ -70,10 +53,10 @@ public class WeatherFragment extends Fragment {
         mIvIcon = (ImageView) view.findViewById(R.id.iv_icon);
 
         // Create View Model
-        mViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         // Set Observer
-        mViewModel.getData().observe(getViewLifecycleOwner(), observer);
+        mViewModel.getWeatherData().observe(getViewLifecycleOwner(), observer);
 
         // Get the data passed from the Main Activity
         try {

@@ -1,15 +1,13 @@
-package com.example.myapplication.ui.weather;
+package com.example.myapplication.models;
 
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.ImageView;
 
 import androidx.core.os.HandlerCompat;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.myapplication.views.WeatherFragment;
 import com.example.myapplication.weatherbackend.JSONWeatherUtils;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;
@@ -21,31 +19,47 @@ import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class WeatherRepository {
-    private static WeatherRepository instance;
+public class MainRepository {
+    private static MainRepository instance;
     private final MutableLiveData<WeatherData> jsonData = new MutableLiveData<WeatherData>();
+    private final MutableLiveData<UserInfo> currUserData = new MutableLiveData<UserInfo>();
     private String mLocation;
+    private UserInfo mCurrUser;
 
-    private WeatherRepository(Application application) {
+    private MainRepository(Application application) {
         if (mLocation != null)
-            loadData();
+            loadWeatherData();
+        if(mCurrUser != null)
+            loadCurrUserData();
     }
 
-    public static synchronized WeatherRepository getInstance(Application application) {
+    public static synchronized MainRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new WeatherRepository(application);
+            instance = new MainRepository(application);
         }
         return instance;
     }
 
     public void setLocation(String location) {
         mLocation = location;
-        loadData();
+        loadWeatherData();
     }
 
-    public MutableLiveData<WeatherData> getData() { return  jsonData; }
+    public void setCurrUser(int weight, String birthdate, String location,
+                            int height, String name, short gender, boolean activity,
+                            String thumbnailString){
+        mCurrUser = new UserInfo(weight, birthdate, location, height, name, gender, activity, thumbnailString);
+        loadCurrUserData();
+    }
 
-    private void loadData() { new FetchWeatherTask().execute(mLocation); }
+    public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
+    public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
+
+    private void loadWeatherData() { new FetchWeatherTask().execute(mLocation); }
+
+    //TODO: update this later to run in background, calc bmi, bmr, age, etc
+    private void loadCurrUserData() {
+        currUserData.setValue(mCurrUser);}
 
     private class FetchWeatherTask{
         WeakReference<WeatherFragment> weatherFragmentWeakReference;
@@ -88,3 +102,4 @@ public class WeatherRepository {
     }
 
 }
+
