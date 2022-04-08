@@ -31,6 +31,7 @@ public class MainViewModel extends AndroidViewModel {
     {
         mMainRepository.setCurrUser(weight, birthdate, location, height, name, gender, activity, thumbnailString);
     }
+    public void setCurrUser(String userID) { mMainRepository.setCurrUser(userID); }
 
     public  LiveData<WeatherData> getWeatherData() { return jsonData; }
     public LiveData<UserInfo> getCurrUserData() {return currUserData; }

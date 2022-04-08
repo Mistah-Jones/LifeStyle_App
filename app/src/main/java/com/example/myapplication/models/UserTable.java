@@ -10,7 +10,7 @@ public class UserTable {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "UserID")
-    private int UserID;
+    private String UserID;
 
     @NonNull
     @ColumnInfo(name = "Weight")
@@ -44,7 +44,7 @@ public class UserTable {
     @ColumnInfo(name = "Thumbnail")
     private String Thumbnail;
 
-    public UserTable(@NonNull int UserID, @NonNull int Weight, @NonNull int Height,
+    public UserTable(@NonNull String UserID, @NonNull int Weight, @NonNull int Height,
                      @NonNull String Birthdate, @NonNull String Location, @NonNull String Name,
                      @NonNull short Sex, @NonNull boolean Activity, @NonNull String Thumbnail) {
         this.UserID = UserID;
@@ -58,7 +58,7 @@ public class UserTable {
         this.Thumbnail = Thumbnail;
     }
 
-    public void setUserID(int UserID) {
+    public void setUserID(String UserID) {
         this.UserID = UserID;
     }
 
@@ -94,7 +94,7 @@ public class UserTable {
         this.Thumbnail = Thumbnail;
     }
 
-    public int getUserID() { return UserID; }
+    public String getUserID() { return UserID; }
 
     public int getWeight() { return Weight; }
 

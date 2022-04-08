@@ -13,5 +13,5 @@ public interface LifestyleDoa {
     void deleteAll();
 
     @Query("SELECT * from user_table WHERE UserID = :userID")
-    LiveData<UserTable> getUser(int userID);
+    LiveData<UserTable> getUser(String userID);
 }

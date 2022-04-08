@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.core.os.HandlerCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.views.WeatherFragment;
@@ -28,6 +29,8 @@ public class MainRepository {
     private String mLocation;
     private UserInfo mCurrUser;
     private LifestyleDoa mDao;
+    private String mUserID;
+    private LiveData<UserTable> currUserTable;
 
     private MainRepository(Application application) {
         RoomDB db = RoomDB.getDatabase(application);
@@ -59,18 +62,30 @@ public class MainRepository {
         insert(weight, height, birthdate, location, name, sex, activity, thumbnailString);
     }
 
+    public void setCurrUser(String userID) {
+        // Populates currUserTable LiveData Object
+        mUserID = userID;
+        selectUser(userID);
+    }
+
     private void insert(int weight, int height, String birthdate, String location, String name, short sex, boolean activity, String thumbnailString) {
         if(mCurrUser != null) {
-            //TODO: insert unique user ID here
-            UserTable userTable = new UserTable(1, weight, height, birthdate, location, name, sex, activity, thumbnailString);
+            UserTable userTable = new UserTable(mUserID, weight, height, birthdate, location, name, sex, activity, thumbnailString);
             RoomDB.databaseExecutor.execute(() -> {
                 mDao.insert(userTable);
             });
         }
     }
 
+    private void selectUser(String userID) {
+        RoomDB.databaseExecutor.execute(() -> {
+            currUserTable = mDao.getUser(userID);
+        });
+    }
+
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
+    public LiveData<UserTable> getCurrUserTable() { return currUserTable; }
 
     private void loadWeatherData() { new FetchWeatherTask().execute(mLocation); }
 
