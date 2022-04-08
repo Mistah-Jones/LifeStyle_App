@@ -6,7 +6,7 @@ import androidx.room.*;
 
 @Dao
 public interface LifestyleDoa {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(UserTable userTable);
 
     @Query("DELETE FROM user_table")

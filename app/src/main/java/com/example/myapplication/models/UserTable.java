@@ -12,13 +12,103 @@ public class UserTable {
     @ColumnInfo(name = "UserID")
     private int UserID;
 
-    //TODO: Break up user data into individual column fields, non sql type
     @NonNull
-    @ColumnInfo(name = "UserData")
-    private UserInfo UserData;
+    @ColumnInfo(name = "Weight")
+    private int Weight;
 
-    public UserTable(@NonNull int UserID, @NonNull UserInfo UserData) {
+    @NonNull
+    @ColumnInfo(name = "Height")
+    private int Height;
+
+    @NonNull
+    @ColumnInfo(name = "Birthdate")
+    private String Birthdate;
+
+    @NonNull
+    @ColumnInfo(name = "Location")
+    private String Location;
+
+    @NonNull
+    @ColumnInfo(name = "Name")
+    private String Name;
+
+    @NonNull
+    @ColumnInfo(name = "Sex")
+    private short Sex;
+
+    @NonNull
+    @ColumnInfo(name = "Activity")
+    private boolean Activity;
+
+    @NonNull
+    @ColumnInfo(name = "Thumbnail")
+    private String Thumbnail;
+
+    public UserTable(@NonNull int UserID, @NonNull int Weight, @NonNull int Height,
+                     @NonNull String Birthdate, @NonNull String Location, @NonNull String Name,
+                     @NonNull short Sex, @NonNull boolean Activity, @NonNull String Thumbnail) {
         this.UserID = UserID;
-        this.UserData = UserData;
+        this.Weight = Weight;
+        this.Height = Height;
+        this.Birthdate = Birthdate;
+        this.Location = Location;
+        this.Name = Name;
+        this.Sex = Sex;
+        this.Activity = Activity;
+        this.Thumbnail = Thumbnail;
     }
+
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
+    }
+
+    public void setWeight(int Weight) {
+        this.Weight = Weight;
+    }
+
+    public void setHeight(int Height) {
+        this.Height = Height;
+    }
+
+    public void setBirthdate(String Birthdate) {
+        this.Birthdate = Birthdate;
+    }
+
+    public void setLocation(String Location) {
+        this.Location = Location;
+    }
+
+    public  void setName(String Name) {
+        this.Name = Name;
+    }
+
+    public void setSex(short Sex) {
+        this.Sex = Sex;
+    }
+
+    public void setActivity(boolean Activity) {
+        this.Activity = Activity;
+    }
+
+    public void setThumbnail(String Thumbnail) {
+        this.Thumbnail = Thumbnail;
+    }
+
+    public int getUserID() { return UserID; }
+
+    public int getWeight() { return Weight; }
+
+    public int getHeight() { return Height; }
+
+    public String getBirthdate() { return Birthdate; }
+
+    public String getLocation() { return Location; }
+
+    public String getName() { return Name; }
+
+    public short getSex() { return Sex; }
+
+    public boolean getActivity() { return Activity; }
+
+    public  String getThumbnail() { return Thumbnail; }
 }

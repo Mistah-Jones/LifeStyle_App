@@ -51,18 +51,18 @@ public class MainRepository {
     }
 
     public void setCurrUser(int weight, String birthdate, String location,
-                            int height, String name, short gender, boolean activity,
+                            int height, String name, short sex, boolean activity,
                             String thumbnailString){
-        mCurrUser = new UserInfo(weight, birthdate, location, height, name, gender, activity, thumbnailString);
+        mCurrUser = new UserInfo(weight, birthdate, location, height, name, sex, activity, thumbnailString);
         loadCurrUserData();
         //Insert user into DB
-        insert();
+        insert(weight, height, birthdate, location, name, sex, activity, thumbnailString);
     }
 
-    private void insert() {
+    private void insert(int weight, int height, String birthdate, String location, String name, short sex, boolean activity, String thumbnailString) {
         if(mCurrUser != null) {
             //TODO: insert unique user ID here
-            UserTable userTable = new UserTable(1, mCurrUser);
+            UserTable userTable = new UserTable(1, weight, height, birthdate, location, name, sex, activity, thumbnailString);
             RoomDB.databaseExecutor.execute(() -> {
                 mDao.insert(userTable);
             });
