@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.models.UserInfo;
 import com.example.myapplication.viewmodels.MainViewModel;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;
@@ -31,7 +32,6 @@ public class WeatherFragment extends Fragment {
     private TextView mTvMaxTemp;
     private TextView mTvMinTemp;
     private ImageView mIvIcon;
-    private String city;
 
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
@@ -56,21 +56,13 @@ public class WeatherFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         // Set Observer
-        mViewModel.getWeatherData().observe(getViewLifecycleOwner(), observer);
+        mViewModel.getWeatherData().observe(getViewLifecycleOwner(), observerWeather);
+        mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observerUser);
 
-        // Get the data passed from the Main Activity
-        try {
-            city = getArguments().getString("CITY_DATA");
-            mTvLocation.setText(city);
-            loadWeatherData(city);
-        }
-        catch (Exception e) {
-            String error = e.getMessage();
-        }
         return view;
     }
 
-    final Observer<WeatherData> observer = new Observer<WeatherData>() {
+    final Observer<WeatherData> observerWeather = new Observer<WeatherData>() {
         @Override
         public void onChanged(@Nullable final WeatherData weatherData) {
             // Update UI
@@ -92,6 +84,19 @@ public class WeatherFragment extends Fragment {
                     SetIcon(mIvIcon, weatherData.getCurrentCondition().getCondition());
                     e.printStackTrace();
                 }
+            }
+        }
+    };
+
+    final Observer<UserInfo> observerUser = new Observer<UserInfo>() {
+        @Override
+        public void onChanged(@Nullable final UserInfo userInfo) {
+            // Update UI
+            if (userInfo != null) {
+                String city = userInfo.getLocation();
+                mTvLocation.setText(city);
+                loadWeatherData(city);
+
             }
         }
     };

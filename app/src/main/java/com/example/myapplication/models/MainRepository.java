@@ -23,14 +23,14 @@ public class MainRepository {
     private static MainRepository instance;
     private final MutableLiveData<WeatherData> jsonData = new MutableLiveData<WeatherData>();
     private final MutableLiveData<UserInfo> currUserData = new MutableLiveData<UserInfo>();
-    private String mLocation;
     private UserInfo mCurrUser;
 
     private MainRepository(Application application) {
-        if (mLocation != null)
-            loadWeatherData();
-        if(mCurrUser != null)
+        if(mCurrUser != null) {
             loadCurrUserData();
+            if (mCurrUser.getLocation() != null)
+                loadWeatherData();
+        }
     }
 
     public static synchronized MainRepository getInstance(Application application) {
@@ -41,7 +41,7 @@ public class MainRepository {
     }
 
     public void setLocation(String location) {
-        mLocation = location;
+        mCurrUser.setLocation(location);
         loadWeatherData();
     }
 
@@ -55,7 +55,7 @@ public class MainRepository {
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
 
-    private void loadWeatherData() { new FetchWeatherTask().execute(mLocation); }
+    private void loadWeatherData() { new FetchWeatherTask().execute(mCurrUser.getLocation()); }
 
     //TODO: update this later to run in background, calc bmi, bmr, age, etc
     private void loadCurrUserData() {

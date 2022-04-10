@@ -46,7 +46,7 @@ public class UserInfo {
         setAge();
         setBmi();
         setBmr();
-        this.weightchange = 0;
+        this.weightchange = 0f;
     }
 
     public int getWeight() {
@@ -97,7 +97,7 @@ public class UserInfo {
         this.gender = gender;
     }
 
-    public boolean isActivity() {
+    public boolean isActive() {
         return activity;
     }
 
@@ -114,27 +114,27 @@ public class UserInfo {
     }
 
     public void setBmi(){
-        this.bmi = (float)weight / (float)Math.pow(height,2);
+        this.bmi = (float)this.weight / (float)Math.pow(this.height,2);
         this.bmi *= 703;
     }
 
     public void setBmr(){
         // BMR Calculation (Harris-Benedict Equation)
         this.bmr = 0f;
-        switch (gender)
+        switch (this.gender)
         {
             // Male
             case 1:
-                this.bmr = 66.47f + (6.24f * weight) + (12.7f * height) - (6.755f * age);
+                this.bmr = 66.47f + (6.24f * this.weight) + (12.7f * this.height) - (6.755f * this.age);
                 break;
             // Female
             case 2:
-                this.bmr = 65.51f + (4.35f * weight) + (4.7f * height) - (4.7f * age);
+                this.bmr = 65.51f + (4.35f * this.weight) + (4.7f * this.height) - (4.7f * this.age);
                 break;
             // Non-Binary
             default:
                 // Linearly interpolated values between the two equations
-                this.bmr = 65.99f + (5.295f * weight) + (8.7f * height) - (5.7275f * age);
+                this.bmr = 65.99f + (5.295f * this.weight) + (8.7f * this.height) - (5.7275f * this.age);
                 break;
         }
         // Since we are only using BMR for weight-loss calculations, we
@@ -158,4 +158,44 @@ public class UserInfo {
 
         this.age = p.getYears();
     }
+
+
+    public int getAge() {
+        return age;
+    }
+
+    public float getBmi() {
+        return bmi;
+    }
+
+    public float getBmr() {
+        return bmr;
+    }
+
+    public float calculateTargetCalories()
+    {
+        float calories = this.weightchange + (this.weightchange * 3500f) / 7f;
+        return Math.round(Math.round(bmr) + Math.round(calories));
+    }
+
+
+    public float getWeightchange() {
+        return weightchange;
+    }
+
+    public void setWeightchange(float weightchange) {
+        this.weightchange = weightchange;
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+
+
+
 }

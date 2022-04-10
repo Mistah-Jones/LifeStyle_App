@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,6 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.ByteArrayOutputStream;
@@ -43,18 +43,18 @@ import java.util.Date;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentUserinfoBinding;
+import com.example.myapplication.models.UserInfo;
 import com.example.myapplication.viewmodels.MainViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 public class UserInfoFragment extends Fragment {
 
     private MainViewModel mViewModel;
-
     private FragmentUserinfoBinding binding;
+    private View root;
 
     // Name Information
     private EditText mEtName;
-    private String mStringName;
 
     // Image Information
     private Button mButtonCamera;
@@ -64,7 +64,13 @@ public class UserInfoFragment extends Fragment {
     private EditText datePickerEText;
     private DatePickerDialog picker;
 
-    private String[] heights = { "3 ft 0 in", "3 ft 1 in", "3 ft 2 in", "3 ft 3 in", "3 ft 4 in", "3 ft 5 in", "3 ft 6 in",
+    // radio buttons
+    private RadioGroup radioGroupGender;
+    private RadioGroup radioGroupActivity;
+
+    private Spinner heightSP;
+
+    private final String[] heights = { "3 ft 0 in", "3 ft 1 in", "3 ft 2 in", "3 ft 3 in", "3 ft 4 in", "3 ft 5 in", "3 ft 6 in",
             "3 ft 7 in", "3 ft 8 in", "3 ft 9 in", "3 ft 10 in", "3 ft 11 in", "4 ft 0 in", "4 ft 1 in", "4 ft 2 in",
             "4 ft 3 in", "4 ft 4 in", "4 ft 5 in", "4 ft 6 in", "4 ft 7 in", "4 ft 8 in", "4 ft 9 in", "4 ft 10 in",
             "4 ft 11 in", "5 ft 0 in", "5 ft 1 in", "5 ft 2 in", "5 ft 3 in", "5 ft 4 in", "5 ft 5 in", "5 ft 6 in",
@@ -89,7 +95,7 @@ public class UserInfoFragment extends Fragment {
 
     //Callback interface
     public interface OnUserDataPass{
-        public void onUserDataPass(String[] data);
+        void onUserDataPass();
     }
 
     @Override
@@ -106,25 +112,19 @@ public class UserInfoFragment extends Fragment {
     // TODO: Break into helper methods!
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
         binding = FragmentUserinfoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
+        mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observer);
 
-        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-   //     });
+        //final TextView textView = binding.textHome;
 
         // The Profile Picture Field
         //The button press should open a camera
         mButtonCamera = (Button) root.findViewById(R.id.button_pic);
         //TODO: Put a placeholder image in the empty thumbnail before the user takes a picture
         mIvThumbnail = (ImageView) root.findViewById(R.id.iv_pic);
-
         mButtonCamera.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v)
@@ -163,7 +163,7 @@ public class UserInfoFragment extends Fragment {
         // The Height Field
         //TODO: Replace hard-coded strings with two integer spinners for feet and inches
         //TODO: Add prompt to spinner dialog
-        Spinner heightSP = root.findViewById(R.id.sp_height);
+        heightSP = root.findViewById(R.id.sp_height);
         ArrayAdapter ad
                 = new ArrayAdapter(
                 getActivity(),
@@ -178,10 +178,10 @@ public class UserInfoFragment extends Fragment {
         weightPicker = root.findViewById(R.id.et_weight);
 
         // The Gender Field
-        RadioGroup radioGroupGender = (RadioGroup) root.findViewById(R.id.rg_gender);
+        radioGroupGender = (RadioGroup) root.findViewById(R.id.rg_gender);
 
         // The Activity Level Field
-        RadioGroup radioGroupActivity = (RadioGroup) root.findViewById(R.id.rg_activity);
+        radioGroupActivity = (RadioGroup) root.findViewById(R.id.rg_activity);
 
         // The city Field
         mEtCity = (EditText) root.findViewById(R.id.et_city);
@@ -248,16 +248,9 @@ public class UserInfoFragment extends Fragment {
                         mThumbnailImage.compress(Bitmap.CompressFormat.PNG,100, baos);
                         byte [] byteImage = baos.toByteArray();
                         String userPhotoString = Base64.encodeToString(byteImage, Base64.DEFAULT);
-                        String[] data = {mEtName.getText().toString(),
-                                datePickerEText.getText().toString(),
-                                "" + convertHeightToInches(heightSP.getSelectedItem().toString()),
-                                weightPicker.getText().toString(),
-                                "" + genderSelectedId,
-                                isActive, userPhotoString,
-                                mEtCity.getText().toString()
-                        };
-
-
+                        float weightChange = 0f;
+                        if (mViewModel.getCurrUserData().getValue() != null)
+                            weightChange = mViewModel.getCurrUserData().getValue().getWeightchange();
                         mViewModel.setCurrUser(Integer.parseInt(weightPicker.getText().toString()),
                                 datePickerEText.getText().toString(),
                                 mEtCity.getText().toString(),
@@ -266,7 +259,9 @@ public class UserInfoFragment extends Fragment {
                                 (short)genderSelectedId,
                                 Boolean.parseBoolean(isActive),
                                 userPhotoString);
-                        mDataPasser.onUserDataPass(data);
+                        mViewModel.getCurrUserData().getValue().setThumbnail(mThumbnailImage);
+                        mViewModel.getCurrUserData().getValue().setWeightchange(weightChange);
+                        mDataPasser.onUserDataPass();
                     }
                     else{
                         String mess = "Please include the following: ";
@@ -303,45 +298,37 @@ public class UserInfoFragment extends Fragment {
             }
         });
 
-        try {
-
-            mEtName.setText(getArguments().getString("NAME_DATA"));
-            weightPicker.setText("" + getArguments().getInt("WEIGHT_DATA"));
-            datePickerEText.setText(getArguments().getString("BIRTH_DATA"));
-            mEtCity.setText(getArguments().getString("LOCATION_DATA"));
-
-            //set gender
-            short gen = getArguments().getShort("GENDER_DATA");
-            if (gen == 1) {
-                radioGroupGender.check(R.id.rb_male);
-            } else {
-                radioGroupGender.check(R.id.rb_female);
-            }
-
-            //set activity level
-            if (getArguments().getBoolean("ACTIVITY_DATA")){
-                radioGroupActivity.check(R.id.rb_active);
-            } else {
-                radioGroupActivity.check(R.id.rb_sedentary);
-            }
-
-            //convert height to array index lmao
-            int height = getArguments().getInt("HEIGHT_DATA");
-            heightSP.setSelection(height-36);
-
-            String img = getArguments().getString("THUMBNAIL_DATA");
-            byte [] encodeByte= Base64.decode(img ,Base64.DEFAULT);
-            mThumbnailImage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            mIvThumbnail.setImageBitmap(mThumbnailImage);
-
-
-
-        } catch (Exception e) {
-            Log.d("NATE", e.getMessage());
-        }
-
         return root;
     }
+
+    final Observer<UserInfo> observer = new Observer<UserInfo>() {
+        @Override
+        public void onChanged(@Nullable final UserInfo userInfo) {
+            // Update UI
+            if (userInfo != null) {
+                mEtName.setText(mViewModel.getCurrUserData().getValue().getName());
+                weightPicker.setText("" + mViewModel.getCurrUserData().getValue().getWeight());
+                datePickerEText.setText(mViewModel.getCurrUserData().getValue().getBirthdate());
+                mEtCity.setText(mViewModel.getCurrUserData().getValue().getLocation());
+
+                if (mViewModel.getCurrUserData().getValue().getGender() == 1) {
+                    radioGroupGender.check(R.id.rb_male);
+                } else {
+                    radioGroupGender.check(R.id.rb_female);
+                }
+
+                if (mViewModel.getCurrUserData().getValue().isActive()){
+                    radioGroupActivity.check(R.id.rb_active);
+                } else {
+                    radioGroupActivity.check(R.id.rb_sedentary);
+                }
+
+                heightSP.setSelection(mViewModel.getCurrUserData().getValue().getHeight()-36);
+                mThumbnailImage = mViewModel.getCurrUserData().getValue().getThumbnail();
+                mIvThumbnail.setImageBitmap(mThumbnailImage);
+            }
+        }
+    };
 
     @Override
     public void onDestroyView() {
