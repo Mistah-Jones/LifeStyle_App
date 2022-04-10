@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_weather:
                     // If the user has not input any data, we don't want to open the weather fragment
                     // (We need the city for this fragment to function)
-                    if (mViewModel.getCurrUserData().getValue() == null && mViewModel.getCurrUserData().getValue().getLocation() != null) {
+                    if (mViewModel.getCurrUserData().getValue() != null && mViewModel.getCurrUserData().getValue().getLocation() != null) {
                         // Instantiate the fragment
                         WeatherFragment weatherFragment = new WeatherFragment();
                         navController.navigate(R.id.navigation_weather);
