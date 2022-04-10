@@ -99,13 +99,13 @@ public class MainActivity extends AppCompatActivity
         fab.setImageDrawable(d);
 
         // Instantiate the fragment
-        //DashboardFragment dashboardFragment = new DashboardFragment();
+        DashboardFragment dashboardFragment = new DashboardFragment();
         navController.navigate(R.id.navigation_dashboard);
     }
 
     @Override
     public void onEdit() {
-        //UserInfoFragment userInfoFragment = new UserInfoFragment();
+        UserInfoFragment userInfoFragment = new UserInfoFragment();
         navController.navigate(R.id.navigation_userinfo);
 
     }
