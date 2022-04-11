@@ -33,12 +33,11 @@ public class MainRepository {
     private LiveData<UserTable> currUserTable;
 
     private MainRepository(Application application) {
-        RoomDB db = RoomDB.getDatabase(application);
-        mDao = db.lifestyleDao();
-        if (mLocation != null)
-            loadWeatherData();
-        if(mCurrUser != null)
+        if(mCurrUser != null) {
             loadCurrUserData();
+            if (mCurrUser.getLocation() != null)
+                loadWeatherData();
+        }
     }
 
     public static synchronized MainRepository getInstance(Application application) {
