@@ -317,7 +317,7 @@ public class UserInfoFragment extends Fragment {
                     radioGroupGender.check(R.id.rb_female);
                 }
 
-                if (mViewModel.getCurrUserData().getValue().isActive()){
+                if (mViewModel.getCurrUserData().getValue().getActivity()){
                     radioGroupActivity.check(R.id.rb_active);
                 } else {
                     radioGroupActivity.check(R.id.rb_sedentary);

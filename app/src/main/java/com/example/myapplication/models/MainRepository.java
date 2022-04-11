@@ -27,11 +27,13 @@ public class MainRepository {
     private final MutableLiveData<WeatherData> jsonData = new MutableLiveData<WeatherData>();
     private final MutableLiveData<UserInfo> currUserData = new MutableLiveData<UserInfo>();
     private UserInfo mCurrUser;
-    private LifestyleDoa mDao;
+    private LifestyleRoomDoa mDao;
     private String mUserID;
-    private LiveData<UserTable> currUserTable;
+    private String mPassword;
 
     private MainRepository(Application application) {
+        LifestyleRoomDatabase db = LifestyleRoomDatabase.getDatabase(application);
+        mDao = db.lifestyleRoomDao();
         if(mCurrUser != null) {
             loadCurrUserData();
             if (mCurrUser.getLocation() != null)
@@ -60,30 +62,29 @@ public class MainRepository {
         insert(weight, height, birthdate, location, name, sex, activity, thumbnailString);
     }
 
-    public void setCurrUser(String userID) {
-        // Populates currUserTable LiveData Object
+    public void setCurrUser(String userID, String password) {
         mUserID = userID;
-        selectUser(userID);
+        mPassword = password;
+        selectUser(userID, password);
     }
 
     private void insert(int weight, int height, String birthdate, String location, String name, short sex, boolean activity, String thumbnailString) {
         if(mCurrUser != null) {
-            UserTable userTable = new UserTable(mUserID, weight, height, birthdate, location, name, sex, activity, thumbnailString);
-            RoomDB.databaseExecutor.execute(() -> {
-                mDao.insert(userTable);
+            LifestyleRoomDatabase.databaseExecutor.execute(() -> {
+                mDao.insert(mCurrUser);
             });
         }
     }
 
-    private void selectUser(String userID) {
-        RoomDB.databaseExecutor.execute(() -> {
-            currUserTable = mDao.getUser(userID);
+    // Auto Populates LiveData<UserInfo> field?
+    private void selectUser(String userID, String password) {
+        LifestyleRoomDatabase.databaseExecutor.execute(() -> {
+            mDao.getUser(userID, password);
         });
     }
 
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
-    public LiveData<UserTable> getCurrUserTable() { return currUserTable; }
 
     private void loadWeatherData() { new FetchWeatherTask().execute(mCurrUser.getLocation()); }
 
