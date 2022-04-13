@@ -86,6 +86,13 @@ public class MainRepository {
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
 
+    public void logout() {
+        mCurrUser = null;
+        mUserID = null;
+        mPassword = null;
+        currUserData.setValue(null);
+    }
+
     private void loadWeatherData() { new FetchWeatherTask().execute(mCurrUser.getLocation()); }
 
     //TODO: update this later to run in background, calc bmi, bmr, age, etc

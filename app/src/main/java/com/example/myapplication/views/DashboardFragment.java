@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
@@ -106,6 +107,16 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // The Logout button
+        Button logoutBttn = root.findViewById(R.id.b_logout);
+        logoutBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+                Navigation.findNavController(v).navigate(R.id.loginFragment);
+            }
+        });
+
         return root;
     }
 
@@ -176,6 +187,10 @@ public class DashboardFragment extends Fragment {
             view.setLayoutParams(params);
             snackbar.show();
         }
+    }
+
+    void logout() {
+        mViewModel.logout();
     }
 
 }

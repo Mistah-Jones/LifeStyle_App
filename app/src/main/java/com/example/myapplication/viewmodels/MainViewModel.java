@@ -33,6 +33,8 @@ public class MainViewModel extends AndroidViewModel {
     }
     public void setCurrUser(String userID, String password) { mMainRepository.setCurrUser(userID, password); }
 
+    public void logout() { mMainRepository.logout(); }
+
     public  LiveData<WeatherData> getWeatherData() { return jsonData; }
     public LiveData<UserInfo> getCurrUserData() {return currUserData; }
 }
