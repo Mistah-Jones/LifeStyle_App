@@ -70,6 +70,10 @@ public class MainRepository {
 
     private void insert(int weight, int height, String birthdate, String location, String name, short sex, boolean activity, String thumbnailString) {
         if(mCurrUser != null) {
+            if(mCurrUser.getUserName() == null){
+                mCurrUser.setUserName(mUserID);
+                mCurrUser.setPassword(mPassword);
+            }
             LifestyleRoomDatabase.databaseExecutor.execute(() -> {
                 mDao.insert(mCurrUser);
             });
@@ -79,8 +83,10 @@ public class MainRepository {
     // Auto Populates LiveData<UserInfo> field?
     private void selectUser(String userID, String password) {
         LifestyleRoomDatabase.databaseExecutor.execute(() -> {
-            mDao.getUser(userID, password);
+            mCurrUser = mDao.getUser(userID, password)[0]; //userID, password
+
         });
+
     }
 
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }

@@ -61,7 +61,12 @@ public class LoginFragment extends Fragment {
                 else {
                     try {
                         loadUser(mUserID, mPassword);
-                        Navigation.findNavController(v).navigate(R.id.navigation_userinfo);
+                        if(mViewModel.getCurrUserData().getValue() == null){
+                            Navigation.findNavController(v).navigate(R.id.navigation_userinfo);
+                        }
+                        else {
+                            Navigation.findNavController(v).navigate(R.id.navigation_dashboard);
+                        }
                     }
                     // Couldn't load user
                     catch (Exception e) {
@@ -74,7 +79,6 @@ public class LoginFragment extends Fragment {
 
         return view;
     }
-
     // Navigate to dashboard if there is userInfo object
     final Observer<UserInfo> observer = new Observer<UserInfo>() {
         @Override

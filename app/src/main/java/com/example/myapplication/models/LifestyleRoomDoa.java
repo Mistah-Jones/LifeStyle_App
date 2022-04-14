@@ -12,5 +12,5 @@ public interface LifestyleRoomDoa {
     void insert(UserInfo userInfo);
 
     @Query("SELECT * FROM User_Info WHERE userName = :userName AND password = :password")
-    LiveData<UserInfo> getUser(String userName, String password);
+    public UserInfo[] getUser(String userName, String password); //String userName, String password
 }
