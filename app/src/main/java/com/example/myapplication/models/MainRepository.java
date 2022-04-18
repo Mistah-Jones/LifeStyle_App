@@ -26,6 +26,7 @@ public class MainRepository {
     private static MainRepository instance;
     private final MutableLiveData<WeatherData> jsonData = new MutableLiveData<WeatherData>();
     private final MutableLiveData<UserInfo> currUserData = new MutableLiveData<UserInfo>();
+    private final MutableLiveData<String> message = new MutableLiveData<String>();
     private UserInfo mCurrUser;
     private LifestyleRoomDoa mDao;
     private String mUserID;
@@ -66,8 +67,14 @@ public class MainRepository {
         mUserID = userID;
         mPassword = password;
         selectUser(userID, password);
+        loadCurrUserData();
     }
 
+    public void setMessage(String message) {
+        this.message.setValue(message);
+    }
+
+    // -------------DB Function Calls-------------------
     private void insert(int weight, int height, String birthdate, String location, String name, short sex, boolean activity, String thumbnailString) {
         if(mCurrUser != null) {
             if(mCurrUser.getUserName() == null){
@@ -79,18 +86,16 @@ public class MainRepository {
             });
         }
     }
-
-    // Auto Populates LiveData<UserInfo> field?
     private void selectUser(String userID, String password) {
         LifestyleRoomDatabase.databaseExecutor.execute(() -> {
             mCurrUser = mDao.getUser(userID, password)[0]; //userID, password
-
         });
-
     }
+    // -----------------------------------------------
 
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
+    public MutableLiveData<String> getMessage() { return message; }
 
     public void logout() {
         mCurrUser = null;
@@ -103,7 +108,8 @@ public class MainRepository {
 
     //TODO: update this later to run in background, calc bmi, bmr, age, etc
     private void loadCurrUserData() {
-        currUserData.setValue(mCurrUser);}
+        currUserData.setValue(mCurrUser);
+    }
 
     private class FetchWeatherTask{
         WeakReference<WeatherFragment> weatherFragmentWeakReference;
@@ -121,7 +127,8 @@ public class MainRepository {
                         jsonWeatherData = NetworkUtils.getDataFromURL(weatherDataURL);
                         if (jsonWeatherData != null)
                             postToMainThread(jsonWeatherData);
-                    }catch(Exception e){
+                    }
+                    catch(Exception e){
                         e.printStackTrace();
                     }
                 }

@@ -71,7 +71,9 @@ public class DashboardFragment extends Fragment {
         tvName = (TextView) root.findViewById(R.id.tv_name_data);
         weightLossPicker = root.findViewById(R.id.et_weight);
 
+        // Observers
         mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observer);
+        mViewModel.getMessage().observe(getViewLifecycleOwner(), observerMessage);
 
         weightLossPicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @SuppressLint("ResourceAsColor")
@@ -131,6 +133,23 @@ public class DashboardFragment extends Fragment {
                 tvCalories.setText("" + mViewModel.getCurrUserData().getValue().calculateTargetCalories());
                 weightLossPicker.setText("" + mViewModel.getCurrUserData().getValue().getWeightchange());
             }
+        }
+    };
+
+    final Observer<String> observerMessage = new Observer<String>() {
+        @Override
+        public void onChanged(String s) {
+            CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
+            cl.bringToFront();
+            Snackbar snackbar = Snackbar.make(cl, s, Snackbar.LENGTH_LONG);
+            View view = snackbar.getView();
+            view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
+            TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+            tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+            CoordinatorLayout.LayoutParams params=(CoordinatorLayout.LayoutParams)view.getLayoutParams();
+            params.gravity = Gravity.TOP;
+            view.setLayoutParams(params);
+            snackbar.show();
         }
     };
 
