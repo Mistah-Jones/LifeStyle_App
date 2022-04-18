@@ -1,6 +1,5 @@
 package com.example.myapplication.models;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -12,5 +11,5 @@ public interface LifestyleRoomDoa {
     void insert(UserInfo userInfo);
 
     @Query("SELECT * FROM User_Info WHERE userName = :userName AND password = :password")
-    public UserInfo[] getUser(String userName, String password); //String userName, String password
+    public UserInfo getUser(String userName, String password); //String userName, String password
 }

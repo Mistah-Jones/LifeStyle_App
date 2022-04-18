@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+import java.util.concurrent.Future;
 
 
 public class MainRepository {
@@ -67,7 +67,6 @@ public class MainRepository {
         mUserID = userID;
         mPassword = password;
         selectUser(userID, password);
-        loadCurrUserData();
     }
 
     public void setMessage(String message) {
@@ -87,9 +86,16 @@ public class MainRepository {
         }
     }
     private void selectUser(String userID, String password) {
-        LifestyleRoomDatabase.databaseExecutor.execute(() -> {
-            mCurrUser = mDao.getUser(userID, password)[0]; //userID, password
+        Future<UserInfo> userFuture = LifestyleRoomDatabase.databaseExecutor.submit(() -> {
+            return mDao.getUser(userID, password);
         });
+        try {
+            mCurrUser = userFuture.get();
+            currUserData.setValue(userFuture.get());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     // -----------------------------------------------
 

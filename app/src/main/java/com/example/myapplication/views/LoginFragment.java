@@ -46,9 +46,6 @@ public class LoginFragment extends Fragment {
         // Create View Model
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // Set Observer
-        mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observer);
-
         // Set OnClick listener for button
         Button submit = root.findViewById(R.id.button_submit);
         submit.setOnClickListener(new View.OnClickListener()
@@ -78,6 +75,14 @@ public class LoginFragment extends Fragment {
                 else {
                     try {
                         loadUser(mUserID, mPassword);
+                        if(mViewModel.getCurrUserData().getValue() == null){
+                            setMessage("Create a New User Profile!");
+                            Navigation.findNavController(root).navigate(R.id.navigation_userinfo);
+                        }
+                        else {
+                            setMessage("Welcome Back!");
+                            Navigation.findNavController(root).navigate(R.id.navigation_dashboard);
+                        }
                     }
                     // Couldn't load user
                     catch (Exception e) {
@@ -89,21 +94,6 @@ public class LoginFragment extends Fragment {
 
         return root;
     }
-
-    // Navigate to dashboard if there is userInfo object
-    final Observer<UserInfo> observer = new Observer<UserInfo>() {
-        @Override
-        public void onChanged(@Nullable final UserInfo userInfo) {
-            if(mViewModel.getCurrUserData().getValue() == null){
-                setMessage("Create a New User Profile!");
-                Navigation.findNavController(root).navigate(R.id.navigation_userinfo);
-            }
-            else {
-                setMessage("Welcome Back!");
-                Navigation.findNavController(root).navigate(R.id.navigation_dashboard);
-            }
-        }
-    };
 
     void loadUser(String userID, String password) { mViewModel.setCurrUser(userID, password); }
 
