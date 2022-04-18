@@ -139,17 +139,20 @@ public class DashboardFragment extends Fragment {
     final Observer<String> observerMessage = new Observer<String>() {
         @Override
         public void onChanged(String s) {
-            CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
-            cl.bringToFront();
-            Snackbar snackbar = Snackbar.make(cl, s, Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
-            TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
-            tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
-            CoordinatorLayout.LayoutParams params=(CoordinatorLayout.LayoutParams)view.getLayoutParams();
-            params.gravity = Gravity.TOP;
-            view.setLayoutParams(params);
-            snackbar.show();
+            if (s != null) {
+                CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
+                cl.bringToFront();
+                Snackbar snackbar = Snackbar.make(cl, s, Snackbar.LENGTH_LONG);
+                View view = snackbar.getView();
+                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
+                TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+                tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+                params.gravity = Gravity.TOP;
+                view.setLayoutParams(params);
+                snackbar.show();
+                mViewModel.setMessage(null);
+            }
         }
     };
 
