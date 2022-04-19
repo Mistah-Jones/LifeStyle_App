@@ -11,7 +11,16 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -30,13 +39,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+
 public class MainActivity extends AppCompatActivity
-                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnEdit {
+                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnEdit, SensorEventListener {
 
     private ActivityMainBinding binding;
     private MainViewModel mViewModel;
 
     private NavController navController;
+
+    private SensorManager sensorManager;
+    private Sensor accelerometerSensor;
+    private boolean isAccSensAvail;
+    private float currentX, currentY, currentZ;
+    private float lastX, lastY, lastZ;
+    private boolean isNotFirstTime = false;
+    private float diffX, diffY, diffZ;
+    private float shakeThresh = 5f;
+    private Vibrator vibrator;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +93,21 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationItemView weather = findViewById(R.id.navigation_weather);
         weather.setOnClickListener(buttonClickListener);
 
+        mp = MediaPlayer.create(this, R.raw.test);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null)
+        {
+            accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            isAccSensAvail = true;
+            Log.d("Device Opened", "Device working");
+        }
+        else
+        {
+            Log.d("Sensor", "Accelerator not available");
+            isAccSensAvail = false;
+        }
     }
 
     @Override
@@ -135,4 +173,57 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        currentX = sensorEvent.values[0];
+        currentY = sensorEvent.values[1];
+        currentZ = sensorEvent.values[2];
+
+        if (isNotFirstTime) {
+            diffX = Math.abs(lastX - currentX);
+            diffY = Math.abs(lastY - currentY);
+            diffZ = Math.abs(lastZ - currentZ);
+
+            if ((diffX > shakeThresh && diffY > shakeThresh) || (diffX > shakeThresh && diffZ > shakeThresh) ||
+                    (diffY > shakeThresh && diffZ > shakeThresh)) {
+                Log.d("Shake", "Shake Threshold reached, shake activated");
+                mp.start();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibrator.vibrate(500);
+                    // deprecated in API 26
+                }
+            }
+        }
+
+        lastX = currentX;
+        lastY = currentY;
+        lastZ = currentZ;
+        isNotFirstTime = true;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isAccSensAvail) {
+            sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isAccSensAvail) {
+            sensorManager.unregisterListener(this);
+        }
+    }
 }
