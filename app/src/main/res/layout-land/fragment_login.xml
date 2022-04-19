@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.UserInfoFragment">
+
+    <TextView
+        android:id="@+id/step_counter"
+        android:layout_width="162dp"
+        android:layout_height="98dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputUserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputUserName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColorHint="#F6404F"
+        app:boxStrokeColor="#30BCC9"
+        app:hintTextColor="#30BCC9"
+        app:layout_constraintBottom_toTopOf="@+id/textInputPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.327"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.938">
+
+        <EditText
+            android:id="@+id/et_userName"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:hint="User Name"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            tools:text="Enter User Name" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColorHint="#F6404F"
+        app:boxStrokeColor="#30BCC9"
+        app:hintTextColor="#30BCC9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textInputUserName"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/textInputUserName"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            tools:text="Enter Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#30BCC9"
+        android:text="Submit"
+        app:itemRippleColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintStart_toEndOf="@+id/textInputUserName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.396" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
