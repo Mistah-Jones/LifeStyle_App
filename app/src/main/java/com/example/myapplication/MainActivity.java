@@ -39,9 +39,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-
 public class MainActivity extends AppCompatActivity
                 implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnEdit, SensorEventListener {
 
@@ -52,14 +49,16 @@ public class MainActivity extends AppCompatActivity
 
     private SensorManager sensorManager;
     private Sensor accelerometerSensor;
-    private boolean isAccSensAvail;
+    private Sensor stepSensor;
+    private boolean isAccSensAvail, isStepSensAvail;
     private float currentX, currentY, currentZ;
     private float lastX, lastY, lastZ;
     private boolean isNotFirstTime = false;
     private float diffX, diffY, diffZ;
     private float shakeThresh = 5f;
     private Vibrator vibrator;
-    private MediaPlayer mp;
+    private boolean alreadyCount = false;
+    private MediaPlayer mp_start, mp_stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,8 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationItemView weather = findViewById(R.id.navigation_weather);
         weather.setOnClickListener(buttonClickListener);
 
-        mp = MediaPlayer.create(this, R.raw.test);
+        mp_start = MediaPlayer.create(this, R.raw.start_sound);
+        mp_stop = MediaPlayer.create(this, R.raw.stop_sound);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
@@ -107,6 +107,18 @@ public class MainActivity extends AppCompatActivity
         {
             Log.d("Sensor", "Accelerator not available");
             isAccSensAvail = false;
+        }
+
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null)
+        {
+            stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            isStepSensAvail = true;
+            Log.d("Device Opened", "Device working");
+        }
+        else
+        {
+            Log.d("Sensor", "Accelerator not available");
+            isStepSensAvail = false;
         }
     }
 
@@ -185,10 +197,24 @@ public class MainActivity extends AppCompatActivity
             diffY = Math.abs(lastY - currentY);
             diffZ = Math.abs(lastZ - currentZ);
 
-            if ((diffX > shakeThresh && diffY > shakeThresh) || (diffX > shakeThresh && diffZ > shakeThresh) ||
-                    (diffY > shakeThresh && diffZ > shakeThresh)) {
+            // pitch change starts it - i.e. bringing top of phone closer to you
+            if (alreadyCount == false && diffZ > shakeThresh) {
                 Log.d("Shake", "Shake Threshold reached, shake activated");
-                mp.start();
+                mp_start.start();
+                alreadyCount = true;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    vibrator.vibrate(500);
+                    // deprecated in API 26
+                }
+            }
+
+            // yaw change stops it - i.e. moving top of phone to the left or right
+            if (alreadyCount == true && diffX > shakeThresh) {
+                Log.d("Shake", "Shake Threshold reached, shake activated");
+                mp_stop.start();
+                alreadyCount = false;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
