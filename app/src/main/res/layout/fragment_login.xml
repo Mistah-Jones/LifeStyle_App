@@ -12,7 +12,14 @@
         android:id="@+id/cl_login"
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" >
+
+        <TextView
+            android:id="@+id/step_counter"
+            android:layout_width="162dp"
+            android:layout_height="98dp"
+            android:text="TextView" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <TextView
         android:id="@+id/textView2"

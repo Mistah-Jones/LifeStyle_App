@@ -23,6 +23,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity
     private Vibrator vibrator;
     private boolean alreadyCount = false;
     private MediaPlayer mp_start, mp_stop;
+    private float steps = 0;
+    private TextView mStepCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,9 @@ public class MainActivity extends AppCompatActivity
         mp_stop = MediaPlayer.create(this, R.raw.stop_sound);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        mStepCounter = (TextView) findViewById(R.id.step_counter);
+        mStepCounter.setText("" + String.valueOf(steps));
 
         if(sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null)
         {
@@ -188,46 +194,52 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        currentX = sensorEvent.values[0];
-        currentY = sensorEvent.values[1];
-        currentZ = sensorEvent.values[2];
+        Sensor sens = sensorEvent.sensor;
+        if (sens.getType() == Sensor.TYPE_ACCELEROMETER) {
+            currentX = sensorEvent.values[0];
+            currentY = sensorEvent.values[1];
+            currentZ = sensorEvent.values[2];
 
-        if (isNotFirstTime) {
-            diffX = Math.abs(lastX - currentX);
-            diffY = Math.abs(lastY - currentY);
-            diffZ = Math.abs(lastZ - currentZ);
+            if (isNotFirstTime) {
+                diffX = Math.abs(lastX - currentX);
+                diffY = Math.abs(lastY - currentY);
+                diffZ = Math.abs(lastZ - currentZ);
 
-            // pitch change starts it - i.e. bringing top of phone closer to you
-            if (alreadyCount == false && diffZ > shakeThresh) {
-                Log.d("Shake", "Shake Threshold reached, shake activated");
-                mp_start.start();
-                alreadyCount = true;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(500);
-                    // deprecated in API 26
+                // pitch change starts it - i.e. bringing top of phone closer to you
+                if (alreadyCount == false && diffZ > shakeThresh) {
+                    Log.d("Shake", "Shake Threshold reached, shake activated");
+                    mp_start.start();
+                    alreadyCount = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(500);
+                        // deprecated in API 26
+                    }
+                }
+
+                // yaw change stops it - i.e. moving top of phone to the left or right
+                if (alreadyCount == true && diffX > shakeThresh) {
+                    Log.d("Shake", "Shake Threshold reached, shake activated");
+                    mp_stop.start();
+                    alreadyCount = false;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(500);
+                        // deprecated in API 26
+                    }
                 }
             }
 
-            // yaw change stops it - i.e. moving top of phone to the left or right
-            if (alreadyCount == true && diffX > shakeThresh) {
-                Log.d("Shake", "Shake Threshold reached, shake activated");
-                mp_stop.start();
-                alreadyCount = false;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(500);
-                    // deprecated in API 26
-                }
-            }
+            lastX = currentX;
+            lastY = currentY;
+            lastZ = currentZ;
+            isNotFirstTime = true;
+        } else if (sens.getType() == Sensor.TYPE_STEP_COUNTER) {
+            steps = steps + sensorEvent.values[0];
+            mStepCounter.setText("" + String.valueOf(steps));
         }
-
-        lastX = currentX;
-        lastY = currentY;
-        lastZ = currentZ;
-        isNotFirstTime = true;
     }
 
     @Override
@@ -242,6 +254,10 @@ public class MainActivity extends AppCompatActivity
         if (isAccSensAvail) {
             sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+
+        if (isStepSensAvail) {
+            sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
     }
 
     @Override
@@ -249,6 +265,10 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
 
         if (isAccSensAvail) {
+            sensorManager.unregisterListener(this);
+        }
+
+        if (isStepSensAvail) {
             sensorManager.unregisterListener(this);
         }
     }
