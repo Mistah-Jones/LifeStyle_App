@@ -14,12 +14,14 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<WeatherData> jsonData;
     private MutableLiveData<UserInfo> currUserData;
     private MainRepository mMainRepository;
+    private MutableLiveData<String> message;
 
     public MainViewModel(Application application) {
         super(application);
         mMainRepository = MainRepository.getInstance(application);
         jsonData = mMainRepository.getWeatherData();
         currUserData = mMainRepository.getCurrUserData();
+        message = mMainRepository.getMessage();
     }
 
     public void setLocation(String location) {
@@ -32,6 +34,12 @@ public class MainViewModel extends AndroidViewModel {
         mMainRepository.setCurrUser(weight, birthdate, location, height, name, gender, activity, thumbnailString);
     }
 
+    public void logout() { mMainRepository.logout(); }
+
+    public void setMessage(String message) { mMainRepository.setMessage(message); }
+    public void setCurrUser(String userID, String password) { mMainRepository.setCurrUser(userID, password); }
+
     public  LiveData<WeatherData> getWeatherData() { return jsonData; }
     public LiveData<UserInfo> getCurrUserData() {return currUserData; }
+    public LiveData<String> getMessage() { return message; }
 }

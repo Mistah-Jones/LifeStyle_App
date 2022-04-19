@@ -118,6 +118,9 @@ public class UserInfoFragment extends Fragment {
         root = binding.getRoot();
         mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observer);
 
+        // Attatch observer for snackbar navigation message
+        mViewModel.getMessage().observe(getViewLifecycleOwner(), observerMessage);
+
         //final TextView textView = binding.textHome;
 
         // The Profile Picture Field
@@ -317,7 +320,7 @@ public class UserInfoFragment extends Fragment {
                     radioGroupGender.check(R.id.rb_female);
                 }
 
-                if (mViewModel.getCurrUserData().getValue().isActive()){
+                if (mViewModel.getCurrUserData().getValue().getActivity()){
                     radioGroupActivity.check(R.id.rb_active);
                 } else {
                     radioGroupActivity.check(R.id.rb_sedentary);
@@ -326,6 +329,26 @@ public class UserInfoFragment extends Fragment {
                 heightSP.setSelection(mViewModel.getCurrUserData().getValue().getHeight()-36);
                 mThumbnailImage = mViewModel.getCurrUserData().getValue().getThumbnail();
                 mIvThumbnail.setImageBitmap(mThumbnailImage);
+            }
+        }
+    };
+
+    final Observer<String> observerMessage = new Observer<String>() {
+        @Override
+        public void onChanged(String s) {
+            if (s != null) {
+                CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
+                cl.bringToFront();
+                Snackbar snackbar = Snackbar.make(cl, s, Snackbar.LENGTH_LONG);
+                View view = snackbar.getView();
+                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
+                TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+                tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+                params.gravity = Gravity.TOP;
+                view.setLayoutParams(params);
+                snackbar.show();
+                mViewModel.setMessage(null);
             }
         }
     };

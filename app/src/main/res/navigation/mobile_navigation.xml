@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_userinfo">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/navigation_weather"
@@ -28,4 +28,8 @@
         android:name="com.example.myapplication.views.UserInfoFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_userinfo" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.myapplication.views.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

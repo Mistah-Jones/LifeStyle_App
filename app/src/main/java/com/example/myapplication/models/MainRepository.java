@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.core.os.HandlerCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.views.WeatherFragment;
@@ -18,14 +19,22 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 
 public class MainRepository {
     private static MainRepository instance;
     private final MutableLiveData<WeatherData> jsonData = new MutableLiveData<WeatherData>();
     private final MutableLiveData<UserInfo> currUserData = new MutableLiveData<UserInfo>();
+    private final MutableLiveData<String> message = new MutableLiveData<String>();
     private UserInfo mCurrUser;
+    private LifestyleRoomDoa mDao;
+    private String mUserID;
+    private String mPassword;
 
     private MainRepository(Application application) {
+        LifestyleRoomDatabase db = LifestyleRoomDatabase.getDatabase(application);
+        mDao = db.lifestyleRoomDao();
         if(mCurrUser != null) {
             loadCurrUserData();
             if (mCurrUser.getLocation() != null)
@@ -46,20 +55,67 @@ public class MainRepository {
     }
 
     public void setCurrUser(int weight, String birthdate, String location,
-                            int height, String name, short gender, boolean activity,
+                            int height, String name, short sex, boolean activity,
                             String thumbnailString){
-        mCurrUser = new UserInfo(weight, birthdate, location, height, name, gender, activity, thumbnailString);
+        mCurrUser = new UserInfo(weight, birthdate, location, height, name, sex, activity, thumbnailString);
         loadCurrUserData();
+        //Insert user into DB
+        insert(weight, height, birthdate, location, name, sex, activity, thumbnailString);
     }
+
+    public void setCurrUser(String userID, String password) {
+        mUserID = userID;
+        mPassword = password;
+        selectUser(userID, password);
+    }
+
+    public void setMessage(String message) {
+        this.message.setValue(message);
+    }
+
+    // -------------DB Function Calls-------------------
+    private void insert(int weight, int height, String birthdate, String location, String name, short sex, boolean activity, String thumbnailString) {
+        if(mCurrUser != null) {
+            if(mCurrUser.getUserName() == null){
+                mCurrUser.setUserName(mUserID);
+                mCurrUser.setPassword(mPassword);
+            }
+            LifestyleRoomDatabase.databaseExecutor.execute(() -> {
+                mDao.insert(mCurrUser);
+            });
+        }
+    }
+    private void selectUser(String userID, String password) {
+        Future<UserInfo> userFuture = LifestyleRoomDatabase.databaseExecutor.submit(() -> {
+            return mDao.getUser(userID, password);
+        });
+        try {
+            mCurrUser = userFuture.get();
+            currUserData.setValue(userFuture.get());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    // -----------------------------------------------
 
     public MutableLiveData<WeatherData> getWeatherData() { return  jsonData; }
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
+    public MutableLiveData<String> getMessage() { return message; }
+
+    public void logout() {
+        mCurrUser = null;
+        mUserID = null;
+        mPassword = null;
+        currUserData.setValue(null);
+    }
 
     private void loadWeatherData() { new FetchWeatherTask().execute(mCurrUser.getLocation()); }
 
     //TODO: update this later to run in background, calc bmi, bmr, age, etc
     private void loadCurrUserData() {
-        currUserData.setValue(mCurrUser);}
+        currUserData.setValue(mCurrUser);
+    }
 
     private class FetchWeatherTask{
         WeakReference<WeatherFragment> weatherFragmentWeakReference;
@@ -77,7 +133,8 @@ public class MainRepository {
                         jsonWeatherData = NetworkUtils.getDataFromURL(weatherDataURL);
                         if (jsonWeatherData != null)
                             postToMainThread(jsonWeatherData);
-                    }catch(Exception e){
+                    }
+                    catch(Exception e){
                         e.printStackTrace();
                     }
                 }
@@ -86,9 +143,7 @@ public class MainRepository {
 
         private void postToMainThread(String jsonWeatherData)
         {
-            mainThreadHandler.post(new Runnable() {
-                @Override
-                public void run() {
+            mainThreadHandler.post(() -> {
                     if (jsonWeatherData != null) {
                         try {
                             jsonData.setValue(JSONWeatherUtils.getWeatherData(jsonWeatherData));
@@ -96,7 +151,6 @@ public class MainRepository {
                             e.printStackTrace();
                         }
                     }
-                }
             });
         }
     }

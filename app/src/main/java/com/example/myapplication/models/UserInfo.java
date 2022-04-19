@@ -4,32 +4,74 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDate;
 import java.time.Period;
 
+@Entity(tableName = "User_Info", primaryKeys = {"userName", "password"})
 public class UserInfo {
 
+    // Login items
+    @NonNull
+    @ColumnInfo(name = "userName")
+    private String userName;
+    @NonNull
+    @ColumnInfo(name = "password")
+    private String password;
     //things received from fragment
+    @NonNull
+    @ColumnInfo(name = "weight")
     private int weight;
+    @NonNull
+    @ColumnInfo(name = "birthdate")
     private String birthdate;
+    @NonNull
+    @ColumnInfo(name = "location")
     private String location;
+    @NonNull
+    @ColumnInfo(name = "height")
     private int height;
+    @NonNull
+    @ColumnInfo(name = "name")
     private String name;
+    @NonNull
+    @ColumnInfo(name = "gender")
     private short gender;
+    @NonNull
+    @ColumnInfo(name = "activity")
     private boolean activity;
+    @NonNull
+    @ColumnInfo(name = "thumbnailString")
     private String thumbnailString;
 
     //things calculated
+    @NonNull
+    @ColumnInfo(name = "age")
     private int age;
+    @NonNull
+    @ColumnInfo(name = "bmi")
+    private float bmi;
+    @NonNull
+    @ColumnInfo(name = "bmr")
+    private float bmr;
+
+    // Not in DB
+    @Ignore
     private Bitmap thumbnail;
-    private float bmi, bmr;
 
     //things inputted;
+    @NonNull
+    @ColumnInfo(name = "weightchange")
     private float weightchange;
 
-    public UserInfo(int weight, String birthdate, String location,
-                 int height, String name, short gender, boolean activity,
-                 String thumbnailString)
+    public UserInfo(@NonNull int weight,@NonNull String birthdate,@NonNull String location,
+                 @NonNull int height,@NonNull String name,@NonNull short gender,@NonNull boolean activity,
+                 @NonNull String thumbnailString)
     {
         this.weight = weight;
         this.birthdate = birthdate;
@@ -43,16 +85,29 @@ public class UserInfo {
         byte [] encodeByte= Base64.decode(thumbnailString,Base64.DEFAULT);
         this.thumbnail = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
-        setAge();
-        setBmi();
-        setBmr();
+        calculateAge();
+        calculateBmi();
+        calculateBmr();
         this.weightchange = 0f;
+    }
+    //TODO: This is not secure
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    //TODO: this is not secure
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getWeight() {
         return weight;
     }
-
     public void setWeight(int weight) {
         this.weight = weight;
     }
@@ -60,7 +115,6 @@ public class UserInfo {
     public String getBirthdate() {
         return birthdate;
     }
-
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
@@ -68,7 +122,6 @@ public class UserInfo {
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
@@ -76,7 +129,6 @@ public class UserInfo {
     public int getHeight() {
         return height;
     }
-
     public void setHeight(int height) {
         this.height = height;
     }
@@ -84,7 +136,6 @@ public class UserInfo {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -92,15 +143,13 @@ public class UserInfo {
     public short getGender() {
         return gender;
     }
-
     public void setGender(short gender) {
         this.gender = gender;
     }
 
-    public boolean isActive() {
+    public boolean getActivity() {
         return activity;
     }
-
     public void setActivity(boolean activity) {
         this.activity = activity;
     }
@@ -108,17 +157,52 @@ public class UserInfo {
     public String getThumbnailString() {
         return thumbnailString;
     }
-
     public void setThumbnailString(String thumbnailString) {
         this.thumbnailString = thumbnailString;
     }
 
-    public void setBmi(){
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public float getBmi() {
+        return bmi;
+    }
+    public void setBmi(float bmi) {
+        this.bmi = bmi;
+    }
+
+    public float getBmr() {
+        return bmr;
+    }
+    public void setBmr(float bmr) {
+        this.bmr = bmr;
+    }
+
+    public float getWeightchange() {
+        return weightchange;
+    }
+    public void setWeightchange(float weightchange) {
+        this.weightchange = weightchange;
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    // Helper Methods
+    public void calculateBmi(){
         this.bmi = (float)this.weight / (float)Math.pow(this.height,2);
         this.bmi *= 703;
     }
 
-    public void setBmr(){
+    public void calculateBmr(){
         // BMR Calculation (Harris-Benedict Equation)
         this.bmr = 0f;
         switch (this.gender)
@@ -149,7 +233,7 @@ public class UserInfo {
         }
     }
 
-    public void setAge() {
+    public void calculateAge() {
         String[] dateParts = birthdate.split("/");
         LocalDate today = LocalDate.now();
         LocalDate birthday = LocalDate.of(Integer.parseInt(dateParts[2]), Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1])); // Birth date
@@ -159,40 +243,10 @@ public class UserInfo {
         this.age = p.getYears();
     }
 
-
-    public int getAge() {
-        return age;
-    }
-
-    public float getBmi() {
-        return bmi;
-    }
-
-    public float getBmr() {
-        return bmr;
-    }
-
     public float calculateTargetCalories()
     {
         float calories = this.weightchange + (this.weightchange * 3500f) / 7f;
         return Math.round(Math.round(bmr) + Math.round(calories));
-    }
-
-
-    public float getWeightchange() {
-        return weightchange;
-    }
-
-    public void setWeightchange(float weightchange) {
-        this.weightchange = weightchange;
-    }
-
-    public Bitmap getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
 

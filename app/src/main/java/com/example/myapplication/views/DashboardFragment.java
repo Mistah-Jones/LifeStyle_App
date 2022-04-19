@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
@@ -70,7 +71,9 @@ public class DashboardFragment extends Fragment {
         tvName = (TextView) root.findViewById(R.id.tv_name_data);
         weightLossPicker = root.findViewById(R.id.et_weight);
 
+        // Observers
         mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observer);
+        mViewModel.getMessage().observe(getViewLifecycleOwner(), observerMessage);
 
         weightLossPicker.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @SuppressLint("ResourceAsColor")
@@ -106,6 +109,16 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // The Logout button
+        Button logoutBttn = root.findViewById(R.id.b_logout);
+        logoutBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+                Navigation.findNavController(v).navigate(R.id.loginFragment);
+            }
+        });
+
         return root;
     }
 
@@ -119,6 +132,26 @@ public class DashboardFragment extends Fragment {
                 tvName.setText("Hello " + mViewModel.getCurrUserData().getValue().getName() + "!");
                 tvCalories.setText("" + mViewModel.getCurrUserData().getValue().calculateTargetCalories());
                 weightLossPicker.setText("" + mViewModel.getCurrUserData().getValue().getWeightchange());
+            }
+        }
+    };
+
+    final Observer<String> observerMessage = new Observer<String>() {
+        @Override
+        public void onChanged(String s) {
+            if (s != null) {
+                CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl);
+                cl.bringToFront();
+                Snackbar snackbar = Snackbar.make(cl, s, Snackbar.LENGTH_LONG);
+                View view = snackbar.getView();
+                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.yellow));
+                TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
+                tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+                params.gravity = Gravity.TOP;
+                view.setLayoutParams(params);
+                snackbar.show();
+                mViewModel.setMessage(null);
             }
         }
     };
@@ -176,6 +209,10 @@ public class DashboardFragment extends Fragment {
             view.setLayoutParams(params);
             snackbar.show();
         }
+    }
+
+    void logout() {
+        mViewModel.logout();
     }
 
 }
