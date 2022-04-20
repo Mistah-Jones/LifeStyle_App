@@ -75,6 +75,30 @@
         app:layout_constraintVertical_bias="0.135" />
 
     <GridLayout
+        android:id="@+id/gridLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_calories"
+        tools:ignore="MissingConstraints">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_step_icon"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/step_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps"
+            android:textSize="35dp" />
+    </GridLayout>
+
+    <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -210,40 +234,40 @@
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
-    <Button
-        android:id="@+id/b_edituser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Edit User"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95
-"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        />
 
-    <Button
-        android:id="@+id/b_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:text="Logout"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_edituser"
+        android:layout_marginLeft="190dp"
+        android:layout_marginBottom="35dp"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#6e6e6e"
+        app:cornerRadius="75dp"
+        app:icon="@drawable/ic_setting_icon"
+        app:iconGravity="textStart"
+        app:iconSize="30dp"
+        app:iconPadding="0dp"
+        app:itemRippleColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/text_calories"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintStart_toEndOf="@+id/tv_name_data"
+        app:layout_constraintTop_toTopOf="@+id/cl" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_logout"
+        android:layout_marginLeft="150dp"
+        android:layout_marginBottom="35dp"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#6e6e6e"
+        app:cornerRadius="75dp"
+        app:icon="@drawable/ic_logout_icon"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="25dp"
+        app:itemRippleColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/text_calories"
+        app:layout_constraintEnd_toStartOf="@+id/b_edituser"
+        app:layout_constraintStart_toEndOf="@+id/tv_name_data"
+        app:layout_constraintTop_toTopOf="@+id/cl" />
 </androidx.constraintlayout.widget.ConstraintLayout>

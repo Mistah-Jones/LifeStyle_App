@@ -72,6 +72,16 @@
         app:layout_constraintVertical_bias="0.54" />
 
     <GridLayout
+        android:id="@+id/gridLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/cl"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@+id/text_calories"
+        app:layout_constraintTop_toTopOf="@+id/cl"
+        tools:ignore="MissingConstraints"/>
+
+    <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
