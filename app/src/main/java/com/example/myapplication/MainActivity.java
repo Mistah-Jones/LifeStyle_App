@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     private boolean alreadyCount = false;
     private MediaPlayer mp_start, mp_stop;
     private float steps = 0;
-    private TextView mStepCounter;
+    //private TextView mStepCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        mStepCounter = (TextView) findViewById(R.id.step_counter);
-        mStepCounter.setText("" + String.valueOf(steps));
+        //mStepCounter = (TextView) findViewById(R.id.step_counter);
+        //mStepCounter.setText("" + String.valueOf(steps));
 
         if(sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null)
         {
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity
             isNotFirstTime = true;
         } else if (sens.getType() == Sensor.TYPE_STEP_COUNTER) {
             steps = steps + sensorEvent.values[0];
-            mStepCounter.setText("" + String.valueOf(steps));
+            //mStepCounter.setText("" + String.valueOf(steps));
         }
     }
 
