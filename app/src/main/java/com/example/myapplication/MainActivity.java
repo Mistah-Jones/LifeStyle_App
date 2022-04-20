@@ -3,6 +3,7 @@ package com.example.myapplication;
 import static androidx.navigation.Navigation.findNavController;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;

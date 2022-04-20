@@ -4,6 +4,7 @@ import static androidx.navigation.Navigation.findNavController;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -50,8 +51,6 @@ public class DashboardFragment extends Fragment {
     private TextView tvName;
     private EditText weightLossPicker;
 
-    private TextView mStepCounter;
-
     // The data passer between the fragment and the main activity
     DashboardFragment.OnEdit mEditPasser;
 
@@ -72,9 +71,6 @@ public class DashboardFragment extends Fragment {
         tvCalories = (TextView) root.findViewById(R.id.text_calories);
         tvName = (TextView) root.findViewById(R.id.tv_name_data);
         weightLossPicker = root.findViewById(R.id.et_weight);
-
-        mStepCounter = (TextView) root.findViewById(R.id.step_counter);
-        mStepCounter.setText("0");
 
         // Observers
         mViewModel.getCurrUserData().observe(getViewLifecycleOwner(), observer);
@@ -219,5 +215,4 @@ public class DashboardFragment extends Fragment {
     void logout() {
         mViewModel.logout();
     }
-
 }
