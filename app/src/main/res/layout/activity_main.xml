@@ -36,10 +36,10 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_account"
         app:backgroundTint="#30BCC9"
-        app:rippleColor="@color/white"
         app:layout_anchor="@id/bottomAppBar"
         app:maxImageSize="56dp"
-        app:tint="@null"/>
+        app:rippleColor="@color/white"
+        app:tint="@null" />
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"

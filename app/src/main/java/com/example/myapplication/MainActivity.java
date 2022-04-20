@@ -24,6 +24,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,10 @@ import com.example.myapplication.views.WeatherFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.lang.reflect.Parameter;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity
                 implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnEdit, SensorEventListener {
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity
     private MediaPlayer mp_start, mp_stop;
     private float steps = 0;
     //private TextView mStepCounter;
+    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,11 +133,49 @@ public class MainActivity extends AppCompatActivity
             Log.d("Sensor", "Accelerator not available");
             isStepSensAvail = false;
         }
+
+        timer.schedule(new timerTask(), 10000, 15000);
+    }
+
+    private class timerTask extends TimerTask {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Bitmap mThumbnail = mViewModel.getCurrUserData().getValue().getThumbnail();
+
+                        // convert thumbnail image to circle shaped version
+                        Bitmap output = Bitmap.createBitmap(mThumbnail.getWidth(),
+                                mThumbnail.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(output);
+                        final int color = 0xff424242;
+                        final Paint paint = new Paint();
+                        final Rect rect = new Rect(0, 0, mThumbnail.getWidth(), mThumbnail.getHeight());
+                        paint.setAntiAlias(true);
+                        canvas.drawARGB(0, 0, 0, 0);
+                        paint.setColor(color);
+                        canvas.drawCircle(mThumbnail.getWidth() / 2f, mThumbnail.getHeight() / 2f,
+                                mThumbnail.getWidth() / 2f, paint);
+                        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                        canvas.drawBitmap(mThumbnail, rect, rect, paint);
+                        mThumbnail = output;
+
+                        // convert circle thumbnail to drawable and assign to fab
+                        Drawable d = new BitmapDrawable(getResources(), mThumbnail);
+                        FloatingActionButton fab = findViewById(R.id.fab);
+                        fab.setImageDrawable(d);
+                    } catch (Exception err) {
+                        Log.e("Timer", "No user image yet");
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public void onUserDataPass() {
-
         Bitmap mThumbnail = mViewModel.getCurrUserData().getValue().getThumbnail();
 
         // convert thumbnail image to circle shaped version
@@ -164,7 +208,6 @@ public class MainActivity extends AppCompatActivity
     public void onEdit() {
         UserInfoFragment userInfoFragment = new UserInfoFragment();
         navController.navigate(R.id.navigation_userinfo);
-
     }
 
     private View.OnClickListener buttonClickListener = new View.OnClickListener() {
