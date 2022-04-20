@@ -5,7 +5,16 @@ import static androidx.navigation.Navigation.findNavController;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -29,13 +38,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentDashboardBinding;
 import com.example.myapplication.models.UserInfo;
 import com.example.myapplication.viewmodels.MainViewModel;
 import com.example.myapplication.weatherbackend.NetworkUtils;
 import com.example.myapplication.weatherbackend.WeatherData;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.lang.reflect.Field;
 
 public class DashboardFragment extends Fragment {
 
@@ -133,6 +146,30 @@ public class DashboardFragment extends Fragment {
                 tvName.setText("Hello " + mViewModel.getCurrUserData().getValue().getName() + "!");
                 tvCalories.setText("" + mViewModel.getCurrUserData().getValue().calculateTargetCalories());
                 weightLossPicker.setText("" + mViewModel.getCurrUserData().getValue().getWeightchange());
+                Bitmap mThumbnail = mViewModel.getCurrUserData().getValue().getThumbnail();
+
+                // convert thumbnail image to circle shaped version
+                Bitmap output = Bitmap.createBitmap(mThumbnail.getWidth(),
+                        mThumbnail.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(output);
+                final int color = 0xff424242;
+                final Paint paint = new Paint();
+                final Rect rect = new Rect(0, 0, mThumbnail.getWidth(), mThumbnail.getHeight());
+                paint.setAntiAlias(true);
+                canvas.drawARGB(0, 0, 0, 0);
+                paint.setColor(color);
+                canvas.drawCircle(mThumbnail.getWidth() / 2f, mThumbnail.getHeight() / 2f,
+                        mThumbnail.getWidth() / 2f, paint);
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                canvas.drawBitmap(mThumbnail, rect, rect, paint);
+                mThumbnail = output;
+
+                // convert circle thumbnail to drawable and assign to fab
+                Drawable d = new BitmapDrawable(getResources(), mThumbnail);
+
+                // TODO: cannot find fab so cannot set it
+                //FloatingActionButton fab = root.findViewById(R.id.fab);
+                //fab.setImageDrawable(d);
             }
         }
     };
