@@ -7,12 +7,36 @@
     tools:context=".views.UserInfoFragment">
 
     <TextView
-        android:id="@+id/step_counter"
-        android:layout_width="162dp"
-        android:layout_height="98dp"
-        android:text="TextView"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Users:\n
+        Enter username and \n
+        password to be \n
+        associated with your \n
+        new account!"
+        android:textSize="25dp"
+        android:layout_marginBottom="250dp"
+        android:layout_marginRight="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textInputUserName"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Existing Users:\n
+        Enter your username \n
+        and password to be \n
+        sent to your dashboard!"
+        android:textSize="25dp"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textInputPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView2"
@@ -35,6 +59,7 @@
         android:textColorHint="#F6404F"
         app:boxStrokeColor="#30BCC9"
         app:hintTextColor="#30BCC9"
+        android:layout_marginLeft="90dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.327"

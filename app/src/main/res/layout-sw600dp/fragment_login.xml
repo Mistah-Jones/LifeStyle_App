@@ -12,14 +12,33 @@
         android:id="@+id/cl_login"
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
-        tools:ignore="MissingConstraints" >
+        tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/step_counter"
-            android:layout_width="162dp"
-            android:layout_height="98dp"
-            android:text="TextView" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="New Users:\n
+        Enter username and password to be associated with \n
+        your new account!"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cl_login" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Existing Users:\n
+        Enter your username and password to be sent to your\n
+        dashboard!"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/cl_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textView2"
