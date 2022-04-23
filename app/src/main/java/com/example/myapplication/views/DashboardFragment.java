@@ -49,6 +49,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Field;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DashboardFragment extends Fragment {
 
@@ -63,6 +66,10 @@ public class DashboardFragment extends Fragment {
     private TextView tvCalories;
     private TextView tvName;
     private EditText weightLossPicker;
+
+    private TextView tvStep;
+    private Timer timer = new Timer();
+    private int stepImitate = 0;
 
     // The data passer between the fragment and the main activity
     DashboardFragment.OnEdit mEditPasser;
@@ -133,7 +140,28 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Chris - you can also change the 15000 value larger if wanted - it is really small right now
+        //   to handle step imitation
+        timer.schedule(new DashboardFragment.timerTask(), 5000, 5000);
+        tvStep = (TextView) root.findViewById(R.id.step_counter);
+        // TODO Chris : set initial to value from database
+        tvStep.setText("" + String.valueOf(stepImitate));
+
         return root;
+    }
+
+    private class timerTask extends TimerTask {
+        @Override
+        public void run() {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    stepImitate += new Random().nextInt(15);
+                    // TODO Chris : same as before, pull value from database and put here
+                    tvStep.setText("" + String.valueOf(stepImitate));
+                }
+            });
+        }
     }
 
     final Observer<UserInfo> observer = new Observer<UserInfo>() {
