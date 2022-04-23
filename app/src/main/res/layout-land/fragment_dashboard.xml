@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.DashboardFragment" >
+    tools:context=".views.DashboardFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/cl"
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-22dp"
-        tools:layout_editor_absoluteY="-282dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tv_name_data"
@@ -30,10 +28,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.085"
         tools:text="Name" />
 
     <TextView
@@ -43,17 +41,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Calories:"
         android:textAlignment="center"
+        android:textColor="#D3D3D3"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168"
-        android:textColor="#D3D3D3"
-        android:fontFamily="sans-serif-medium"
+        app:layout_constraintVertical_bias="0.284"
         tools:text="Calories" />
 
     <TextView
@@ -61,42 +59,17 @@
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-medium"
         android:textAlignment="center"
         android:textSize="50sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="bold"
-        app:layout_constraintVertical_bias="0.135" />
-
-    <GridLayout
-        android:id="@+id/gridLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_calories"
-        tools:ignore="MissingConstraints">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_step_icon"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/step_counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Steps"
-            android:textSize="35dp" />
-    </GridLayout>
+        app:layout_constraintVertical_bias="0.54" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -104,102 +77,105 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:columnCount="2"
+        android:useDefaultMargins="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56"
-        android:useDefaultMargins="true"
-        >
+        app:layout_constraintVertical_bias="0.026">
 
-        <LinearLayout android:orientation="vertical"
-            android:background="@drawable/bmi_square">
+        <LinearLayout
+            android:background="@drawable/bmi_square"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="172dp"
-                android:layout_height="20dp"
+                android:layout_width="100dp"
+                android:layout_height="10dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="BMI"
-                tools:text="BMI"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="15sp"
+                android:textColor="#D3D3D3"
+                android:textSize="8sp"
                 android:textStyle="bold"
-                android:textColor="#D3D3D3" />
+                tools:text="BMI" />
 
             <TextView
                 android:id="@+id/tv_BMI_data"
-                android:layout_width="172dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="35sp"
-                android:textColor="#FFFFFF"
                 android:text="HERE IS A PLACE HOLDER FOR BMI"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
                 tools:text="BMI" />
         </LinearLayout>
 
-        <LinearLayout android:orientation="vertical"
-            android:background="@drawable/bmr_square">
+        <LinearLayout
+            android:background="@drawable/bmr_square"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="172dp"
-                android:layout_height="20dp"
+                android:layout_width="100dp"
+                android:layout_height="10dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="BMR"
-                tools:text="BMR"
-                android:fontFamily="sans-serif-medium"
+                android:textColor="#D3D3D3"
+                android:textSize="8sp"
                 android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#D3D3D3"/>
+                tools:text="BMR" />
 
             <TextView
                 android:id="@+id/tv_BMR_data"
-                android:layout_width="172dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textSize="35sp"
-                android:textColor="#FFFFFF"
                 android:text="HERE IS A PLACE HOLDER FOR BMR"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
                 tools:text="BMR" />
         </LinearLayout>
     </GridLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="189dp"
-        android:layout_height="134dp"
+        android:layout_width="185dp"
+        android:layout_height="103dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.826"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.80">
+        app:layout_constraintVertical_bias="0.574">
 
         <TextView
             android:layout_width="172dp"
-            android:layout_height="30dp"
+            android:layout_height="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="12dp"
             android:gravity="center"
             android:text="Weight Change Per Week"
+            android:textSize="10dp"
             tools:text="Weight Change Per Week" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -219,7 +195,7 @@
             <EditText
                 android:id="@+id/et_weight"
                 android:layout_width="168dp"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -235,28 +211,47 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
+    <GridLayout
+        android:id="@+id/gridLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@+id/text_calories"
+        app:layout_constraintTop_toTopOf="@+id/cl">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_step_icon"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/step_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps"
+            android:textSize="35dp" />
+    </GridLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/b_edituser"
-        android:layout_marginLeft="190dp"
-        android:layout_marginBottom="35dp"
         android:layout_width="35dp"
         android:layout_height="45dp"
         android:backgroundTint="#6e6e6e"
         app:cornerRadius="75dp"
         app:icon="@drawable/ic_setting_icon"
         app:iconGravity="textStart"
-        app:iconSize="30dp"
         app:iconPadding="0dp"
+        app:iconSize="30dp"
         app:itemRippleColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/text_calories"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_name_data"
-        app:layout_constraintTop_toTopOf="@+id/cl" />
+        app:layout_constraintStart_toEndOf="@+id/gridLayout"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/b_logout"
-        android:layout_marginLeft="150dp"
-        android:layout_marginBottom="35dp"
         android:layout_width="35dp"
         android:layout_height="45dp"
         android:backgroundTint="#6e6e6e"
@@ -266,8 +261,7 @@
         app:iconPadding="0dp"
         app:iconSize="25dp"
         app:itemRippleColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/text_calories"
-        app:layout_constraintEnd_toStartOf="@+id/b_edituser"
-        app:layout_constraintStart_toEndOf="@+id/tv_name_data"
-        app:layout_constraintTop_toTopOf="@+id/cl" />
+        app:layout_constraintEnd_toEndOf="@+id/cl"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/b_edituser" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,10 +20,11 @@
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/logo_icon_background.xml" value="0.1385" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/drawable/spinner_outline.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_dashboard.xml" value="0.2239858906525573" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_dashboard.xml" value="0.22" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_hike.xml" value="0.2239858906525573" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_login.xml" value="0.2279541446208113" />
-        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_userinfo.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_userinfo.xml" value="0.6054628224582701" />
+        <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-land/fragment_weather.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp-land/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp-land/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/gabi8/Desktop/Spring 2022/CS 4530/Examples/MyApplication/app/src/main/res/layout-sw600dp-land/fragment_hike.xml" value="0.10533822330888346" />
