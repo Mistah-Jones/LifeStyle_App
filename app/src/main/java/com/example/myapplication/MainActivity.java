@@ -33,6 +33,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.viewmodels.MainViewModel;
 import com.example.myapplication.views.DashboardFragment;
@@ -42,6 +46,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.Parameter;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -78,6 +85,18 @@ public class MainActivity extends AppCompatActivity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Amplify
+        try {
+            // Add these lines to add the AWSCognitoAuthPlugin and AWSS3StoragePlugin plugins
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+            Amplify.configure(getApplicationContext());
+
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+        }
 
         androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
@@ -315,5 +334,19 @@ public class MainActivity extends AppCompatActivity
         if (isStepSensAvail) {
             sensorManager.unregisterListener(this);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+        File dbFile = new File(getDatabasePath("Lifestyle.db").getAbsolutePath());
+
+        Amplify.Storage.uploadFile(
+                "UserInfo",
+                dbFile,
+                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+        );
     }
 }
