@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
                 mPassword = mEtPassword.getText().toString();
                 // Check if there's an input
                 if (mUserID.equals("") || mPassword.equals("")) {
-                    String message = "Enter in Both fields";
+                    String message = "Please enter both a username and a password.";
                     CoordinatorLayout cl = (CoordinatorLayout) root.findViewById(R.id.cl_login);
                     cl.bringToFront();
                     Snackbar snackbar = Snackbar.make(cl, message, Snackbar.LENGTH_LONG);

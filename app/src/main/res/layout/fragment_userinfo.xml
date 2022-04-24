@@ -30,8 +30,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_pic"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
         android:backgroundTint="#30BCC9"
         app:cornerRadius="45dp"
         app:icon="@drawable/ic_camera_icon"

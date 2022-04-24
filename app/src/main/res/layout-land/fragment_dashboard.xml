@@ -210,4 +210,58 @@
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/gridLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@+id/text_calories"
+        app:layout_constraintTop_toTopOf="@+id/cl">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_step_icon"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/step_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps"
+            android:textSize="35dp" />
+    </GridLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_edituser"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#6e6e6e"
+        app:cornerRadius="75dp"
+        app:icon="@drawable/ic_setting_icon"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="30dp"
+        app:itemRippleColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/b_logout"
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:backgroundTint="#6e6e6e"
+        app:cornerRadius="75dp"
+        app:icon="@drawable/ic_logout_icon"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="25dp"
+        app:itemRippleColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/cl"
+        app:layout_constraintStart_toEndOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/b_edituser" />
 </androidx.constraintlayout.widget.ConstraintLayout>
