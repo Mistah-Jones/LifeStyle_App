@@ -12,17 +12,17 @@
         android:id="@+id/cl_login"
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
-        tools:ignore="MissingConstraints" >
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="100dp"
         android:text="New Users:\n
         Enter username and password to be associated with \n
         your new account!"
+        android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,17 +34,20 @@
         android:text="Existing Users:\n
         Enter your username and password to be sent to your\n
         dashboard!"
+        android:textSize="25dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/cl_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="250dp"
         android:text="Login"
-        android:textSize="64dp"
+        android:textSize="120dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputUserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -54,7 +57,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputUserName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="188dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textColorHint="#F6404F"
@@ -68,9 +71,10 @@
 
         <EditText
             android:id="@+id/et_userName"
-            android:layout_width="188dp"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:hint="User Name"
+            android:textSize="30dp"
             android:imeOptions="actionDone"
             android:inputType="textPersonName"
             tools:text="Enter User Name" />
@@ -79,7 +83,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="188dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textColorHint="#F6404F"
@@ -93,8 +97,9 @@
 
         <EditText
             android:id="@+id/et_password"
-            android:layout_width="188dp"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
+            android:textSize="30dp"
             android:hint="Password"
             android:imeOptions="actionDone"
             android:inputType="textPersonName"
@@ -105,6 +110,7 @@
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30dp"
         android:backgroundTint="#30BCC9"
         android:text="Submit"
         app:itemRippleColor="@color/white"

@@ -3,6 +3,7 @@ package com.example.myapplication;
 import static androidx.navigation.Navigation.findNavController;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,9 +12,20 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,13 +42,33 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Parameter;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity
-                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnEdit {
+                implements UserInfoFragment.OnUserDataPass, DashboardFragment.OnEdit, SensorEventListener {
 
     private ActivityMainBinding binding;
     private MainViewModel mViewModel;
 
     private NavController navController;
+
+    private SensorManager sensorManager;
+    private Sensor accelerometerSensor;
+    private Sensor stepSensor;
+    private boolean isAccSensAvail, isStepSensAvail;
+    private float currentX, currentY, currentZ;
+    private float lastX, lastY, lastZ;
+    private boolean isNotFirstTime = false;
+    private float diffX, diffY, diffZ;
+    private float shakeThresh = 5f;
+    private Vibrator vibrator;
+    private boolean alreadyCount = false;
+    private MediaPlayer mp_start, mp_stop;
+    private float steps = 0;
+    //private TextView mStepCounter;
+    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +102,80 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationItemView weather = findViewById(R.id.navigation_weather);
         weather.setOnClickListener(buttonClickListener);
 
+        mp_start = MediaPlayer.create(this, R.raw.start_sound);
+        mp_stop = MediaPlayer.create(this, R.raw.stop_sound);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        //mStepCounter = (TextView) findViewById(R.id.step_counter);
+        //mStepCounter.setText("" + String.valueOf(steps));
+
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null)
+        {
+            accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            isAccSensAvail = true;
+            Log.d("Device Opened", "Device working");
+        }
+        else
+        {
+            Log.d("Sensor", "Accelerator not available");
+            isAccSensAvail = false;
+        }
+
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null)
+        {
+            stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            isStepSensAvail = true;
+            Log.d("Device Opened", "Device working");
+        }
+        else
+        {
+            Log.d("Sensor", "Accelerator not available");
+            isStepSensAvail = false;
+        }
+
+        timer.schedule(new timerTask(), 10000, 15000);
+    }
+
+    private class timerTask extends TimerTask {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Bitmap mThumbnail = mViewModel.getCurrUserData().getValue().getThumbnail();
+
+                        // convert thumbnail image to circle shaped version
+                        Bitmap output = Bitmap.createBitmap(mThumbnail.getWidth(),
+                                mThumbnail.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(output);
+                        final int color = 0xff424242;
+                        final Paint paint = new Paint();
+                        final Rect rect = new Rect(0, 0, mThumbnail.getWidth(), mThumbnail.getHeight());
+                        paint.setAntiAlias(true);
+                        canvas.drawARGB(0, 0, 0, 0);
+                        paint.setColor(color);
+                        canvas.drawCircle(mThumbnail.getWidth() / 2f, mThumbnail.getHeight() / 2f,
+                                mThumbnail.getWidth() / 2f, paint);
+                        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                        canvas.drawBitmap(mThumbnail, rect, rect, paint);
+                        mThumbnail = output;
+
+                        // convert circle thumbnail to drawable and assign to fab
+                        Drawable d = new BitmapDrawable(getResources(), mThumbnail);
+                        FloatingActionButton fab = findViewById(R.id.fab);
+                        fab.setImageDrawable(d);
+                    } catch (Exception err) {
+                        Log.e("Timer", "No user image yet");
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public void onUserDataPass() {
-
         Bitmap mThumbnail = mViewModel.getCurrUserData().getValue().getThumbnail();
 
         // convert thumbnail image to circle shaped version
@@ -107,7 +208,6 @@ public class MainActivity extends AppCompatActivity
     public void onEdit() {
         UserInfoFragment userInfoFragment = new UserInfoFragment();
         navController.navigate(R.id.navigation_userinfo);
-
     }
 
     private View.OnClickListener buttonClickListener = new View.OnClickListener() {
@@ -135,4 +235,85 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor sens = sensorEvent.sensor;
+        if (sens.getType() == Sensor.TYPE_ACCELEROMETER) {
+            currentX = sensorEvent.values[0];
+            currentY = sensorEvent.values[1];
+            currentZ = sensorEvent.values[2];
+
+            if (isNotFirstTime) {
+                diffX = Math.abs(lastX - currentX);
+                diffY = Math.abs(lastY - currentY);
+                diffZ = Math.abs(lastZ - currentZ);
+
+                // pitch change starts it - i.e. bringing top of phone closer to you
+                if (alreadyCount == false && diffZ > shakeThresh) {
+                    Log.d("Shake", "Shake Threshold reached, shake activated");
+                    mp_start.start();
+                    alreadyCount = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(500);
+                        // deprecated in API 26
+                    }
+                }
+
+                // yaw change stops it - i.e. moving top of phone to the left or right
+                if (alreadyCount == true && diffX > shakeThresh) {
+                    Log.d("Shake", "Shake Threshold reached, shake activated");
+                    mp_stop.start();
+                    alreadyCount = false;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(500);
+                        // deprecated in API 26
+                    }
+                }
+            }
+
+            lastX = currentX;
+            lastY = currentY;
+            lastZ = currentZ;
+            isNotFirstTime = true;
+        } else if (sens.getType() == Sensor.TYPE_STEP_COUNTER) {
+            steps = steps + sensorEvent.values[0];
+            //mStepCounter.setText("" + String.valueOf(steps));
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isAccSensAvail) {
+            sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
+        if (isStepSensAvail) {
+            sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isAccSensAvail) {
+            sensorManager.unregisterListener(this);
+        }
+
+        if (isStepSensAvail) {
+            sensorManager.unregisterListener(this);
+        }
+    }
 }

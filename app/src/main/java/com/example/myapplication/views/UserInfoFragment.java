@@ -3,9 +3,21 @@ package com.example.myapplication.views;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.VibrationEffect;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -40,11 +52,15 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentUserinfoBinding;
 import com.example.myapplication.models.UserInfo;
 import com.example.myapplication.viewmodels.MainViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class UserInfoFragment extends Fragment {
@@ -300,7 +316,6 @@ public class UserInfoFragment extends Fragment {
                 }
             }
         });
-
         return root;
     }
 
