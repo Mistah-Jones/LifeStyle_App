@@ -3,11 +3,13 @@ package com.example.myapplication.models;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.amplifyframework.core.Amplify;
 import com.example.myapplication.views.WeatherFragment;
 import com.example.myapplication.weatherbackend.JSONWeatherUtils;
 import com.example.myapplication.weatherbackend.NetworkUtils;
@@ -15,6 +17,7 @@ import com.example.myapplication.weatherbackend.WeatherData;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
@@ -56,11 +59,12 @@ public class MainRepository {
 
     public void setCurrUser(int weight, String birthdate, String location,
                             int height, String name, short sex, boolean activity,
-                            String thumbnailString){
+                            String thumbnailString, Application app){
         mCurrUser = new UserInfo(weight, birthdate, location, height, name, sex, activity, thumbnailString);
         loadCurrUserData();
         //Insert user into DB
         insert(weight, height, birthdate, location, name, sex, activity, thumbnailString);
+        saveDB(app);
     }
 
     public void setCurrUser(String userID, String password) {
@@ -103,11 +107,23 @@ public class MainRepository {
     public MutableLiveData<UserInfo> getCurrUserData() { return currUserData; }
     public MutableLiveData<String> getMessage() { return message; }
 
-    public void logout() {
+    public void logout(Application app) {
         mCurrUser = null;
         mUserID = null;
         mPassword = null;
         currUserData.setValue(null);
+        saveDB(app);
+    }
+
+    private void saveDB(Application app) {
+        File dbFile = new File(app.getDatabasePath("Lifestyle.db").getAbsolutePath());
+
+        Amplify.Storage.uploadFile(
+                "UserInfo",
+                dbFile,
+                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+        );
     }
 
     private void loadWeatherData() { new FetchWeatherTask().execute(mCurrUser.getLocation()); }

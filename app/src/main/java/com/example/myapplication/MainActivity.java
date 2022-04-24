@@ -339,7 +339,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+    }
+
+
+    private void saveDB() {
         File dbFile = new File(getDatabasePath("Lifestyle.db").getAbsolutePath());
 
         Amplify.Storage.uploadFile(

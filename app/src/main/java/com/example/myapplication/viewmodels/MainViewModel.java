@@ -31,10 +31,10 @@ public class MainViewModel extends AndroidViewModel {
                             int height, String name, short gender, boolean activity,
                             String thumbnailString)
     {
-        mMainRepository.setCurrUser(weight, birthdate, location, height, name, gender, activity, thumbnailString);
+        mMainRepository.setCurrUser(weight, birthdate, location, height, name, gender, activity, thumbnailString, getApplication());
     }
 
-    public void logout() { mMainRepository.logout(); }
+    public void logout() { mMainRepository.logout(getApplication()); }
 
     public void setMessage(String message) { mMainRepository.setMessage(message); }
     public void setCurrUser(String userID, String password) { mMainRepository.setCurrUser(userID, password); }
