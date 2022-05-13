@@ -140,29 +140,39 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Get the live step count object
+        final Observer<Integer> stepObserver = new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable final Integer newInt) {
+                // Update the UI every time the step count is updated
+                tvStep.setText("" + newInt);
+            }
+        };
         // Chris - you can also change the 15000 value larger if wanted - it is really small right now
         //   to handle step imitation
-        timer.schedule(new DashboardFragment.timerTask(), 5000, 5000);
+        // timer.schedule(new DashboardFragment.timerTask(), 5000, 5000);
         tvStep = (TextView) root.findViewById(R.id.step_counter);
+
+        ((MainActivity)getActivity()).getCurrentSteps().observe(getViewLifecycleOwner(), stepObserver);
         // TODO Chris : set initial to value from database
-        tvStep.setText("" + String.valueOf(stepImitate));
+        tvStep.setText("" + ((MainActivity)getActivity()).getCurrentSteps().getValue());
 
         return root;
     }
 
-    private class timerTask extends TimerTask {
-        @Override
-        public void run() {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    stepImitate += new Random().nextInt(15);
-                    // TODO Chris : same as before, pull value from database and put here
-                    tvStep.setText("" + String.valueOf(stepImitate));
-                }
-            });
-        }
-    }
+    //private class timerTask extends TimerTask {
+    //    @Override
+    //    public void run() {
+    //        getActivity().runOnUiThread(new Runnable() {
+    //            @Override
+    //            public void run() {
+    //                stepImitate += new Random().nextInt(15);
+    //                // TODO Chris : same as before, pull value from database and put here
+    //                tvStep.setText("" + String.valueOf(stepImitate));
+    //            }
+    //        });
+    //    }
+    //}
 
     final Observer<UserInfo> observer = new Observer<UserInfo>() {
         @Override

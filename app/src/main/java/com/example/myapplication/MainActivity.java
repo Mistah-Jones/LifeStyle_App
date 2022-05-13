@@ -2,8 +2,10 @@ package com.example.myapplication;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -27,7 +29,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -45,7 +51,6 @@ import com.example.myapplication.views.WeatherFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -69,12 +74,11 @@ public class MainActivity extends AppCompatActivity
     private float lastX, lastY, lastZ;
     private boolean isNotFirstTime = false;
     private float diffX, diffY, diffZ;
-    private float shakeThresh = 5f;
+    private float shakeThresh = 10f;
     private Vibrator vibrator;
     private boolean alreadyCount = false;
     private MediaPlayer mp_start, mp_stop;
-    private float steps = 0;
-    //private TextView mStepCounter;
+    private MutableLiveData<Integer> currentSteps;
     private Timer timer = new Timer();
 
     @Override
@@ -153,6 +157,13 @@ public class MainActivity extends AppCompatActivity
             isStepSensAvail = false;
         }
 
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            //ask for permission
+            requestPermissionLauncher.launch(
+                    Manifest.permission.ACTIVITY_RECOGNITION);
+        }
+
         timer.schedule(new timerTask(), 10000, 15000);
     }
 
@@ -192,6 +203,15 @@ public class MainActivity extends AppCompatActivity
             });
         }
     }
+
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted.
+                } else {
+                    // Show the popup asking for step counter permission
+                }
+            });
 
     @Override
     public void onUserDataPass() {
@@ -299,10 +319,19 @@ public class MainActivity extends AppCompatActivity
             lastY = currentY;
             lastZ = currentZ;
             isNotFirstTime = true;
-        } else if (sens.getType() == Sensor.TYPE_STEP_COUNTER) {
-            steps = steps + sensorEvent.values[0];
-            //mStepCounter.setText("" + String.valueOf(steps));
+        } else if (sens.getType() == Sensor.TYPE_STEP_COUNTER && alreadyCount) {
+            int steps = getCurrentSteps().getValue();
+            steps++;
+            getCurrentSteps().setValue(steps);
         }
+    }
+
+    public MutableLiveData<Integer> getCurrentSteps() {
+        if (currentSteps == null) {
+            currentSteps = new MutableLiveData<Integer>();
+            currentSteps.setValue(0);
+        }
+        return currentSteps;
     }
 
     @Override
